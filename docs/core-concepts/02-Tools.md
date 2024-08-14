@@ -52,19 +52,17 @@ const searchAgent = new Agent({
 });
 ```
 
-//TODO: Add a video of an Agent using a Tool
-
 ### Integration with LangChain Tools
 
 AgenticJS seamlessly integrates with a variety of [LangChain compatible tools](https://js.langchain.com/v0.2/docs/integrations/tools), empowering your AI agents with capabilities ranging from web browsing and image generation to interacting with cloud services and executing Python code. These tools enrich the agents' functionality, allowing them to perform specialized tasks efficiently and effectively.
 
 Here are some of the tools available for integration:
 
-- **[Tavily Search](https://js.langchain.com/v0.2/docs/integrations/tools#Tavily-Search)**: Enhances your agents with robust search capabilities.
-- **[Dall-E Tool](https://js.langchain.com/v0.2/docs/integrations/tools#Dall-E-Tool)**: Enables agents to create images using OpenAI's Dall-E.
-- **[Discord Tool](https://js.langchain.com/v0.2/docs/integrations/tools#Discord-Tool)**: Allows agents to interact with Discord channels.
-- **[Google Calendar Tool](https://js.langchain.com/v0.2/docs/integrations/tools#Google-Calendar-Tool)**: Manage Google Calendar events.
-- **[WolframAlpha Tool](https://js.langchain.com/v0.2/docs/integrations/tools#WolframAlpha-Tool)**: Utilizes WolframAlpha for computational intelligence.
+- **[Tavily Search](https://js.langchain.com/v0.2/docs/integrations/tools/tavily_search/)**: Enhances your agents with robust search capabilities.
+- **[Dall-E Tool](https://js.langchain.com/v0.2/docs/integrations/tools/dalle/)**: Enables agents to create images using OpenAI's Dall-E.
+- **[Discord Tool](https://js.langchain.com/v0.2/docs/integrations/tools/discord/)**: Allows agents to interact with Discord channels.
+- **[Google Calendar Tool](https://js.langchain.com/v0.2/docs/integrations/tools/google_calendar/)**: Manage Google Calendar events.
+- **[WolframAlpha Tool](https://js.langchain.com/v0.2/docs/integrations/tools/wolframalpha/)**: Utilizes WolframAlpha for computational intelligence.
 
 These tools provide your agents with the flexibility to perform tasks that are otherwise outside the scope of typical AI functionalities, making them more versatile and capable of handling complex workflows.
 
