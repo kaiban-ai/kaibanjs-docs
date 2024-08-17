@@ -5,7 +5,7 @@ description: Discover how AgenticJS can revolutionize the resume creation proces
 
 In today's competitive job market, crafting a resume that stands out is crucial. Traditional methods of resume creation often involve manual data entry and formatting, which can be time-consuming and prone to errors.
 
-![Resume Writing Process](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723923890/DALL_E_2024-08-17_15.44.30_-_Create_a_vibrant_and_inspiring_image_depicting_a_young_professional_JavaScript_Developer_at_a_modern_workspace._The_scene_shows_a_Caucasian_male_in_hi_mwtj4a.webp)
+![Resume Writing Process](https://res.cloudinary.com/dnno8pxyy/image/upload/t_Grayscale/v1723923890/DALL_E_2024-08-17_15.44.30_-_Create_a_vibrant_and_inspiring_image_depicting_a_young_professional_JavaScript_Developer_at_a_modern_workspace._The_scene_shows_a_Caucasian_male_in_hi_mwtj4a.webp)
 
 ### Traditional Approach Challenges
 
