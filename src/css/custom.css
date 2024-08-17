@@ -43,6 +43,31 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+.admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module:not(:last-child) {
+  margin-bottom: 0.8rem!important;
+}
+
+.admonition-agents{
+  background-color: #f9f9f9;
+  border-left: 4px solid #86efac;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.admonition-tasks{
+  background-color: #f9f9f9;
+  border-left: 4px solid #818cf8;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.admonition-challenges{
+  background-color: #fee2e2;
+  border-left: 4px solid #fca5a5;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 
