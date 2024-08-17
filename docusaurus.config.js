@@ -104,10 +104,10 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
       colorMode: {
-        defaultMode: 'dark',
+        defaultMode: 'light',
         disableSwitch: true,
         respectPrefersColorScheme: false,
-      },      
+      }    
     }),
 };
 
