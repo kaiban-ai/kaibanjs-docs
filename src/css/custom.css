@@ -29,6 +29,13 @@
   --ifm-color-gray-700: #334155;
   --ifm-color-gray-800: #1e293b;
   --ifm-color-gray-900: #0f172a;
+
+  --ifm-color-success-contrast-background: #f0fdf4;
+  --ifm-color-success-dark: #22c55e;
+  --ifm-global-shadow-lw: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+
+  --ifm-color-info-contrast-background: #f0f9ff;
+  --ifm-color-info-dark: #0ea5e9;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -68,15 +75,17 @@
   margin: 1rem 0;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 
 h1 {
-  font-size: 2.25rem !important;
+  font-size: 1.75rem !important;
+  font-weight: 800;
 }
 
 h2 {
-  font-size: 1.5rem !important;
+  font-size: 1.25rem !important;
+  font-weight: 700;
 }
 
 /* NAVBAR */
@@ -186,10 +195,19 @@ aside nav {
 .breadcrumbs__item--active .breadcrumbs__link {
   background: none !important;
   color: var(--ifm-color-gray-900);
+  font-weight: 600;
 }
 
 .card {
   box-shadow: none !important;
+}
+
+.card h2 {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px;
+  text-indent: -1.25em;
+  overflow: hidden;
 }
 
 .pagination-nav__link {
