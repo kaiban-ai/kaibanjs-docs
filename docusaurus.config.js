@@ -83,6 +83,11 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          {
+            href: 'https://bit.ly/JoinAIChamps',
+            label: 'Community',
+            position: 'right',
+          },
         ],
       },
       footer: {
