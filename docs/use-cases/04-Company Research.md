@@ -67,6 +67,8 @@ The result is an exhaustive and meticulously prepared report that not only aggre
 Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/08EYaQG4mRmYbU5jftXA)
 :::
 
+![Use Case - Company Research](https://github.com/user-attachments/assets/f6496b93-ddce-4d27-802c-60ef47ef9da6)
+
 By leveraging AgenticJS and its intelligent agents, businesses and analysts can revolutionize the way they conduct company research, achieving greater depth and breadth in their analyses with significantly reduced effort and increased accuracy.
 
 ### Expected Benefits
