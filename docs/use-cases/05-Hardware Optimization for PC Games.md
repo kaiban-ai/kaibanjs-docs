@@ -72,7 +72,7 @@ Curious about how this solution comes together? Explore it interactively in our 
 
 :::
 
-![Use Case - Hardware Optimization for PC Games](https://github.com/user-attachments/assets/8e5d89b6-e9cc-4c4f-a456-05b579d8c1e5)
+![Use Case - Hardware Optimization for PC Games (1)](https://github.com/user-attachments/assets/afda3d2d-d239-4738-88b2-668884b47ccd)
 
 
 By leveraging AgenticJS and its suite of automated capabilities, gamers and tech enthusiasts can optimize their PC builds more efficiently, ensuring they get the best performance possible for their budget.
