@@ -5,7 +5,7 @@ description: Discover how to automate sports news reporting with AgenticJS and L
 
 In the fast-paced world of sports journalism, covering grand-scale events like the Copa America final demands not only rapid response but also an insightful analysis. Traditional methods often fall short, ensnared by slow, manual processes that can't keep pace with live sports.
 
-![Copa America 2024 Final](https://res.cloudinary.com/dnno8pxyy/image/upload/t_Grayscale/v1723920534/DALL_E_2024-08-17_14.44.42_-_Create_a_hyperrealistic_photographic-style_image_of_the_Copa_America_2024_final_capturing_a_dramatic_moment_in_the_soccer_match_between_Argentina_and_pdhkpu.webp)
+![Copa America 2024 Final](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724092985/sport-news_qafxww.jpg)
 
 ### Traditional Approach Challenges
 

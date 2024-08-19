@@ -5,7 +5,7 @@ description: Discover how AgenticJS can transform trip planning with intelligent
 
 In the dynamic world of travel planning, creating personalized and detailed itineraries demands not only an understanding of the destination but also the ability to adapt to travelers' preferences and local nuances. Traditional methods often rely heavily on manual research and planning, which can be time-consuming and less precise.
 
-![Dynamic Travel Planning](https://res.cloudinary.com/dnno8pxyy/image/upload/t_Grayscale/v1723922064/DALL_E_2024-08-17_15.14.08_-_Create_a_hyperrealistic_photographic-style_image_of_a_traveler_at_an_airport._The_scene_depicts_a_middle-aged_Caucasian_woman_dressed_casually_in_a_c_twwuvu.webp)
+![Dynamic Travel Planning](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093187/trip-planning_dlz3wq.jpg)
 
 ### Traditional Approach Challenges
 
