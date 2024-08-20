@@ -71,7 +71,7 @@ Now that you are familiar with the agents and their roles, let's explore the pro
 The result is a comprehensive report detailing the top three hardware setups for running Cyberpunk 2077 efficiently. The report includes specific CPU, GPU, and RAM combinations along with current prices, allowing gamers to make informed decisions without the need for extensive manual research.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/3NfBytHUByi33E6Sg6Lo)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/wDlcLgOrHfV6INFreR6Z)
 
 :::
 
