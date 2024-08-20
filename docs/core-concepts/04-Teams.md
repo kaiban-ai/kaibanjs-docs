@@ -96,8 +96,6 @@ Initial data or parameters provided to guide task execution. These inputs are dy
 - **Type:** Object
 - **Example:** `{ aboutMe: 'Detailed background information...' }`
 
-Absolutely, addressing the user directly can make the documentation feel more engaging and personal. Here’s the adjusted version:
-
 #### `env`
 A collection of environment variables that configure access to AI model APIs needed for your team's operations. This setup allows you to easily define API keys for one or more AI models, ensuring all agents in your team can access the necessary AI services.
 
