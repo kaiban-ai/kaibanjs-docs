@@ -68,9 +68,19 @@ const team = new Team({
     env: {OPENAI_API_KEY: 'your-open-ai-api-key'}  // Environment variables for the team
 });
 
-team.start().then((result) => {
-  console.log("Final Output:", result);
-});
+// Listen to the workflow status changes
+// team.onWorkflowStatusChange((status) => {
+//   console.log("Workflow status:", status);
+// });
+
+team.start()
+  .then((output) => {
+    console.log("Workflow status:", output.status);
+    console.log("Result:", output.result);
+  })
+  .catch((error) => {
+    console.error("Workflow encountered an error:", error);
+  });
 ```
 
 
@@ -119,9 +129,53 @@ The logging level set for monitoring and debugging the team's activities.
 ### Team Methods
 
 #### `start(inputs)`
-Begins the team's task processing workflow.
-- **Parameters:** `inputs` (optional) - Additional inputs to override initial task parameters.
-- **Returns:** Promise resolving to the workflow result.
+Initiates the team's task processing workflow and monitors its progress.
+
+- **Parameters:** 
+  - `inputs` (Object, optional): Additional inputs to override or supplement the initial inputs.
+- **Returns:** `Promise<Object>` - Resolves with different structures based on the workflow status:
+  - For completed workflows:
+    ```js
+    {
+      status: 'FINISHED',
+      result: workflowResult
+    }
+    ```
+  - For errored workflows:
+    ```js
+    // The promise is rejected with an Error object
+    new Error('Workflow encountered an error')
+    ```
+  - For blocked workflows:
+    ```javascript
+    {
+      status: 'BLOCKED',
+      result: null
+    }
+    ```
+
+**Example:**
+  ```js
+  team.start()
+    .then((output) => {
+      if (output.status === 'FINISHED') {
+        console.log("Workflow completed. Final result:", output.result);
+      } else if (output.status === 'BLOCKED') {
+        console.log("Workflow is blocked");
+        // Handle blocked state (e.g., request human intervention)
+      }
+    })
+    .catch((error) => {
+      console.error("Workflow encountered an error:", error);
+    });
+  ```
+
+
+**Note:** This method resolves the promise for `FINISHED` and `BLOCKED` states, and rejects for `ERRORED` state. For `BLOCKED` state, it resolves with a null result, allowing the promise chain to continue but indicating that the workflow is blocked.
+
+It's important to note that once the Promise resolves (whether due to completion, error, or blockage), it won't resolve again, even if the workflow continues after being unblocked.
+
+For full HITL implementation, you would need to use this method in conjunction with other Team methods like `provideFeedback` and `validateTask`, and potentially set up additional listeners `onWorkflowStatusChange` to monitor the workflow's progress after it has been unblocked.
 
 #### `getStore()`
 Provides NodeJS developers direct access to the team's store.
@@ -131,11 +185,59 @@ Provides NodeJS developers direct access to the team's store.
 Provides a React hook for accessing the team's store in React applications.
 - **Returns:** The store object.
 
+#### `provideFeedback(taskId, feedbackContent)`
+Provides feedback on a specific task, enabling human intervention in the AI workflow. This method triggers the human-in-the-loop workflow by setting the task status to REVISE, prompting the agent to reconsider and improve its work based on the provided feedback.
+- **Parameters:** 
+  - `taskId` (String): The ID of the task to provide feedback for.
+  - `feedbackContent` (String): The feedback to be incorporated into the task.
+- **Returns:** void
+- **Note:** Calling this method initiates the human-in-the-loop process, allowing for iterative refinement of task outputs. You can track the workflow status using the `onWorkflowStatusChange` method.
+
+#### `validateTask(taskId)`
+Marks a task as validated, used in the HITL process to approve a task that required validation.
+- **Parameters:**
+  - `taskId` (String): The ID of the task to be marked as validated.
+- **Returns:** void
+
+#### `onWorkflowStatusChange(callback)`
+Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
+- **Parameters:**
+  - `callback` (Function): A function to be called when the workflow status changes.
+- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L78) for more details.
+
+**Example:**
+
 ```js
-team.start().then((result) => {
-  console.log("Final Output:", result);
+team.onWorkflowStatusChange((status) => {
+  console.log('Workflow status:', status);
 });
 ```
+
+#### `getTasksByStatus(status)`
+Retrieves tasks filtered by a specific status.
+- **Parameters:**
+  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L58) values.
+- **Returns:** Array of tasks with the specified status.
+
+**Example:**
+
+```js
+const completedTasks = team.getTasksByStatus('DONE');
+console.log(pendingTasks);
+```
+
+#### `getWorkflowStatus()`
+Retrieves the current status of the workflow.
+- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L78) for more details.
+
+#### `getWorkflowResult()`
+Retrieves the final result of the workflow. Should be called only after the workflow has finished.
+- **Returns:** The workflow result if finished, null otherwise.
+- **Type:** String
+
+#### `getTasks()`
+Retrieves all tasks in the team's workflow.
+- **Returns:** Array of all tasks.
 
 ### The Team Store
 The store serves as the backbone for state management within the AgenticJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.

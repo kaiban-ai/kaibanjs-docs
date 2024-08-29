@@ -91,12 +91,12 @@ The store is powered by Zustand, offering a full range of features for effective
 This attribute indicates the current state of the team's workflow process. It transitions through various statuses, reflecting different phases of the workflow lifecycle.
 
 - **Type:** `Enum` (WORKFLOW_STATUS_enum)
-- **Possible Values:** `INITIAL`, `RUNNING`, `STOPPING`, `STOPPED`, `ERRORED`, `FINISHED`, `BLOCKED`
+- **Possible Values:** `INITIAL`, `RUNNING`, `STOPPED`, `ERRORED`, `FINISHED`, `BLOCKED`
 
 #### `workflowResult`
 Stores the final result or output of the workflow once it has completed. This attribute is particularly useful for retrieving the outcome of all tasks processing.
 
-- **Type:** `Object`
+- **Type:** `String`
 - **Default:** `null`
 
 #### `agents`
@@ -111,11 +111,20 @@ Contains all tasks assigned to the team. Each task is managed according to the w
 - **Type:** `Array of Tasks`
 - **Default:** `[]`
 
-#### `workflowContext`
-Stores essential context or metadata from the workflow execution, such as task outputs and intermediate results. This attribute acts as a contextual memory, allowing agents to access and utilize past interactions and decisions throughout the workflow. It enhances agents' ability to make informed decisions based on the historical context of the workflow.
+#### `workflowContext` (Deprecated)
 
-- **Type:** `String`
-- **Default:** Empty string `''`
+:::caution[Deprecated]
+The `workflowContext` attribute is deprecated and will be removed in future versions. Context is now dynamically derived from the `workflowLogs` array.
+:::
+
+Previously, this attribute stored essential context or metadata from the workflow execution. However, the context now varies depending on the task being executed and the status of other tasks. It is dynamically derived from the `workflowLogs` array using:
+
+```js
+const currentContext = teamStore.deriveContextFromLogs(teamStore.workflowLogs, currentTaskId);
+```
+
+This approach ensures that the context is always up-to-date and relevant to the current task and workflow state. It provides a more flexible and accurate representation of the workflow's context at any given point in time.
+
 
 #### `workflowLogs`
 This is a critical attribute as it records all significant events and changes in the workflow's status. It's invaluable for debugging, auditing, and understanding the sequence of operations within the store.

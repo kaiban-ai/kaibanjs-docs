@@ -9,7 +9,7 @@ Below, you'll find essential links that serve as your starting points for naviga
 - 🔍 [**Core Concepts**](/category/core-concepts)
 - 🛠️ [**Use Cases**](/category/use-cases)
 - 🌐 [**Website**](https://www.agenticjs.com/)
-- 📚 [**Official Documentation**](https://docs.agenticjs.com/category/core-concepts)
+- 📚 [**Official Documentation**](/category/core-concepts)
 - 💻 [**GitHub Repository**](https://github.com/AI-Champions/AgenticJS)
 - 📦 [**NPM Package**](https://www.npmjs.com/package/agenticjs)
 - 📝 [**Project Backlog**](https://github.com/AI-Champions/AgenticJS/issues)
