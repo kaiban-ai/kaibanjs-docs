@@ -115,6 +115,30 @@ function getWorkflowCompletionStats(teamStore) {
 const workflowStats = getWorkflowCompletionStats(teamStore);
 ```
 
+### Example: Counting Human in the Loop (HITL) Interactions
+
+This example demonstrates how to count the number of validations and revisions in a workflow by examining the workflowLogs.
+
+```js
+function countHITLInteractions(teamStore) {
+    const logs = teamStore.getState().workflowLogs;
+    const validations = logs.filter(log =>
+        log.logType === "TaskStatusUpdate" && log.taskStatus === "VALIDATED"
+    ).length;
+    const revisions = logs.filter(log =>
+        log.logType === "TaskStatusUpdate" && log.taskStatus === "REVISE"
+    ).length;
+    console.log(`Total validations: ${validations}`);
+    console.log(`Total revisions: ${revisions}`);
+    return { validations, revisions };
+}
+
+// Example usage
+const hitlStats = countHITLInteractions(teamStore);
+```
+
+
+
 ### Log Types and Attributes
 
 There are three primary types of logs, each corresponding to different aspects of the system's operation:

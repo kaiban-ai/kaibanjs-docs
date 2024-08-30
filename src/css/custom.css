@@ -138,6 +138,11 @@ h2 {
   font-weight: 700;
 }
 
+h3 {
+  font-size: 1.00rem !important;
+  font-weight: 600;
+}
+
 p {
   color: #475569;
 }

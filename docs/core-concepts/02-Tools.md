@@ -5,7 +5,7 @@ description: What are Tools and how to use them.
 
 ## What is a Tool?
 
-> An Tool is a skill or function that agents can utilize to perform various actions:
+> A Tool is a skill or function that agents can utilize to perform various actions:
 >
 > - Search on the Internet
 > - Calculate data or predictions

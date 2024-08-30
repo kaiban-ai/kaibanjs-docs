@@ -124,9 +124,19 @@ const team = new Team({
     } // Centralized environment variables for the team
 });
 
-team.start().then((result) => {
-    console.log("Final Output:", result);
-});
+// Listen to the workflow status changes
+// team.onWorkflowStatusChange((status) => {
+//   console.log("Workflow status:", status);
+// });
+
+team.start()
+  .then((output) => {
+    console.log("Workflow status:", output.status);
+    console.log("Result:", output.result);
+  })
+  .catch((error) => {
+    console.error("Workflow encountered an error:", error);
+  });
 ```
 
 **Note:** Both approaches are valid, and the choice between them depends on your project's structure and your preference for managing API keys.

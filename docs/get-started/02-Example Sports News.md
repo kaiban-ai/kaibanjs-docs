@@ -89,9 +89,19 @@ const team = new Team({
     env: {OPENAI_API_KEY: 'ENV_OPENAI_API_KEY'}
 });
 
-team.start().then((result) => {
-  console.log("Final Output:", result);
-});
+// Listen to the workflow status changes
+// team.onWorkflowStatusChange((status) => {
+//   console.log("Workflow status:", status);
+// });
+
+team.start()
+  .then((output) => {
+    console.log("Workflow status:", output.status);
+    console.log("Result:", output.result);
+  })
+  .catch((error) => {
+    console.error("Workflow encountered an error:", error);
+  });
 ```
 
 ## Conclusion
