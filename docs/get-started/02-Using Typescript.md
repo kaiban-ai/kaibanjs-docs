@@ -47,4 +47,4 @@ This guide has covered the basics of setting up TypeScript for use with AgenticJ
 We recommend the following resources:
 
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) - The TypeScript handbook is the official documentation for TypeScript, and covers most key language features.
-- [TypeScript Discord](https://discord.com/invite/typescript) - The TypeScript Community Discord is a great place to ask questions and get help with TypeScript and React issues.
+- [TypeScript Discord](https://discord.com/invite/typescript) - The TypeScript Community Discord is a great place to ask questions and get help with TypeScript issues.
