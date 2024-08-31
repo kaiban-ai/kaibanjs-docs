@@ -1,6 +1,6 @@
 ---
 title: State Management
-description: Explore how state is managed within AgenticJS using the Team Store, including detailed insights on team operations and workflows.
+description: Explore how state is managed within KaibanJS using the Team Store, including detailed insights on team operations and workflows.
 ---
 
 :::info[Understanding State Management]
@@ -9,11 +9,11 @@ State management is the method by which software keeps track of changes in an ap
 
 :::
 
-> In AgenticJS, state management is handled by the Team Store, which coordinates the behaviors and statuses of agents and tasks, ensuring seamless operation within teams.
+> In KaibanJS, state management is handled by the Team Store, which coordinates the behaviors and statuses of agents and tasks, ensuring seamless operation within teams.
 
 
 ## What is the Team Store?
-The Team Store in the AgenticJS framework is a specialized component designed to manage the state and workflows of agents and tasks within a team. 
+The Team Store in the KaibanJS framework is a specialized component designed to manage the state and workflows of agents and tasks within a team. 
 
 Acting as the central hub for state management, the Team Store ensures that all activities and data flows within the team are coordinated efficiently and accurately. 
 
@@ -21,7 +21,7 @@ This critical infrastructure piece allows teams to function seamlessly, supporti
 
 ## Accessing Team State
 
-Once a team is created in AgenticJS, you can access and interact with its internal state through specific methods tailored to different development environments.
+Once a team is created in KaibanJS, you can access and interact with its internal state through specific methods tailored to different development environments.
 
 
 ```js
@@ -53,7 +53,7 @@ const unsubscribe = myAgentsTeam.useStore().subscribe(() => {
 ```js
 import myAgentsTeam from "./agenticTeam";
 
-const AgenticJSComponent = () => {
+const KaibanJSComponent = () => {
   const useTeamStore = myAgentsTeam.useStore();
 
   const { agents, workflowResult } = useTeamStore(state => ({
@@ -75,7 +75,7 @@ const AgenticJSComponent = () => {
   );
 };
 
-export default AgenticJSComponent;
+export default KaibanJSComponent;
 ```
 
 :::tip[Store Powered by Zustand]
@@ -150,8 +150,8 @@ team.useStore().subscribe(state => state.workflowLogs, (newLogs, previousLogs) =
 **Note:** *This function logs changes in workflow status as they occur, providing real-time feedback on the progress and state of the workflow. For more detailed insights on log types and attributes, refer to the [Observability and Monitoring](./06-Observability%20and%20Monitoring.md) section.*
 
 ## Conclusion
-The Team Store in AgenticJS plays a pivotal role by efficiently managing and reacting to state changes across agents, tasks, and workflows. This robust system enhances application management by enabling structured state tracking and real-time feedback mechanisms. For further detailed insights into advanced monitoring and debugging techniques, refer to the [Observability and Monitoring](./06-Observability%20and%20Monitoring.md) section.
+The Team Store in KaibanJS plays a pivotal role by efficiently managing and reacting to state changes across agents, tasks, and workflows. This robust system enhances application management by enabling structured state tracking and real-time feedback mechanisms. For further detailed insights into advanced monitoring and debugging techniques, refer to the [Observability and Monitoring](./06-Observability%20and%20Monitoring.md) section.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

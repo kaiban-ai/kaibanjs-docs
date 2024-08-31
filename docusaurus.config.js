@@ -8,20 +8,20 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'AgenticJS',
-  tagline: 'The official documentation for AgenticJS',
+  title: 'KaibanJS',
+  tagline: 'The official documentation for KaibanJS',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://docs.agenticjs.com',
+  url: 'https://docs.kaibanjs.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'AI Champions', // Usually your GitHub org/user name.
-  projectName: 'AgenticJS', // Usually your repo name.
+  organizationName: 'Kaiban', // Usually your GitHub org/user name.
+  projectName: 'KaibanJS', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -63,11 +63,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/agenticjs-social-card.png',
+      image: 'img/kaibanjs-social-card.png',
       navbar: {
         title: '',
         logo: {
-          alt: 'AgenticJS',
+          alt: 'KaibanJS',
           src: 'img/logo.svg',
         },
         items: [
@@ -79,7 +79,7 @@ const config = {
           // },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/AI-Champions/AgenticJS',
+            href: 'https://github.com/kaiban-ai/KaibanJS',
             label: 'GitHub',
             position: 'right',
           },
@@ -99,11 +99,11 @@ const config = {
           },
           {
             label: 'Home',
-            href: 'https://www.agenticjs.com/',
+            href: 'https://www.kaibanjs.com/',
           },
           {
-            label: 'Enterprise',
-            href: 'https://aichampions.co',
+            label: 'GitHub',
+            href: 'https://github.com/kaiban-ai/KaibanJS',
           },
         ],
         copyright: `© ${new Date().getFullYear()} AI Champions, All rights reserved. Made with love from Miami, FL 🏝️`,

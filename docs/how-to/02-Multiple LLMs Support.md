@@ -1,9 +1,9 @@
 ---
 title: Multiple LLMs Support
-description: Leverage multiple language models to enhance the capabilities of your AI agents in AgenticJS.
+description: Leverage multiple language models to enhance the capabilities of your AI agents in KaibanJS.
 ---
 
-> Multiple LLMs Support in AgenticJS allows you to integrate a range of specialized AI models, each expertly tailored to excel in distinct aspects of your projects. By employing various models, you can optimize your AI solutions to achieve more accurate, efficient, and tailored outcomes.
+> Multiple LLMs Support in KaibanJS allows you to integrate a range of specialized AI models, each expertly tailored to excel in distinct aspects of your projects. By employing various models, you can optimize your AI solutions to achieve more accurate, efficient, and tailored outcomes.
 
 #### Currently Supported Models:
 
@@ -12,7 +12,7 @@ description: Leverage multiple language models to enhance the capabilities of yo
 - Google
 - Mistral
 
-If you require integration with a specific model not yet supported, please submit a request on [GitHub](https://github.com/AI-Champions/AgenticJS/issues) to help us prioritize future additions.
+If you require integration with a specific model not yet supported, please submit a request on [GitHub](https://github.com/kaiban-ai/KaibanJS/issues) to help us prioritize future additions.
 
 ## Implementing Multiple LLMs
 
@@ -21,7 +21,7 @@ To utilize multiple language learning models (LLMs), you start by configuring ea
 Here’s how to set up agents with different LLM configurations:
 
 ```js
-import { Agent } from 'agenticjs';
+import { Agent } from 'kaibanjs';
 
 // Agent with Google's Gemini model
 const emma = new Agent({
@@ -67,7 +67,7 @@ You can specify the API key for each agent directly in their `llmConfig` or glob
 You can include the API key directly in the `llmConfig` of each agent if they use different providers or you prefer to encapsulate the key with the agent configuration.
 
 ```js
-import { Agent } from 'agenticjs';
+import { Agent } from 'kaibanjs';
 
 // Agent with Google's Gemini model
 const emma = new Agent({
@@ -111,7 +111,7 @@ const mia = new Agent({
 If all agents in your team use the same AI provider, or you prefer a centralized location for managing API keys, use the `env` property when defining the team. This method simplifies management especially when using environment variables or configuration files.
 
 ```js
-import { Agent, Task, Team } from 'agenticjs';
+import { Agent, Task, Team } from 'kaibanjs';
 
 const team = new Team({
     name: 'Multi-Model Support Team',
@@ -142,8 +142,8 @@ team.start()
 **Note:** Both approaches are valid, and the choice between them depends on your project's structure and your preference for managing API keys.
 
 ## Conclusion
-Incorporating multiple LLMs into your AgenticJS framework significantly enhances the versatility and effectiveness of your AI agents. By strategically aligning specific models with the unique needs of each agent, your AI solutions become more robust, capable, and aligned with your project's objectives.
+Incorporating multiple LLMs into your KaibanJS framework significantly enhances the versatility and effectiveness of your AI agents. By strategically aligning specific models with the unique needs of each agent, your AI solutions become more robust, capable, and aligned with your project's objectives.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

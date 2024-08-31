@@ -41,7 +41,7 @@ const searchTool = new TavilySearchResults({
 Create an agent named 'Scout', designed to gather information using the defined search tool.
 
 ```js
-import { Agent } from 'agenticjs';
+import { Agent } from 'kaibanjs';
 
 const searchAgent = new Agent({
     name: 'Scout',
@@ -54,7 +54,7 @@ const searchAgent = new Agent({
 
 ### Integration with LangChain Tools
 
-AgenticJS seamlessly integrates with a variety of [LangChain compatible tools](https://js.langchain.com/v0.2/docs/integrations/tools), empowering your AI agents with capabilities ranging from web browsing and image generation to interacting with cloud services and executing Python code. These tools enrich the agents' functionality, allowing them to perform specialized tasks efficiently and effectively.
+KaibanJS seamlessly integrates with a variety of [LangChain compatible tools](https://js.langchain.com/v0.2/docs/integrations/tools), empowering your AI agents with capabilities ranging from web browsing and image generation to interacting with cloud services and executing Python code. These tools enrich the agents' functionality, allowing them to perform specialized tasks efficiently and effectively.
 
 Here are some of the tools available for integration:
 
@@ -76,5 +76,5 @@ Integrating tools into your agents provides several advantages:
 For detailed guidance on specific tools and their configurations, refer to the individual tool documentation. This structured approach ensures your agents are equipped with the necessary tools to excel in their designated tasks, enhancing both their functionality and productivity.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

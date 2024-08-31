@@ -203,7 +203,7 @@ Marks a task as validated, used in the HITL process to approve a task that requi
 Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
 - **Parameters:**
   - `callback` (Function): A function to be called when the workflow status changes.
-- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L78) for more details.
+- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
 
 **Example:**
 
@@ -216,7 +216,7 @@ team.onWorkflowStatusChange((status) => {
 #### `getTasksByStatus(status)`
 Retrieves tasks filtered by a specific status.
 - **Parameters:**
-  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L58) values.
+  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L58) values.
 - **Returns:** Array of tasks with the specified status.
 
 **Example:**
@@ -228,7 +228,7 @@ console.log(pendingTasks);
 
 #### `getWorkflowStatus()`
 Retrieves the current status of the workflow.
-- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L78) for more details.
+- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
 
 #### `getWorkflowResult()`
 Retrieves the final result of the workflow. Should be called only after the workflow has finished.
@@ -240,7 +240,7 @@ Retrieves all tasks in the team's workflow.
 - **Returns:** Array of all tasks.
 
 ### The Team Store
-The store serves as the backbone for state management within the AgenticJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.
+The store serves as the backbone for state management within the KaibanJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.
 
 
 **Integration with Team:** 
@@ -250,8 +250,8 @@ Each team operates with its own dedicated store instance. This store orchestrate
 **Further Reading:** For an in-depth exploration of the store’s capabilities and setup, please refer to the detailed store documentation.
 
 ### Conclusion
-The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within AgenticJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
+The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within KaibanJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

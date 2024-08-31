@@ -1,12 +1,12 @@
 ---
 title: Human in the Loop (HITL)
-description: AgenticJS incorporates Human-in-the-Loop (HITL) functionality, allowing for seamless integration of human expertise and oversight in AI-driven workflows. This feature enables manual intervention at critical points, ensuring accuracy, reliability, and ethical considerations in complex tasks. HITL in AgenticJS facilitates human validation, feedback processing, and task revision, creating a collaborative environment between AI agents and human operators for optimal decision-making and quality assurance.
+description: KaibanJS incorporates Human-in-the-Loop (HITL) functionality, allowing for seamless integration of human expertise and oversight in AI-driven workflows. This feature enables manual intervention at critical points, ensuring accuracy, reliability, and ethical considerations in complex tasks. HITL in KaibanJS facilitates human validation, feedback processing, and task revision, creating a collaborative environment between AI agents and human operators for optimal decision-making and quality assurance.
 ---
 
 # Human in the Loop (HITL)
 
 ## Overview
-Human in the Loop (HITL) is a core feature in AgenticJS that enables manual intervention and oversight in AI-driven tasks. It provides a mechanism for human operators to review, provide input, or make decisions at critical points in the workflow, ensuring accuracy, reliability, and ethical considerations in complex or sensitive operations.
+Human in the Loop (HITL) is a core feature in KaibanJS that enables manual intervention and oversight in AI-driven tasks. It provides a mechanism for human operators to review, provide input, or make decisions at critical points in the workflow, ensuring accuracy, reliability, and ethical considerations in complex or sensitive operations.
 
 ## Purpose
 The HITL feature addresses the need for human judgment in scenarios where:
@@ -30,7 +30,7 @@ Imagine a Kanban board for a software development team:
 
 In this scenario, Task 3 in the "Code Review" column requires human intervention. This is similar to how HITL works in AI workflows, where certain tasks need human input or validation before proceeding.
 
-### How HITL Works in AgenticJS
+### How HITL Works in KaibanJS
 
 1. **Task Creation**: Tasks are created and can be flagged to require human validation.
 
@@ -52,7 +52,7 @@ In this scenario, Task 3 in the "Code Review" column requires human intervention
 
 This process ensures that human expertise is incorporated at crucial points, improving the overall quality and reliability of the AI-driven workflow.
 
-### This HITL workflow can be easily implemented using AgenticJS. 
+### This HITL workflow can be easily implemented using KaibanJS. 
 
 The library provides methods and status to manage the entire process programmatically:
 
@@ -66,7 +66,7 @@ The library provides methods and status to manage the entire process programmati
 
 ## Example Usage
 
-Here's an example of how to set up and manage a HITL workflow using AgenticJS:
+Here's an example of how to set up and manage a HITL workflow using KaibanJS:
 
 ```js
 // Creating a task that requires validation
@@ -121,7 +121,7 @@ The system includes the following task statuses, which apply to all tasks throug
 - `VALIDATED`: Task has been validated and confirmed as correctly completed.
 - `DONE`: Task is fully completed and requires no further action.
 
-These statuses are defined in the [TASK_STATUS_enum](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js#L58) and can be accessed throughout the system for consistency.
+These statuses are defined in the [TASK_STATUS_enum](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L58) and can be accessed throughout the system for consistency.
 
 ## Task State Flow Diagram
 
@@ -209,7 +209,7 @@ Below is a text-based representation of the task state flow diagram:
 
 ## Feedback in HITL
 
-In AgenticJS, human interventions are implemented through a feedback system. Each task maintains a `feedbackHistory` array to track these interactions.
+In KaibanJS, human interventions are implemented through a feedback system. Each task maintains a `feedbackHistory` array to track these interactions.
 
 ### Feedback Structure
 
@@ -219,7 +219,7 @@ Each feedback entry in the `feedbackHistory` consists of:
 - `timestamp`: When the feedback was created or last updated
 
 ### Feedback Statuses
-AgenticJS uses two primary statuses for feedback:
+KaibanJS uses two primary statuses for feedback:
 - `PENDING`: Newly added feedback that hasn't been addressed yet
 - `PROCESSED`: Feedback that has been successfully addressed and incorporated
 
@@ -293,8 +293,8 @@ export default WorkflowBoard;
 
 ## Conclusion
 
-By implementing Human in the Loop through AgenticJS's feedback and validation system, you can create a more robust, ethical, and accurate task processing workflow. This feature ensures that critical decisions benefit from human judgment while maintaining the efficiency of automated processes for routine operations.
+By implementing Human in the Loop through KaibanJS's feedback and validation system, you can create a more robust, ethical, and accurate task processing workflow. This feature ensures that critical decisions benefit from human judgment while maintaining the efficiency of automated processes for routine operations.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

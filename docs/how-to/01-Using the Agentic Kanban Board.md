@@ -11,7 +11,7 @@ Kanban boards are excellent tools for showcasing team workflows in real time, pr
 
 ## Try It Live!
 
-Experience the Agentic Kanban Board [here](https://www.agenticjs.com/playground).
+Experience the Agentic Kanban Board [here](https://www.kaibanjs.com/playground).
 
 ## Interface Overview
 
@@ -116,5 +116,5 @@ This button initiates the execution of the tasks by the agents defined in your c
 The Agentic Kanban Board simplifies AI integration, enabling you to visualize, manage, and share AI agents with ease. Ideal for developers, project managers, and researchers, this tool facilitates efficient operation and collaboration without the need for complex setups. Enhance your projects by leveraging the power of AI with our user-friendly platform.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

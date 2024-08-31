@@ -1,5 +1,5 @@
 ---
-title: Implementing RAG with AgenticJS
+title: Implementing RAG with KaibanJS
 description: Learn how to enhance your AI agents with Retrieval Augmented Generation.
 ---
 
@@ -7,7 +7,7 @@ description: Learn how to enhance your AI agents with Retrieval Augmented Genera
 
 ## Setup and Requirements
 
-This guide will outline the steps needed to integrate RAG into your AgenticJS projects. Before proceeding, ensure you have the latest version of AgenticJS and access to a suitable database or knowledge base for retrieval purposes.
+This guide will outline the steps needed to integrate RAG into your KaibanJS projects. Before proceeding, ensure you have the latest version of KaibanJS and access to a suitable database or knowledge base for retrieval purposes.
 
 ## Step-by-Step Guide
 
@@ -18,5 +18,5 @@ Coming soon...
 Thanks to [@Valdozzz](https://twitter.com/valdozzz1) for suggesting this valuable addition. Your contributions help drive innovation within our community!
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

@@ -1,6 +1,6 @@
 ---
 title: Resume Creation
-description: Discover how AgenticJS can revolutionize the resume creation process with intelligent agents that analyze conversational input and craft compelling resumes. Learn how our tools can tailor resumes to highlight job seekers' qualifications and achievements, enhancing their prospects in the job market.
+description: Discover how KaibanJS can revolutionize the resume creation process with intelligent agents that analyze conversational input and craft compelling resumes. Learn how our tools can tailor resumes to highlight job seekers' qualifications and achievements, enhancing their prospects in the job market.
 ---
 
 In today's competitive job market, crafting a resume that stands out is crucial. Traditional methods of resume creation often involve manual data entry and formatting, which can be time-consuming and prone to errors.
@@ -23,7 +23,7 @@ Typically, individuals manually compile their work history, skills, and educatio
 :::
 
 ### The Agentic Solution
-Imagine transforming this process with AgenticJS automation:
+Imagine transforming this process with KaibanJS automation:
 
 - **Scenario:** Creating a resume for David Llaca, a JavaScript Developer who is currently exploring new job opportunities.
 
@@ -51,12 +51,12 @@ With the agents introduced, here’s how they collaborate to deliver a seamless 
 The result is a meticulously crafted resume for David that effectively showcases his skills and experiences in JavaScript development. This resume is ready to be submitted to potential employers, significantly enhancing his job application process.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
 :::
 
 ![Resume Writing Result](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723924595/Use_Case_-_Resume_Creation_melexu.gif)
 
-By leveraging AgenticJS and its intelligent agents, job seekers can transform the way they create resumes, making the process more streamlined, efficient, and effective at capturing the attention of potential employers.
+By leveraging KaibanJS and its intelligent agents, job seekers can transform the way they create resumes, making the process more streamlined, efficient, and effective at capturing the attention of potential employers.
 
 ### Expected Benefits
 
@@ -66,8 +66,8 @@ By leveraging AgenticJS and its intelligent agents, job seekers can transform th
 
 - **Professional Appeal:** Creates resumes that are structured and formatted to meet professional standards, increasing the chances of job application success.
 
-Ready to revolutionize your resume creation process? Dive deeper into AgenticJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.agenticjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your resume creation process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
 
 :::info[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

@@ -1,38 +1,38 @@
 ---
 title: Example 2 - Trip Planning Team
-description: Learn how to assemble a dynamic team for trip planning using AgenticJS and LangChain tools.
+description: Learn how to assemble a dynamic team for trip planning using KaibanJS and LangChain tools.
 ---
 
-Explore the process of creating a versatile team capable of planning detailed and personalized trips using the AgenticJS framework and LangChain tools.
+Explore the process of creating a versatile team capable of planning detailed and personalized trips using the KaibanJS framework and LangChain tools.
 
 :::tip[Try it Out in the Playground!]
-Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.agenticjs.com/share/IeeoriFq3uIXlLkBjXbl)
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/IeeoriFq3uIXlLkBjXbl)
 :::
 
 ## Setup
 
-#### Install AgenticJS via npm:
+#### Install KaibanJS via npm:
 
 ```bash
-npm install agenticjs --save
+npm install kaibanjs
 ```
 
 #### Install LangChain Tools:
 
 ```bash
-npm install @langchain/community --save
+npm install @langchain/community
 ```
 
-#### Import AgenticJS in your JavaScript file:
+#### Import KaibanJS in your JavaScript file:
 
 ```js
 // Using ES6 import syntax for NextJS, React, etc.
-import { Agent, Task, Team } from 'agenticjs';
+import { Agent, Task, Team } from 'kaibanjs';
 ```
 
 ```js
 // Using CommonJS syntax for NodeJS
-const { Agent, Task, Team } = require("agenticjs");
+const { Agent, Task, Team } = require("kaibanjs");
 ```
 
 ## Example Usage
@@ -41,7 +41,7 @@ This example demonstrates building a dynamic team to automate personalized trave
 
 ```js
 
-import { Agent, Task, Team } from 'agenticjs';
+import { Agent, Task, Team } from 'kaibanjs';
 
 import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 
@@ -145,8 +145,8 @@ team.start()
 
 ## Conclusion
 
-This example demonstrates how AgenticJS, combined with LangChain tools, efficiently automates sports news generation. By leveraging specialized agents and external tools, developers can create versatile, AI-powered applications tailored to specific tasks, enhancing both productivity and content quality.
+This example demonstrates how KaibanJS, combined with LangChain tools, efficiently automates sports news generation. By leveraging specialized agents and external tools, developers can create versatile, AI-powered applications tailored to specific tasks, enhancing both productivity and content quality.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

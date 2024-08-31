@@ -1,6 +1,6 @@
 ---
 title: Using Typescript
-description: AgenticJS is type supported. You can use TypeScript to get better type checking and intellisense with powerful IDEs like Visual Studio Code.
+description: KaibanJS is type supported. You can use TypeScript to get better type checking and intellisense with powerful IDEs like Visual Studio Code.
 ---
 
 ## Setup 
@@ -26,23 +26,23 @@ You may optionally create a custom tsconfig file to configure your typescript se
 }
 ```
 
-Now you can follow the, [Quick Start](/docs/get-started/01-Quick%20Start.md) guide to get started with AgenticJS using TypeScript.
+Now you can follow the, [Quick Start](/docs/get-started/01-Quick%20Start.md) guide to get started with KaibanJS using TypeScript.
 
 ## Types
 Base classes are already type suported and you can import them like below:-
 
 ```typescript
-import { Agent, Task, Team } from "agenticjs";
+import { Agent, Task, Team } from "kaibanjs";
 ```
 
 For any other specific types, can call them like below:-
 
 ```typescript
-import type { IAgentParams, ITaskParams } from "agenticjs";
+import type { IAgentParams, ITaskParams } from "kaibanjs";
 ```
 
 ## Learn more
-This guide has covered the basics of setting up TypeScript for use with AgenticJS. But if you want to learn more about TypeScript itself, there are many resources available to help you.
+This guide has covered the basics of setting up TypeScript for use with KaibanJS. But if you want to learn more about TypeScript itself, there are many resources available to help you.
 
 We recommend the following resources:
 

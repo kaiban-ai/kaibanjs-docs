@@ -1,13 +1,13 @@
 ---
 title: Company Research
-description: Learn how AgenticJS facilitates thorough and detailed company research by deploying intelligent agents capable of analyzing various aspects of a business. Discover how our tools can streamline the process of gathering data on business models, funding history, operational efficiencies, and more, enhancing business insights and decision-making.
+description: Learn how KaibanJS facilitates thorough and detailed company research by deploying intelligent agents capable of analyzing various aspects of a business. Discover how our tools can streamline the process of gathering data on business models, funding history, operational efficiencies, and more, enhancing business insights and decision-making.
 ---
 
 It’s Saturday afternoon, and here I am, nearly four hours deep into researching companies like ours. So far, I've only managed to fully analyze two companies. It’s frustrating. With each passing hour, I’m reminded just how slow and piecemeal this traditional research process can be.
 
 I’m gearing up for a crucial meeting with our advisors next week, and I need to bring my A-game.
 
-**That’s when it hit me—why not use our own creation, AgenticJS, to streamline this?**
+**That’s when it hit me—why not use our own creation, KaibanJS, to streamline this?**
 
 It's the perfect scenario to "eat our own dog food" and really put our platform to the test. I can't believe I didn’t think of this sooner, sticking to the old, manual ways of doing things.
 
@@ -33,7 +33,7 @@ Conducting comprehensive company research typically includes several labor-inten
 :::
 
 ### The Agentic Solution
-Imagine transforming this complex research process with AgenticJS automation:
+Imagine transforming this complex research process with KaibanJS automation:
 
 - **Scenario:** Conducting in-depth research on the company Vercel.
 
@@ -64,12 +64,12 @@ With the agents introduced, here’s how they collaborate to deliver seamless an
 The result is an exhaustive and meticulously prepared report that not only aggregates all pertinent data about Vercel but also provides actionable insights and strategic recommendations. This enhanced method of company research facilitates informed decision-making and strategic planning.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/08EYaQG4mRmYbU5jftXA)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/08EYaQG4mRmYbU5jftXA)
 :::
 
 ![Use Case - Company Research](https://github.com/user-attachments/assets/f6496b93-ddce-4d27-802c-60ef47ef9da6)
 
-By leveraging AgenticJS and its intelligent agents, businesses and analysts can revolutionize the way they conduct company research, achieving greater depth and breadth in their analyses with significantly reduced effort and increased accuracy.
+By leveraging KaibanJS and its intelligent agents, businesses and analysts can revolutionize the way they conduct company research, achieving greater depth and breadth in their analyses with significantly reduced effort and increased accuracy.
 
 ### Expected Benefits
 
@@ -81,8 +81,8 @@ By leveraging AgenticJS and its intelligent agents, businesses and analysts can 
 
 - **Strategic Impact:** Offers strategic recommendations based on thorough and integrated research findings.
 
-Ready to revolutionize your company research processes? Dive deeper into AgenticJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.agenticjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your company research processes? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
 
 :::info[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

@@ -1,6 +1,6 @@
 ---
 title: Hardware Optimization for PC Games
-description: Learn how to optimize PC hardware configurations for running games efficiently with AgenticJS. Discover the best CPU, GPU, and RAM combinations for your game, ensuring optimal performance and cost-effectiveness.
+description: Learn how to optimize PC hardware configurations for running games efficiently with KaibanJS. Discover the best CPU, GPU, and RAM combinations for your game, ensuring optimal performance and cost-effectiveness.
 ---
 
 In the world of PC gaming, ensuring that a game runs smoothly and efficiently requires careful selection of hardware components. Traditionally, gamers and tech enthusiasts spend considerable time researching different CPUs, GPUs, and RAM configurations, comparing prices, and balancing performance with budget constraints.
@@ -18,13 +18,13 @@ When optimizing hardware for PC gaming, enthusiasts typically follow a detailed,
 3. **Balancing Performance and Cost:** Evaluating different combinations of hardware to find the optimal setup that balances high performance with a reasonable budget.
 4. **Final Decision and Purchase:** After extensive research, users decide on the components and proceed with the purchase.
 
-*Note: In this use case, the purchasing step is not currently automated by AgenticJS to maintain simplicity in the workflow.*
+*Note: In this use case, the purchasing step is not currently automated by KaibanJS to maintain simplicity in the workflow.*
 
 :::
 
 ### The Agentic Solution
 
-Now, imagine this scenario optimized with AgenticJS automation:
+Now, imagine this scenario optimized with KaibanJS automation:
 
 - **Game:** Cyberpunk 2077
 - **Query:** "What are the best hardware setups to run Cyberpunk 2077?"
@@ -67,14 +67,14 @@ Now that you are familiar with the agents and their roles, let's explore the pro
 The result is a comprehensive report detailing the top three hardware setups for running Cyberpunk 2077 efficiently. The report includes specific CPU, GPU, and RAM combinations along with current prices, allowing gamers to make informed decisions without the need for extensive manual research.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/kPvBw88uBiV3utaiRdDK)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/kPvBw88uBiV3utaiRdDK)
 
 :::
 
 ![Use Case - Hardware Optimization for PC Games (1)](https://github.com/user-attachments/assets/afda3d2d-d239-4738-88b2-668884b47ccd)
 
 
-By leveraging AgenticJS and its suite of automated capabilities, gamers and tech enthusiasts can optimize their PC builds more efficiently, ensuring they get the best performance possible for their budget.
+By leveraging KaibanJS and its suite of automated capabilities, gamers and tech enthusiasts can optimize their PC builds more efficiently, ensuring they get the best performance possible for their budget.
 
 ### Expected Benefits
 
@@ -86,9 +86,9 @@ By leveraging AgenticJS and its suite of automated capabilities, gamers and tech
 
 - **Personalized Recommendations:** The process tailors hardware suggestions to specific games, ensuring optimal performance based on the unique demands of each title.
 
-Ready to optimize your gaming setup? Dive deeper into AgenticJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.agenticjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to optimize your gaming setup? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
 
 :::info[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 
 :::

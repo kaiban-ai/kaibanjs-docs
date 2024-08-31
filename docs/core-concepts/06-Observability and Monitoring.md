@@ -1,10 +1,10 @@
 ---
 title: Observability and Monitoring
-description: Built into AgenticJS, the observability features enable you to track every state change with detailed stats and logs, ensuring full transparency and control. This functionality provides real-time insights into token usage, operational costs, and state changes, enhancing system reliability and enabling informed decision-making through comprehensive data visibility.
+description: Built into KaibanJS, the observability features enable you to track every state change with detailed stats and logs, ensuring full transparency and control. This functionality provides real-time insights into token usage, operational costs, and state changes, enhancing system reliability and enabling informed decision-making through comprehensive data visibility.
 ---
 
 ### Introduction to Observability and Monitoring
-> Observability in AgenticJS is foundational, ensuring clarity and explainability not just for developers but for everyone interacting with AI systems. This feature extends beyond technical oversight; it is integral to building trust and transparency across all user interactions. By implementing a robust state management system, AgenticJS tracks every state change within the application, reflecting the principles of Flux where the state flows in one direction—predictable and transparent.
+> Observability in KaibanJS is foundational, ensuring clarity and explainability not just for developers but for everyone interacting with AI systems. This feature extends beyond technical oversight; it is integral to building trust and transparency across all user interactions. By implementing a robust state management system, KaibanJS tracks every state change within the application, reflecting the principles of Flux where the state flows in one direction—predictable and transparent.
 
 #### The workflowLogs Array
 
@@ -175,14 +175,14 @@ These logs are vital for monitoring the overall progress and status of workflows
   - `logDescription`: A summary or detailed explanation of the workflow's condition or changes.
   - `metadata`: Additional details that might include workflow results, operational stats, and other relevant data.
 
-For a comprehensive list of possible status values and their meanings for each type of log, please refer to the enums file in the AgenticJS repository:
+For a comprehensive list of possible status values and their meanings for each type of log, please refer to the enums file in the KaibanJS repository:
 
-[AgenticJS Enums File](https://github.com/AI-Champions/AgenticJS/blob/main/src/utils/enums.js)
+[KaibanJS Enums File](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js)
 
 ## Conclusion
 
-These logs serve as a foundational element for observability within AgenticJS, allowing developers and system administrators to trace actions, pinpoint issues, and understand the dynamics of agent interactions and task executions. They form an integral part of the system's accountability and operational insight mechanisms.
+These logs serve as a foundational element for observability within KaibanJS, allowing developers and system administrators to trace actions, pinpoint issues, and understand the dynamics of agent interactions and task executions. They form an integral part of the system's accountability and operational insight mechanisms.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

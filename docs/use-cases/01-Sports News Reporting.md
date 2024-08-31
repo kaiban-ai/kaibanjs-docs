@@ -1,6 +1,6 @@
 ---
 title: Sports News Reporting
-description: Discover how to automate sports news reporting with AgenticJS and LangChain tools. Learn to set up intelligent agents that gather real-time sports data and generate detailed articles, enhancing the efficiency and quality of your news coverage.
+description: Discover how to automate sports news reporting with KaibanJS and LangChain tools. Learn to set up intelligent agents that gather real-time sports data and generate detailed articles, enhancing the efficiency and quality of your news coverage.
 ---
 
 In the fast-paced world of sports journalism, covering grand-scale events like the Copa America final demands not only rapid response but also an insightful analysis. Traditional methods often fall short, ensnared by slow, manual processes that can't keep pace with live sports.
@@ -20,12 +20,12 @@ When reporting on significant sports events like the Copa America final, journal
 3. **Writing and Structuring:** Back in the newsroom, writers piece together their findings, striving to create a narrative that captures the essence of the game.
 4. **Editing and Publishing:** Editors polish the articles for clarity and engagement, racing against time to publish while the news is still fresh.
 
-*Note: In this use case, the publishing step is not currently automated by AgenticJS to maintain simplicity in the workflow.*
+*Note: In this use case, the publishing step is not currently automated by KaibanJS to maintain simplicity in the workflow.*
 :::
 
 
 ### The Agentic Solution
-Now, imagine this scenario optimized with AgenticJS automation:
+Now, imagine this scenario optimized with KaibanJS automation:
 
 - **Event:** Copa America Final, 2024
 - **Query:** "Who won the Copa America in 2024?"
@@ -51,15 +51,15 @@ Now that you are familiar with the agents and their roles, let's explore the pro
 
 #### Outcome
 
-The result is a rich, comprehensive sports article that not only details Argentina’s thrilling victory but also conveys the vibrant atmosphere of the Copa America final. This seamless integration of AgenticJS tools accelerates the reporting process and elevates the quality of the content delivered to sports enthusiasts around the globe.
+The result is a rich, comprehensive sports article that not only details Argentina’s thrilling victory but also conveys the vibrant atmosphere of the Copa America final. This seamless integration of KaibanJS tools accelerates the reporting process and elevates the quality of the content delivered to sports enthusiasts around the globe.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/9lyzu1VjBFPOl6FRgNWu)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
 :::
 
 ![Workflow Results](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723834601/sports_news_result_starq1.gif)
 
-By leveraging AgenticJS and its suite of automated capabilities, media outlets can ensure that they are not just keeping up but leading the way in sports journalism, providing richer, faster, and more accurate coverage than ever before.
+By leveraging KaibanJS and its suite of automated capabilities, media outlets can ensure that they are not just keeping up but leading the way in sports journalism, providing richer, faster, and more accurate coverage than ever before.
 
 
 ### Expected Benefits
@@ -73,8 +73,8 @@ By leveraging AgenticJS and its suite of automated capabilities, media outlets c
 - **Cost Efficiency**: By automating the content creation process, organizations can significantly reduce the costs associated with traditional journalism workflows.
 
 
-Ready to revolutionize your sports news reporting process? Dive deeper into AgenticJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.agenticjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your sports news reporting process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
 
 :::info[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

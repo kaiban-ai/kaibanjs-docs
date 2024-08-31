@@ -1,6 +1,6 @@
 ---
 title: Trip Planning
-description: Discover how AgenticJS can transform trip planning with intelligent agents that analyze, recommend, and create detailed travel itineraries. Learn how our tools can tailor travel plans to personal preferences and local insights, enhancing the travel experience with efficiency and precision.
+description: Discover how KaibanJS can transform trip planning with intelligent agents that analyze, recommend, and create detailed travel itineraries. Learn how our tools can tailor travel plans to personal preferences and local insights, enhancing the travel experience with efficiency and precision.
 ---
 
 In the dynamic world of travel planning, creating personalized and detailed itineraries demands not only an understanding of the destination but also the ability to adapt to travelers' preferences and local nuances. Traditional methods often rely heavily on manual research and planning, which can be time-consuming and less precise.
@@ -22,7 +22,7 @@ When planning trips, travel agents and individuals typically go through a labor-
 :::
 
 ### The Agentic Solution
-Imagine simplifying this complex process with AgenticJS automation:
+Imagine simplifying this complex process with KaibanJS automation:
 
 - **Scenario:** Planning a cultural trip from New York to cities like Tokyo, Paris, or Berlin between December 1st and 15th, 2024, focusing on art and culture.
 
@@ -50,16 +50,16 @@ With the agents introduced, here’s how they collaborate to deliver a seamless 
 
 #### Outcome
 
-The result is a meticulously planned cultural journey that not only meets but exceeds the expectations of the discerning traveler. This integration of AgenticJS tools streamlines the planning process and elevates the quality of travel itineraries delivered to globetrotters.
+The result is a meticulously planned cultural journey that not only meets but exceeds the expectations of the discerning traveler. This integration of KaibanJS tools streamlines the planning process and elevates the quality of travel itineraries delivered to globetrotters.
 
 :::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.agenticjs.com/share/IeeoriFq3uIXlLkBjXbl)
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/IeeoriFq3uIXlLkBjXbl)
 :::
 
 ![Results](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723922871/Use_Case_-_Trip_Planning_pwy1bx.gif)
 
 
-By leveraging AgenticJS and its suite of intelligent agents, travel agencies and individuals can transform the way they plan trips, offering more personalized and engaging travel experiences with significantly reduced effort and increased accuracy.
+By leveraging KaibanJS and its suite of intelligent agents, travel agencies and individuals can transform the way they plan trips, offering more personalized and engaging travel experiences with significantly reduced effort and increased accuracy.
 
 ### Expected Benefits
 
@@ -71,8 +71,8 @@ By leveraging AgenticJS and its suite of intelligent agents, travel agencies and
 
 - **Cost-Effective Itineraries:** Optimize travel budgets by intelligently suggesting activities and logistics that offer the best value for money.
 
-Ready to revolutionize your trip planning process? Dive deeper into AgenticJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.agenticjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your trip planning process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
 
 :::info[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

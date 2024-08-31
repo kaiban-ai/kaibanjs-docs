@@ -1,39 +1,39 @@
 ---
 title: Quick Start
-description: Get started with AgenticJS quickly using this step-by-step guide that demonstrates how to set up and run a simple AI-driven application.
+description: Get started with KaibanJS quickly using this step-by-step guide that demonstrates how to set up and run a simple AI-driven application.
 ---
 
-Start building with AgenticJS swiftly using our step-by-step guide, designed to help you understand the essentials of integrating AI agents into your projects. Whether you're a seasoned developer or new to AI, this guide will facilitate a smooth introduction to creating powerful, AI-enhanced applications.
+Start building with KaibanJS swiftly using our step-by-step guide, designed to help you understand the essentials of integrating AI agents into your projects. Whether you're a seasoned developer or new to AI, this guide will facilitate a smooth introduction to creating powerful, AI-enhanced applications.
 
 :::tip[Try it Out in the Playground!]
-Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.agenticjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
 :::
 
 ## Setup 
 
-#### Install AgenticJS via npm:
+#### Install KaibanJS via npm:
 
 ```bash
-npm install agenticjs --save
+npm install kaibanjs
 ```
 
-#### Import AgenticJS in your JavaScript file:
+#### Import KaibanJS in your JavaScript file:
 
 ```js
 // Using ES6 import syntax for NextJS, React, etc.
-import { Agent, Task, Team } from 'agenticjs';
+import { Agent, Task, Team } from 'kaibanjs';
 ```
 
 ```js
 // Using CommonJS syntax for NodeJS
-const { Agent, Task, Team } = require("agenticjs");
+const { Agent, Task, Team } = require("kaibanjs");
 ```
 
-> Note: AgenticJS is TypeScript-supported. To learn more, check out the NodeJS TypeScript example.
+> Note: KaibanJS is TypeScript-supported. To learn more, check out the NodeJS TypeScript example.
 
 ## Example Usage
 
-In this example, we use AgenticJS to build a resume generation team. If you're looking to create or update your resume, this setup utilizes specialized AI agents to automatically process your information and produce a polished, professional resume tailored to your career goals.
+In this example, we use KaibanJS to build a resume generation team. If you're looking to create or update your resume, this setup utilizes specialized AI agents to automatically process your information and produce a polished, professional resume tailored to your career goals.
 
 
 ```js
@@ -112,8 +112,8 @@ team.start()
 
 ## Conclusion
 
-This quick start guide is designed to get you up and running with AgenticJS promptly, allowing you to harness the power of AI agents in your applications. If you encounter any challenges or have questions, consult our more detailed documentation or reach out to the [community for support](https://bit.ly/JoinAIChamps).
+This quick start guide is designed to get you up and running with KaibanJS promptly, allowing you to harness the power of AI agents in your applications. If you encounter any challenges or have questions, consult our more detailed documentation or reach out to the [community for support](https://bit.ly/JoinAIChamps).
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/AI-Champions/AgenticJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::
