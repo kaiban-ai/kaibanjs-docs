@@ -144,7 +144,22 @@ h3 {
 }
 
 p {
-  color: #475569;
+  color: var(--ifm-color-gray-600);
+}
+
+p a {
+  text-decoration: underline;
+  text-decoration-color: var(--ifm-color-gray-200);
+  text-underline-offset: 0.2em;
+  color: var(--ifm-color-gray-600);
+}
+
+p a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--ifm-color-gray-300);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  color: var(--ifm-color-gray-600);
 }
 
 hr {
