@@ -26,8 +26,8 @@ import { DallEAPIWrapper } from "@langchain/openai";
 
 const dallE = new DallEAPIWrapper({
   n: 1, // If it is not 1 it gives an error
-  model: "dall-e-3",
-  apiKey: 'ENV_OPENAI_API_KEY', // Default
+  model: "dall-e-3", // Default
+  apiKey: 'ENV_OPENAI_API_KEY',
 });
 
 const creativeDesigner = new Agent({
