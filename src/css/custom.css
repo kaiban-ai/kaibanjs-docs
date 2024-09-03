@@ -167,11 +167,13 @@ hr {
 }
 
 /* NAVBAR */
-.navbar {
-  padding: var(--ifm-navbar-padding-vertical) 2rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+@media (min-width: 996px) {
+  .navbar {
+    padding: var(--ifm-navbar-padding-vertical) 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 .navbar__logo {
@@ -236,6 +238,16 @@ aside div div::after {
   height: 60px;
   background-color: #fff;
 }
+
+.navbar-sidebar {
+  height: 100vh;
+}
+
+.navbar__toggle {
+  margin-right: 1rem;
+  color: var(--ifm-color-gray-600);
+}
+
 /* NAVBAR */
 
 /* SIDE-MENUS */
@@ -377,13 +389,14 @@ footer {
 }
 
 code {
-  background-color: #f8fafc!important;
+  background-color: #f8fafc !important;
 }
 
-.language-bash, .language-js {
-  box-shadow: none!important;
+.language-bash,
+.language-js {
+  box-shadow: none !important;
 }
 
 .theme-code-block {
-  border: 1px solid #e2e8f0!important;
+  border: 1px solid #e2e8f0 !important;
 }
