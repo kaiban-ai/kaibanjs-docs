@@ -248,6 +248,10 @@ aside div div::after {
   color: var(--ifm-color-gray-600);
 }
 
+.navbar-sidebar__items--show-secondary .clean-btn.navbar-sidebar__back {
+  display: none;
+}
+
 /* NAVBAR */
 
 /* SIDE-MENUS */
