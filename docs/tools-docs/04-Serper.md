@@ -53,3 +53,7 @@ const contentScraper = new Agent({
   - `"webpage"`: For scraping webpages. *Note: The Scraper option is in Beta and may be subject to changes.*
 
 This tool dynamically adjusts the request URL and body based on the specified type, making it versatile for various search needs.
+
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/cBjyih67gx7n7CKrsVmm)
+:::

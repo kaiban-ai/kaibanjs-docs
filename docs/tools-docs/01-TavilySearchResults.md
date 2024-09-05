@@ -42,3 +42,7 @@ const newsAggregator = new Agent({
 
 - `maxResults` **Required**. The maximum number of results you want to retrieve.
 - `apiKey` **Required**. The API key generated from [Tavily](https://app.tavily.com/). Set `'ENV_TRAVILY_API_KEY'` as an environment variable or replace it directly with your API key.
+
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
+:::
