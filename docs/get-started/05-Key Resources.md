@@ -13,7 +13,7 @@ Below, you'll find essential links that serve as your starting points for naviga
 - 💻 [**GitHub Repository**](https://github.com/kaiban-ai/KaibanJS)
 - 📦 [**NPM Package**](https://www.npmjs.com/package/kaibanjs)
 - 📝 [**Project Backlog**](https://github.com/kaiban-ai/KaibanJS/issues)
-- 🤝 [**Join the Community**](https://bit.ly/JoinAIChamps)
+- 🤝 [**Join the Community**](https://kaibanjs.com/discord)
 
 These are your essential tools and community links for getting the most out of KaibanJS.
 
