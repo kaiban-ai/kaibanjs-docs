@@ -66,7 +66,7 @@ By leveraging KaibanJS and its intelligent agents, job seekers can transform the
 
 - **Professional Appeal:** Creates resumes that are structured and formatted to meet professional standards, increasing the chances of job application success.
 
-Ready to revolutionize your resume creation process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your resume creation process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://www.kaibanjs.com/discord).
 
 :::info[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!

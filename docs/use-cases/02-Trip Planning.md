@@ -71,7 +71,7 @@ By leveraging KaibanJS and its suite of intelligent agents, travel agencies and 
 
 - **Cost-Effective Itineraries:** Optimize travel budgets by intelligently suggesting activities and logistics that offer the best value for money.
 
-Ready to revolutionize your trip planning process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://bit.ly/JoinAIChamps).
+Ready to revolutionize your trip planning process? Dive deeper into KaibanJS and explore the endless possibilities it offers. For more information, check out our [website](https://www.kaibanjs.com) and [community](https://www.kaibanjs.com/discord).
 
 :::info[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!

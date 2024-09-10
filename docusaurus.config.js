@@ -84,7 +84,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://bit.ly/JoinAIChamps',
+            href: 'https://www.kaibanjs.com/discord',
             label: 'Community',
             position: 'right',
           },
@@ -95,7 +95,7 @@ const config = {
         links: [
           {
             label: 'Community',
-            href: 'https://bit.ly/JoinAIChamps',
+            href: 'https://www.kaibanjs.com/discord',
           },
           {
             label: 'Home',
