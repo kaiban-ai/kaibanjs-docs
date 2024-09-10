@@ -7,7 +7,7 @@ By the end of this tutorial, you will have a solid understanding of how to lever
 :::tip[For the Lazy: Jump Right In!]
 If you're eager to see the final product in action without following the step-by-step guide first, we've got you covered. Click the link below to access a live version of the project running on CodeSandbox.
 
-[View the completed project on CodeSandbox](https://codesandbox.io/p/github/kaiban-ai/KaibanJS-NodeJS/main)
+[View the completed project on a CodeSandbox](https://stackblitz.com/~/github.com/kaiban-ai/kaibanjs-node-demo)
 
 Feel free to return to this tutorial to understand how we built each part of the application step by step!
 :::
