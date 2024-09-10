@@ -43,3 +43,7 @@ const scientificAnalyst = new Agent({
 ## Parameters
 
 - `appId` **Required**. The App ID generated from [WolframAlpha](https://developer.wolframalpha.com/). Set `'ENV_WOLFRAM_APP_ID'` as an environment variable or replace it directly with your App ID.
+
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/VyfPFnQHiKxtr2BUkY9F)
+:::

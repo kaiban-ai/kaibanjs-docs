@@ -44,3 +44,7 @@ const creativeDesigner = new Agent({
 - `n` **Required**. Number of images to generate. Must be set to `1` to avoid errors.
 - `model` **Required**. The model version to use. Default is `"dall-e-3"`.
 - `apiKey` **Required**. The API key generated from [OpenAI](https://openai.com/). Set `'ENV_OPENAI_API_KEY'` as an environment variable or replace it directly with your API key.
+
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/UNAC47GR4NUQfZoU5V0w)
+:::

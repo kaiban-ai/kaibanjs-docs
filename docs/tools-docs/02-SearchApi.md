@@ -41,3 +41,7 @@ const informationRetriever = new Agent({
 
 - `apiKey` **Required**. The API key generated from [SearchApi](https://www.searchapi.io/). Set `'ENV_SEARCH_API_KEY'` as an environment variable or replace it directly with your API key.
 - `engine` **Optional**. The search engine you want to use. Some options include `"google_news"`, `"bing"`, and others, depending on what is supported by SearchApi.
+
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/A9fdCxrlUK81qDeFRdzF)
+:::
