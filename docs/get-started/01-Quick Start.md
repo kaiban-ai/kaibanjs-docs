@@ -112,7 +112,7 @@ team.start()
 
 ## Conclusion
 
-This quick start guide is designed to get you up and running with KaibanJS promptly, allowing you to harness the power of AI agents in your applications. If you encounter any challenges or have questions, consult our more detailed documentation or reach out to the [community for support](https://bit.ly/JoinAIChamps).
+This quick start guide is designed to get you up and running with KaibanJS promptly, allowing you to harness the power of AI agents in your applications. If you encounter any challenges or have questions, consult our more detailed documentation or reach out to the [community for support](https://kaibanjs.com/discord).
 
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!

@@ -1,5 +1,5 @@
 ---
-title:  Agentic Kanban Board 💎
+title:  Agentic Kanban Board
 description: Work, prototype, run, and share your AI agents effortlessly with your teams and clients—no installations, complex commands, or servers required. Who said that AI is hard anymore?
 ---
 

@@ -136,9 +136,26 @@ Initiates the team's task processing workflow and monitors its progress.
 - **Returns:** `Promise<Object>` - Resolves with different structures based on the workflow status:
   - For completed workflows:
     ```js
-    {
-      status: 'FINISHED',
-      result: workflowResult
+        {
+        status: 'FINISHED',
+        result: workflowResult,
+        stats: {
+          duration: number,
+          taskCount: number,
+          agentCount: number,
+          iterationCount: number,
+          llmUsageStats: {
+            inputTokens: number,
+            outputTokens: number,
+            callsCount: number,
+            callsErrorCount: number,
+            parsingErrors: number
+          },
+          costDetails: {
+            totalCost: number
+          },
+          teamName: string
+      }
     }
     ```
   - For errored workflows:
@@ -148,10 +165,11 @@ Initiates the team's task processing workflow and monitors its progress.
     ```
   - For blocked workflows:
     ```javascript
-    {
-      status: 'BLOCKED',
-      result: null
-    }
+      {
+        status: 'BLOCKED',
+        result: null,
+        stats: { ... } // Same structure as FINISHED state
+      }
     ```
 
 **Example:**
