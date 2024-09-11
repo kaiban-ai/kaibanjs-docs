@@ -13,6 +13,10 @@ Enhance your agents with:
 - **Custom Search**: Quickly and accurately retrieve relevant search results.
 - **Simple Integration**: Easily configure your search tool with adjustable parameters.
 
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
+:::
+
 ## Installation
 
 Before using the tool, make sure to create an API Key at [Tavily](https://app.tavily.com/) to enable search functionality.
@@ -43,6 +47,6 @@ const newsAggregator = new Agent({
 - `maxResults` **Required**. The maximum number of results you want to retrieve.
 - `apiKey` **Required**. The API key generated from [Tavily](https://app.tavily.com/). Set `'ENV_TRAVILY_API_KEY'` as an environment variable or replace it directly with your API key.
 
-:::tip[Try it Out in the Playground!]
-Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

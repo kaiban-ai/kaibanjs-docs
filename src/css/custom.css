@@ -154,6 +154,13 @@ p a {
   color: var(--ifm-color-gray-600);
 }
 
+li a {
+  text-decoration: underline;
+  text-decoration-color: var(--ifm-color-gray-200);
+  text-underline-offset: 0.2em;
+  color: var(--ifm-color-gray-600);
+}
+
 p a:hover {
   text-decoration: underline;
   text-decoration-color: var(--ifm-color-gray-300);

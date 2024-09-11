@@ -13,6 +13,10 @@ Enhance your agents with:
 - **AI-Generated Imagery**: Create custom images based on textual input using state-of-the-art AI technology.
 - **Creative Flexibility**: Use specific prompts to guide the generation of visuals, tailored to your needs.
 
+:::tip[Try it Out in the Playground!]
+Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/UNAC47GR4NUQfZoU5V0w)
+:::
+
 ## Installation
 
 Before using the tool, ensure you have created an API Key at [OpenAI](https://openai.com/) to enable image generation functionality.
@@ -45,6 +49,6 @@ const creativeDesigner = new Agent({
 - `model` **Required**. The model version to use. Default is `"dall-e-3"`.
 - `apiKey` **Required**. The API key generated from [OpenAI](https://openai.com/). Set `'ENV_OPENAI_API_KEY'` as an environment variable or replace it directly with your API key.
 
-:::tip[Try it Out in the Playground!]
-Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/UNAC47GR4NUQfZoU5V0w)
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::

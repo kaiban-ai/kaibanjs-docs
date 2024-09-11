@@ -18,7 +18,7 @@ The 'Directory Structure' section visually represents the hierarchical arrangeme
 Following the directory structure, the 'File Contents' section includes detailed listings of each JavaScript file within the KaibanJS library. Each file entry is prefixed with its relative path from the base directory, ensuring clear context and easy access. The content of each file is enclosed in code blocks, formatted for JavaScript, providing exact details of the code written in the library`;
 
 
-const baseDirectory = './docs';  // Adjust the base directory as needed
+const baseDirectory = './docs/tools-docs';  // Adjust the base directory as needed
 const outputFilePath = './output.md';
 
 // Function to recursively get all file paths
