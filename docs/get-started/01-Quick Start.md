@@ -5,6 +5,8 @@ description: Get started with KaibanJS quickly using this step-by-step guide tha
 
 Start building with KaibanJS swiftly using our step-by-step guide, designed to help you understand the essentials of integrating AI agents into your projects. Whether you're a seasoned developer or new to AI, this guide will facilitate a smooth introduction to creating powerful, AI-enhanced applications.
 
+<iframe src="https://res.cloudinary.com/dnno8pxyy/video/upload/v1726181818/Quick_Start_KaibanJS_v1_1_jaqgfj.mp4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
 :::tip[Try it Out in the Playground!]
 Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
 :::
