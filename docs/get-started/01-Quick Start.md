@@ -9,6 +9,19 @@ Start building with KaibanJS swiftly using our step-by-step guide, designed to h
 Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
 :::
 
+## Video Walkthrough
+
+For a visual guide through this documentation, check out our walkthrough video below. It covers the same content as this Quick Start guide, providing a step-by-step visual explanation of setting up and using KaibanJS.
+
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+  <iframe 
+    src="https://res.cloudinary.com/dnno8pxyy/video/upload/v1726181818/Quick_Start_KaibanJS_v1_1_jaqgfj.mp4" 
+    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+    frameBorder="0" 
+    allowFullScreen>
+  </iframe>
+</div>
+
 ## Setup 
 
 #### Install KaibanJS via npm:
