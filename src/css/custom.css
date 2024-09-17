@@ -162,6 +162,10 @@ p a:hover {
   color: var(--ifm-color-gray-600);
 }
 
+.alert a:hover {
+  text-decoration-color: var(--ifm-alert-border-color);
+}
+
 /* li a {
   text-decoration: underline;
   text-decoration-color: var(--ifm-color-gray-200);
