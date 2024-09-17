@@ -1,62 +1,46 @@
-Certainly! I understand you want a more concise version of the LLMs Docs section, with the main information condensed into the overview pages until more models are added. Here's a simplified structure with concise content for each overview:
-
-```
-LLMs Docs
-├── Overview
-├── Built-in Models
-│   └── Overview
-└── Custom Integrations
-    └── Overview
-```
-
-Here's the content for each overview:
-
-1. LLMs Docs > Overview
-
-```markdown
 ---
-title: LLMs in KaibanJS
-description: An overview of Language Model support in KaibanJS.
+title: Overview
+description: An introduction to pre-integrated Language Models in KaibanJS
 ---
 
-KaibanJS supports multiple Language Models (LLMs) to enhance the capabilities of your AI agents. This flexibility allows you to optimize your AI solutions for accuracy, efficiency, and tailored outcomes.
+> KaibanJS offers seamless integration with several leading LLM providers, allowing you to quickly implement powerful AI capabilities in your applications.
 
-Currently supported models include:
-- OpenAI
-- Anthropic
-- Google
-- Mistral
+## What are Built-in Models?
 
-For integration with models not yet supported, please submit a request on our [GitHub issues page](https://github.com/kaiban-ai/KaibanJS/issues).
-```
+Built-in models in KaibanJS are pre-integrated language models that require minimal setup to use. These models are ready to go with just a few lines of configuration, making it easy to get started with AI-powered agents.
 
-2. Built-in Models > Overview
+## Available Built-in Models
 
-```markdown
----
-title: Built-in LLM Models
-description: Overview of pre-integrated Language Models in KaibanJS.
----
+KaibanJS currently supports the following built-in models:
 
-KaibanJS comes with several pre-integrated LLMs, ready to use out-of-the-box:
+1. **OpenAI**: Access to state-of-the-art models like GPT-4 and GPT-3.5-turbo.
+2. **Anthropic**: Integration with Claude models, known for their strong performance and safety features.
+3. **Google**: Utilize Google's Gemini models, offering cutting-edge natural language processing capabilities.
+4. **Mistral**: Leverage Mistral AI's efficient language models, designed for various NLP tasks.
 
-- OpenAI (e.g., GPT-4)
-- Anthropic (e.g., Claude)
-- Google (e.g., Gemini)
-- Mistral
+## Key Benefits
 
-To use a built-in model, specify it in the agent's `llmConfig`:
+- **Easy Setup**: Minimal configuration required to start using these models.
+- **Consistent API**: Uniform interface across different model providers.
+- **Automatic Updates**: Stay current with the latest model versions and features.
 
-```js
+## Getting Started
+
+To use a built-in model, simply specify the provider and model name in your agent's `llmConfig`:
+
+```javascript
 const agent = new Agent({
-    name: 'Emma',
-    role: 'Drafter',
+    name: 'AI Assistant',
+    role: 'Helper',
     llmConfig: {
-        provider: 'openai',
-        model: 'gpt-4',
+        provider: 'openai',  // or 'anthropic', 'google', 'mistral'
+        model: 'gpt-4',      // specific model name
     }
 });
 ```
 
-API keys can be set in the `llmConfig` or globally in the team's `env` property.
-```
+Explore the individual model pages for detailed setup instructions and advanced configuration options.
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
+:::

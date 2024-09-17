@@ -1,26 +1,51 @@
 ---
-title: Custom LLM Integrations
-description: Guide to integrating custom Language Models in KaibanJS.
+title: Overview
+description: An introduction to integrating additional Language Models with KaibanJS
 ---
 
-KaibanJS allows for custom LLM integrations, enabling you to use models beyond the built-in options. 
+> KaibanJS supports integration with a variety of additional LLM providers and services, allowing you to expand your AI capabilities beyond the built-in options.
 
-To integrate a custom LLM:
+## What are Custom Integrations?
 
-1. Implement the LLM interface provided by KaibanJS.
-2. Configure your agent to use the custom LLM:
+Custom integrations in KaibanJS allow you to use language models that aren't pre-integrated into the framework. These integrations require some additional setup but offer greater flexibility and access to specialized models.
 
-```js
-const customLLM = new YourCustomLLM();
+## Available Custom Integrations
+
+KaibanJS supports custom integrations with:
+
+1. **Ollama**: Run open-source models locally.
+2. **Cohere**: Access Cohere's suite of language models.
+3. **Azure OpenAI**: Use OpenAI models through Azure's cloud platform.
+4. **Cloudflare**: Integrate with Cloudflare's AI services.
+5. **Groq**: Utilize Groq's high-performance inference engines.
+6. **Other Integrations**: Explore additional options for specialized needs.
+
+## Key Benefits
+
+- **Flexibility**: Choose from a wider range of model providers.
+- **Local Deployment**: Options for running models on your own infrastructure.
+- **Specialized Models**: Access to models optimized for specific tasks or industries.
+
+## Getting Started
+
+To use a custom integration, you'll typically need to import the specific LLM package and configure it before passing it to your agent:
+
+```javascript
+import { SomeLLM } from "some-llm-package";
+
+const customLLM = new SomeLLM({
+    // LLM-specific configuration
+});
 
 const agent = new Agent({
-    name: 'Custom Agent',
-    llmConfig: {
-        provider: 'custom',
-        model: customLLM,
-    }
+    name: 'Custom AI Assistant',
+    role: 'Specialized Helper',
+    llmInstance: customLLM
 });
 ```
 
-For detailed integration steps and best practices, refer to our full documentation.
+Explore the individual integration pages for detailed setup instructions and configuration options for each supported LLM.
 
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
+:::
