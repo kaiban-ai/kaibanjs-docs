@@ -175,34 +175,41 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>AI Agents News Blogging Team</h1>
-      <input
-        type="text"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        placeholder="Enter a topic... E.g. 'AI News Sep, 2024'"
-      />
-      <button onClick={generateBlogPost}>
-        Generate Blog Post
-      </button>
-      <div>Status: {teamWorkflowStatus}</div>
-      <h2>Generated Blog Post:</h2>
-      <div className="blog-post">
-        {blogPost ? (
-          blogPost
-        ) : (
-          <p>No blog post available yet. Enter a topic and click 'Generate Blog Post' to see results here.</p>
-        )}
+    <div className="container">
+      <h1 className="header">AI Agents News Blogging Team</h1>
+      <div className="grid">
+        <div className="column">
+          <div className="options">
+            <input
+              type="text"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              placeholder="Enter a topic... E.g. 'AI News Sep, 2024'"
+            />
+            <button onClick={generateBlogPost}>
+              Generate
+            </button>
+          </div>
+          <div className="status">Status <span>{teamWorkflowStatus}</span></div>
+          {/* Generated Blog Post */}
+          <div className="blog-post">
+            {blogPost ? (
+              blogPost
+            ) : (
+              <p className="blog-post-info"><span>ℹ️</span><span>No blog post available yet</span><span>Enter a topic and click 'Generate' to see results here.</span></p>
+            )}
+          </div>
+        </div>
+
+        {/* We'll add more UI elements in the next steps */}
+        <div className="column">
+          {/* Agents Here */}
+
+          {/* Tasks Here */}
+      
+          {/* Stats Here */}
+        </div>
       </div>
-
-      {/* We'll add more UI elements in the next steps */}
-      
-      {/* Agents Here */}
-
-      {/* Tasks Here */}
-      
-      {/* Stats Here */}
     </div>
   );
 }
@@ -280,11 +287,13 @@ In this section, we'll implement UX best practices to enhance how the system pro
 **First, let's add a section to show the status of our agents:**
 
 ```jsx
-<h2>🕵️‍♂️ Agents:</h2>
+<h2 className="title">Agents</h2>
 <ul className="agent-list">
   {agents && agents.map((agent, index) => (
     <li key={index}>
-      {agent.name}: {agent.status}
+      <img src={`https://ui-avatars.com/api/name=${encodeURIComponent(agent.name)}?background=3b82f6&color=fff`} alt={`${agent.name}'s avatar`} />
+      <span>{agent.name}</span>
+      <span>{agent.status}</span>
     </li>
   ))}
 </ul>
@@ -295,13 +304,14 @@ This code displays a list of agents, showing each agent's name and current statu
 **Next, let's display the tasks that our agents are working on:**
 
 ```jsx
-<h2>📝 Tasks:</h2>
+<h2 className="title">Tasks</h2>
 <ul className="task-list">
   {tasks && tasks.map((task, index) => (
     <li key={index}>
-      {task.title}: {task.status}
+      <span>{task.title}</span>
+      <span>{task.status}</span>
     </li>
-  ))}
+))}
 </ul>
 ```
 
@@ -310,15 +320,24 @@ This code creates a list of tasks, showing the title and current status of each 
 **Finally, let's add a section to display statistics about the blog post generation process:**
 
 ```jsx
-<h2>📊 Stats:</h2>
+<h2 className="title">Stats</h2>
 {stats ? (
   <div className="stats">
-    <p>Duration: {stats.duration} ms</p>
-    <p>Total Token Count: {stats.totalTokenCount}</p>
-    <p>Total Cost: ${stats.totalCost.toFixed(4)}</p>
+    <p>
+      <span>Total Tokens: </span>
+      <span>{stats.totalTokenCount}</span>
+    </p>
+    <p>
+      <span>Total Cost: </span>
+      <span>${stats.totalCost.toFixed(4)}</span>
+    </p>
+    <p>
+      <span>Duration: </span>
+      <span>{stats.duration} ms</span>
+    </p>
   </div>
 ) : (
-  <div className="stats"><p>No stats generated yet.</p></div>
+  <div className="stats"><p className="stats-info">ℹ️ No stats generated yet.</p></div>
 )}
 ```
 
@@ -353,7 +372,7 @@ Then, update the section where the blog post is displayed to use `ReactMarkdown`
   {blogPost ? (
     <ReactMarkdown>{blogPost}</ReactMarkdown>
   ) : (
-    <p>No blog post available yet. Enter a topic and click 'Generate Blog Post' to see results here.</p>
+    <p className="blog-post-info"><span>ℹ️</span><span>No blog post available yet</span><span>Enter a topic and click 'Generate' to see results here.</span></p>
   )}
 </div>
 ```
@@ -376,91 +395,283 @@ import './App.css';
 Replace the content of your `App.css` with the following styles. These styles are designed to provide a modern and clean look, focusing on readability and a pleasant user experience:
 
 ```css
+/* Base font size for rem units */
+html {
+  font-size: 16px;
+  /* 1rem = 16px */
+}
 
 /* General body styles */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f8;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0;
-  padding: 20px;
-  color: #333;
+  padding: 0;
+  width: 100%;
+  min-height: calc(100vh - 6.25rem);
+  color: #0f172a;
+  background-image:
+    linear-gradient(to bottom, #faf5ff, #ecfeff),
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  background-blend-mode: multiply;
 }
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* Main application container */
-.App {
-  max-width: 800px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: left;
-}
-
-/* Header styles */
-h1, h2 {
-  color: #333333;
-}
-
-/* Input field styling */
+/* Input styling */
 input[type="text"] {
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  border: 2px solid #0056b3;
-  border-radius: 4px;
-  width: calc(100% - 24px);
+  width: 100%;
+  padding: 1rem;
+  border-radius: .5rem;
   box-sizing: border-box;
+  font-size: 0.875rem;
+  color: #0f172a;
+  border: 2px solid #e2e8f0;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #c7d2fe;
 }
 
 /* Button styling */
 button {
-  background-color: #007bff!important;
+  background-color: #6366f1;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: .6rem 1rem;
+  border-radius: .4rem;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 0.875rem;
+  position: absolute;
+  right: 8px;
+  top: 8px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #4f46e5;
 }
 
-/* Styling for status and blog post display */
-.status, .blog-post {
-  padding: 15px;
-  background-color: #e9ecef;
-  border-left: 4px solid #2e2e2e;
-  margin: 10px 0;
+/* General styles for the app */
+.options {
+  position: relative;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.status {
+  position: absolute;
+  font-size: 1rem;
+  position: absolute;
+  top: -34px;
+  left: 0;
+  padding-left: .25rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.status span {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.blog-post {
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: .5rem;
+  height: calc(100% - 100px);
+}
+
+.blog-post-info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.blog-post-info span:nth-child(1) {
+  font-size: 1.25rem;
+}
+
+.blog-post-info span:nth-child(2) {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.blog-post-info span:nth-child(3) {
+  font-size: 0.875rem;
+  font-weight: 300;
 }
 
 .stats {
-  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+  column-gap: 1rem;
 }
 
-/* Task and agent list styles */
+.stats p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.stats p span:last-child {
+  color: #64748b;
+}
+
+.stats-info {
+  color: #64748b;
+  font-weight: 300;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
+  margin-bottom: 1.5rem;
 }
 
 ul li {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  padding: 10px;
-  margin-top: 5px;
+  border: 1px solid #ede9fe;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Additional styling as needed for other elements */
+ul li img {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: .5rem;
+}
+
+.agent-list li {
+  font-weight: 500;
+}
+
+.agent-list li span:last-child {
+  margin-left: auto;
+  background-color: #fae8ff;
+  color: #c026d3;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.task-list li {
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.875rem;
+}
+
+.task-list li span:last-child {
+  margin-left: auto;
+  background-color: #fce7f3;
+  color: #db2777;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 6.25rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.header {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  position: absolute;
+  top: -64px;
+  padding-left: .25rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.column {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.column:first-child {
+  order: 1;
+}
+
+.column:last-child {
+  order: 2;
+  height: auto;
+  align-self: flex-start;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 3fr;
+  }
+
+  .column:first-child {
+    order: 2;
+  }
+
+  .column:last-child {
+    order: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
 ```
 
 This CSS code provides a foundation that you can easily build on or modify to fit the specific needs or branding of your project. By incorporating these styles, your application will not only function well but also look great.
