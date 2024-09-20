@@ -33,7 +33,7 @@ Let's dive into the creation of the `WebRAGTool`, which implements the RAG funct
 First, install the necessary dependencies in your project directory:
 
 ```bash
-npm install kaibanjs @langchain/core @langchain/embeddings openai @langchain/text_splitter @langchain/document_loaders cheerio zod dotenv
+npm install kaibanjs @langchain/core @langchain/community @langchain/openai zod cheerio
 ```
 
 Create a new file `tool.js` and import the necessary modules:
