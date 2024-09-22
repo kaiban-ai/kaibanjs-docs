@@ -7,6 +7,8 @@ description: Learn to enhance your AI projects with the power of Retrieval Augme
 
 **Retrieval Augmented Generation (RAG)** combines large language models (LLMs) with external data sources to provide more accurate and current information. By retrieving relevant documents and incorporating them into the generation process, RAG enables AI agents to answer queries using the latest available data.
 
+![UI](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,h_600/t_Grayscale/v1726976548/WebRAGTool_imp4ea.png)
+
 :::tip[For the Eager Learners]
 Ready to dive straight into the code? You can find the complete project on CodeSandbox by following the link below:
 
