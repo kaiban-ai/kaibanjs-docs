@@ -166,12 +166,12 @@ p a:hover {
   text-decoration-color: var(--ifm-alert-border-color);
 }
 
-/* li a {
+article ul li a {
   text-decoration: underline;
   text-decoration-color: var(--ifm-color-gray-200);
   text-underline-offset: 0.2em;
   color: var(--ifm-color-gray-600);
-} */
+}
 
 hr {
   background-color: #e2e8f0;
