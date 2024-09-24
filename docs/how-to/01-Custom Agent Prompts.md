@@ -1,5 +1,5 @@
 ---
-title: How to Use Custom Agent Prompts
+title: Custom Agent Prompts
 description: Learn how to customize agent prompts in KaibanJS to tailor AI agent behavior and responses for specific use cases.
 ---
 

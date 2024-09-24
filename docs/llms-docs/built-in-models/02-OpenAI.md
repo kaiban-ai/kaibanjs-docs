@@ -73,6 +73,8 @@ apiKey: process.env.YOUR_API_KEY
 ```
 
 Never commit API keys to version control. Use a `.env` file or a secure secrets management system for sensitive information.
+
+Please refer to [API Keys Management](/how-to/API%20Key%20Management) to learn more about handling API Keys safely.
 :::
 
 ## Advanced Configuration and Langchain Compatibility
