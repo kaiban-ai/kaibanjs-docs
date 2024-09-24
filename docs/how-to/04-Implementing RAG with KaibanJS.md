@@ -79,8 +79,6 @@ Now that we've covered the key components of our RAG system, let's dive into the
 
 ## Create a WebRAGTool
 
-Absolutely, that's a great suggestion. Let's modify the "Setting Up the Environment" section to include the boilerplate of the class with placeholders for each component. This approach will give readers a clear overview of the structure we're building towards.
-
 ### 1. Setting Up the Environment
 
 First, let's install the necessary dependencies and set up our project:
