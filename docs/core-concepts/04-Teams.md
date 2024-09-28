@@ -3,6 +3,10 @@ title: Teams
 description: What are Teams and how to use them.
 ---
 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/93U0sQKBobc?si=Y7rZsGAb_kPIdvgT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>  
+
 ## What is a Team?
 > A Team represents a group of agents working together to complete assigned tasks. Each team is structured around a store, which manages the state and workflow of agents and tasks, making it the backbone of the team's functionality.
 

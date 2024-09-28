@@ -3,6 +3,10 @@ title: Tasks
 description: What are Tasks and how to use them.
 ---
 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qhpchYMZr-w?si=L_9Mz7FagIIDkNd4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
 ## What is a Task?
 
 > A Task is a **defined piece of work** assigned to agents, characterized by:

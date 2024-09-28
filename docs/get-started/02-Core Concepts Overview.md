@@ -2,6 +2,10 @@
 title: Core Concepts Overview
 description: A brief introduction to the fundamental concepts of KaibanJS - Agents, Tasks, Teams, and Tools.
 ---
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem'}}>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VxfOIZLvBug?si=1V0mZCzQzGC-bKiJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
 
 KaibanJS is built around four primary components: `Agents`, `Tools`, `Tasks`, and `Teams`. Understanding how these elements interact is key to leveraging the full power of the framework.
 
