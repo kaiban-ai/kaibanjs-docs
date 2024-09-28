@@ -5,7 +5,13 @@ description: Discover how to automate sports news reporting with KaibanJS and La
 
 In the fast-paced world of sports journalism, covering grand-scale events like the Copa America final demands not only rapid response but also an insightful analysis. Traditional methods often fall short, ensnared by slow, manual processes that can't keep pace with live sports.
 
-![Copa America 2024 Final](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724092985/sport-news_qafxww.jpg)
+
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3xuFvWqbXT4?si=JsCwRzITNhnVbb7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+
+</div>
+
+<!-- ![Copa America 2024 Final](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724092985/sport-news_qafxww.jpg) -->
 
 ### Traditional Approach Challenges
 

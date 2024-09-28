@@ -5,7 +5,11 @@ description: Learn how to optimize PC hardware configurations for running games 
 
 In the world of PC gaming, ensuring that a game runs smoothly and efficiently requires careful selection of hardware components. Traditionally, gamers and tech enthusiasts spend considerable time researching different CPUs, GPUs, and RAM configurations, comparing prices, and balancing performance with budget constraints.
 
-![Action](https://res.cloudinary.com/dnno8pxyy/image/upload/v1724173362/hard_6_a6fxhe.png)
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eq_JwOj2Ys8?si=lK3wCWhT-ODkHsdZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+<!-- ![Action](https://res.cloudinary.com/dnno8pxyy/image/upload/v1724173362/hard_6_a6fxhe.png) -->
 
 ### Traditional Approach Challenges
 

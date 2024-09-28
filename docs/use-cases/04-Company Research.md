@@ -3,6 +3,11 @@ title: Company Research
 description: Learn how KaibanJS facilitates thorough and detailed company research by deploying intelligent agents capable of analyzing various aspects of a business. Discover how our tools can streamline the process of gathering data on business models, funding history, operational efficiencies, and more, enhancing business insights and decision-making.
 ---
 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0uuBhvw-03E?si=EE40qTRewV6oaqzM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
+
 It’s Saturday afternoon, and here I am, nearly four hours deep into researching companies like ours. So far, I've only managed to fully analyze two companies. It’s frustrating. With each passing hour, I’m reminded just how slow and piecemeal this traditional research process can be.
 
 I’m gearing up for a crucial meeting with our advisors next week, and I need to bring my A-game.

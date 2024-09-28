@@ -5,7 +5,11 @@ description: Discover how KaibanJS can revolutionize the resume creation process
 
 In today's competitive job market, crafting a resume that stands out is crucial. Traditional methods of resume creation often involve manual data entry and formatting, which can be time-consuming and prone to errors.
 
-![Resume Writing Process](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093311/resume_j5wq8v.jpg)
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/spnntj6fkys?si=I4ujNF0jxEPD_A1O" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
+<!-- ![Resume Writing Process](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093311/resume_j5wq8v.jpg) -->
 
 ### Traditional Approach Challenges
 

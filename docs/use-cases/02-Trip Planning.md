@@ -5,7 +5,11 @@ description: Discover how KaibanJS can transform trip planning with intelligent 
 
 In the dynamic world of travel planning, creating personalized and detailed itineraries demands not only an understanding of the destination but also the ability to adapt to travelers' preferences and local nuances. Traditional methods often rely heavily on manual research and planning, which can be time-consuming and less precise.
 
-![Dynamic Travel Planning](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093187/trip-planning_dlz3wq.jpg)
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DuNG2orn7PY?si=GKsb2mbgbY0TFbZz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
+<!-- ![Dynamic Travel Planning](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093187/trip-planning_dlz3wq.jpg) -->
 
 ### Traditional Approach Challenges
 
