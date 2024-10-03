@@ -3,7 +3,7 @@ title: Quick Start
 description: Get started with KaibanJS in under 1 minute. Learn how to set up your Kaiban Board, create AI agents, watch them complete tasks in real-time, and deploy your board online.
 ---
 
-# QuickStart Guide
+# Quick Start Guide
 
 Get your AI-powered workflow up and running in minutes with KaibanJS!
 
