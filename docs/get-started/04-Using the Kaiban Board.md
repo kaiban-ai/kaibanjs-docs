@@ -3,6 +3,11 @@ title: Using the Kaiban Board
 description: Master the intuitive Kaiban Board interface. Learn to effortlessly create, monitor, and manage AI workflows through our powerful visual tools. Perfect for teams looking to streamline their AI development process.
 ---
 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem'}}>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/14zd_UkIK8o?si=XzSNTU0EpSMefPtp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
 Welcome to the Kaiban Board - your visual command center for AI agent workflows! This guide will walk you through the key features of our intuitive interface, helping you get started quickly.
 
 **Try It Live!**
