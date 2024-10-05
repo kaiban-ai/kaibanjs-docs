@@ -5,9 +5,12 @@ description: Transform your AI workflow with Kaiban Board. Easily create, visual
 
 ## From Kanban to Kaiban: Evolving Workflow Management for AI
 
-The Kaiban Board draws inspiration from the time-tested [Kanban methodology](https://en.wikipedia.org/wiki/Kanban_(development)), adapting it for the unique challenges of AI agent management. 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem'}}>
 
-![alt text](image-2.png)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DTLdeXR2Oy8?si=B3H_mAd4iYBLbRUI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
+The Kaiban Board draws inspiration from the time-tested [Kanban methodology](https://en.wikipedia.org/wiki/Kanban_(development)), adapting it for the unique challenges of AI agent management. 
 
 But what exactly is Kanban, and how does it translate to the world of AI?
 
