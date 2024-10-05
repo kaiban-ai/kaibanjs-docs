@@ -3,12 +3,12 @@ title: The Kaiban Board
 description: Transform your AI workflow with Kaiban Board. Easily create, visualize, and manage AI agents locally, then deploy with a single click. Your all-in-one solution for intuitive AI development and deployment.
 ---
 
-## From Kanban to Kaiban: Evolving Workflow Management for AI
-
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem'}}>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DTLdeXR2Oy8?si=B3H_mAd4iYBLbRUI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
+
+## From Kanban to Kaiban: Evolving Workflow Management for AI
 
 The Kaiban Board draws inspiration from the time-tested [Kanban methodology](https://en.wikipedia.org/wiki/Kanban_(development)), adapting it for the unique challenges of AI agent management. 
 
