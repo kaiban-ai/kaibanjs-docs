@@ -25,7 +25,7 @@ Feel free to return to this tutorial to understand how we built each part of the
 # Create a new Next.js project
 
 npx create-next-app kaibanjs-next-example
-cd kaibanjs-react-demo
+cd kaibanjs-next-example
 
 # Start the development server
 npm run dev
