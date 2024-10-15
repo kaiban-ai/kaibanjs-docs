@@ -30,10 +30,11 @@ To use an Ollama model in your KaibanJS agent, follow these steps:
 
 1. **Install Ollama**: First, ensure you have Ollama installed on your system. Follow the installation instructions on the [Ollama website](https://ollama.ai/).
 
-2. **Install LangChain's Ollama Integration**: Install the necessary package:
+2. **Install LangChain's Cora and Ollama Integration**: Install the necessary package:
 
    ```bash
-   npm install @langchain/ollama
+   npm i @langchain/core
+   npm i @langchain/ollama
    ```
 
 3. **Import and Configure the Model**: In your KaibanJS project, import and configure the Ollama model:
