@@ -6,12 +6,16 @@ description: Discover how to automate sports news reporting with KaibanJS and La
 In the fast-paced world of sports journalism, covering grand-scale events like the Copa America final demands not only rapid response but also an insightful analysis. Traditional methods often fall short, ensnared by slow, manual processes that can't keep pace with live sports.
 
 
-<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3xuFvWqbXT4?si=JsCwRzITNhnVbb7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 
 </div>
 
 <!-- ![Copa America 2024 Final](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724092985/sport-news_qafxww.jpg) -->
+
+:::tip[Try it Out in the Playground!]
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
+:::
 
 ### Traditional Approach Challenges
 
@@ -58,10 +62,6 @@ Now that you are familiar with the agents and their roles, let's explore the pro
 #### Outcome
 
 The result is a rich, comprehensive sports article that not only details Argentina’s thrilling victory but also conveys the vibrant atmosphere of the Copa America final. This seamless integration of KaibanJS tools accelerates the reporting process and elevates the quality of the content delivered to sports enthusiasts around the globe.
-
-:::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu)
-:::
 
 ![Workflow Results](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723834601/sports_news_result_starq1.gif)
 

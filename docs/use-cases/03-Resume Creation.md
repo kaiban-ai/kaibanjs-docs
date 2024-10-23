@@ -5,10 +5,13 @@ description: Discover how KaibanJS can revolutionize the resume creation process
 
 In today's competitive job market, crafting a resume that stands out is crucial. Traditional methods of resume creation often involve manual data entry and formatting, which can be time-consuming and prone to errors.
 
-<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/spnntj6fkys?si=I4ujNF0jxEPD_A1O" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
 
+:::tip[Try it Out in the Playground!]
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
+:::
 <!-- ![Resume Writing Process](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093311/resume_j5wq8v.jpg) -->
 
 ### Traditional Approach Challenges
@@ -53,10 +56,6 @@ With the agents introduced, here’s how they collaborate to deliver a seamless 
 #### Outcome
 
 The result is a meticulously crafted resume for David that effectively showcases his skills and experiences in JavaScript development. This resume is ready to be submitted to potential employers, significantly enhancing his job application process.
-
-:::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/f3Ek9X5dEWnvA3UVgKUQ)
-:::
 
 ![Resume Writing Result](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723924595/Use_Case_-_Resume_Creation_melexu.gif)
 

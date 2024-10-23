@@ -7,6 +7,9 @@ description: Learn how KaibanJS facilitates thorough and detailed company resear
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0uuBhvw-03E?si=EE40qTRewV6oaqzM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
 
+:::tip[Try it Out in the Playground!]
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/08EYaQG4mRmYbU5jftXA)
+:::
 
 It’s Saturday afternoon, and here I am, nearly four hours deep into researching companies like ours. So far, I've only managed to fully analyze two companies. It’s frustrating. With each passing hour, I’m reminded just how slow and piecemeal this traditional research process can be.
 
@@ -67,10 +70,6 @@ With the agents introduced, here’s how they collaborate to deliver seamless an
 #### Outcome
 
 The result is an exhaustive and meticulously prepared report that not only aggregates all pertinent data about Vercel but also provides actionable insights and strategic recommendations. This enhanced method of company research facilitates informed decision-making and strategic planning.
-
-:::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/08EYaQG4mRmYbU5jftXA)
-:::
 
 ![Use Case - Company Research](https://github.com/user-attachments/assets/f6496b93-ddce-4d27-802c-60ef47ef9da6)
 

@@ -5,9 +5,13 @@ description: Discover how KaibanJS can transform trip planning with intelligent 
 
 In the dynamic world of travel planning, creating personalized and detailed itineraries demands not only an understanding of the destination but also the ability to adapt to travelers' preferences and local nuances. Traditional methods often rely heavily on manual research and planning, which can be time-consuming and less precise.
 
-<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DuNG2orn7PY?si=GKsb2mbgbY0TFbZz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
+
+:::tip[Try it Out in the Playground!]
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/IeeoriFq3uIXlLkBjXbl)
+:::
 
 <!-- ![Dynamic Travel Planning](https://res.cloudinary.com/dnno8pxyy/image/upload/c_fill,w_1000,h_600/t_Grayscale/v1724093187/trip-planning_dlz3wq.jpg) -->
 
@@ -55,10 +59,6 @@ With the agents introduced, here’s how they collaborate to deliver a seamless 
 #### Outcome
 
 The result is a meticulously planned cultural journey that not only meets but exceeds the expectations of the discerning traveler. This integration of KaibanJS tools streamlines the planning process and elevates the quality of travel itineraries delivered to globetrotters.
-
-:::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/IeeoriFq3uIXlLkBjXbl)
-:::
 
 ![Results](https://res.cloudinary.com/dnno8pxyy/image/upload/v1723922871/Use_Case_-_Trip_Planning_pwy1bx.gif)
 

@@ -11,6 +11,10 @@ In the world of PC gaming, ensuring that a game runs smoothly and efficiently re
 </div>
 <!-- ![Action](https://res.cloudinary.com/dnno8pxyy/image/upload/v1724173362/hard_6_a6fxhe.png) -->
 
+:::tip[Try it Out in the Playground!]
+Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/kPvBw88uBiV3utaiRdDK)
+:::
+
 ### Traditional Approach Challenges
 
 :::challenges
@@ -69,11 +73,6 @@ Now that you are familiar with the agents and their roles, let's explore the pro
 #### Outcome
 
 The result is a comprehensive report detailing the top three hardware setups for running Cyberpunk 2077 efficiently. The report includes specific CPU, GPU, and RAM combinations along with current prices, allowing gamers to make informed decisions without the need for extensive manual research.
-
-:::tip[Try it Out in the Playground!]
-Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/kPvBw88uBiV3utaiRdDK)
-
-:::
 
 ![Use Case - Hardware Optimization for PC Games (1)](https://github.com/user-attachments/assets/afda3d2d-d239-4738-88b2-668884b47ccd)
 
