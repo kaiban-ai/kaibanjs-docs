@@ -18,10 +18,16 @@ Welcome to the Tools Documentation for KaibanJS, where we guide you through the 
 
 KaibanJS enhances the functionality of your agents through two primary tool categories:
 
+- **[KaibanJS Tools](/category/kaibanjs-tools)**
 - **[LangChain Tools](/category/langchain-tools)**
 - **[Custom Tools](/category/custom-tools)**
 
 Both sections are accessible through the sidebar/menu, where you can explore detailed documentation and resources.
+
+
+### KaibanJS Tools
+
+KaibanJS Tools are pre-integrated tools that are ready to use out of the box. We've tested and verified a subset to work seamlessly with KaibanJS, which you'll find listed in the sidebar. 
 
 ### LangChain Tools
 
