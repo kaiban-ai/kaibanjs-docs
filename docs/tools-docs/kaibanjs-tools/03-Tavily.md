@@ -1,5 +1,5 @@
 ---
-title: Tavily Search Results
+title: Tavily Search
 description: Tavily is an advanced search engine optimized for comprehensive, accurate, and trusted results.
 ---
 
