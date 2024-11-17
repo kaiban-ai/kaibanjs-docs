@@ -9,6 +9,12 @@ description: GitHub Issues tool provides access to repository issues with automa
 
 The GitHub Issues tool integrates with GitHub's API to fetch issues from specified repositories. It provides a clean, structured way to retrieve and analyze repository issues.
 
+![GitHub Issues Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731857097/GithubIssues_wywql7.png)
+
+:::tip[Try it in the Kaiban Board!]
+Want to see this tool in action? Check out our interactive Kaiban Board! [Try it now!](https://www.kaibanjs.com/share/VbAmEbFRKSDJuI5bESea)
+:::
+
 Enhance your agents with:
 - **Issue Collection**: Fetch open issues from any public GitHub repository
 - **Automatic Pagination**: Handle large sets of issues seamlessly

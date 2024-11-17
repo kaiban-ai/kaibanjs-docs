@@ -9,15 +9,17 @@ description: Tavily is an advanced search engine optimized for comprehensive, ac
 
 [Tavily](https://tavily.com/) is an advanced search engine specifically designed for AI applications. It excels at providing comprehensive and accurate search results, with a particular focus on current events and real-time information.
 
+![Tavily Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731856690/Tavily_aipoyp.png)
+
+:::tip[Try it in the Kaiban Board!]
+Want to see this tool in action? Check out our interactive Kaiban Board! [Try it now!](https://www.kaibanjs.com/share/mffyPAxJqLi9s5H27t9p)
+:::
+
 Enhance your agents with:
 - **Trusted Results**: Get accurate and reliable search results
 - **Real-Time Information**: Access current events and up-to-date data
 - **LLM-Ready Output**: Receive well-structured JSON data ready for consumption
 - **Smart Filtering**: Benefit from content relevance scoring and filtering
-
-<!-- :::tip[Try it Out in the Playground!]
-Before diving into the installation and coding, why not experiment directly with our interactive playground? [Try it now!](https://www.kaibanjs.com/share/TavilyDemo)
-::: -->
 
 ## Installation
 

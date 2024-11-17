@@ -9,6 +9,8 @@ description: Firecrawl is a web scraping and crawling service designed to turn w
 
 [Firecrawl](https://www.firecrawl.dev/) is a powerful web scraping and crawling service designed specifically for AI applications. It excels at converting web content into clean, well-formatted data that's optimized for Large Language Models (LLMs).
 
+![Firecrawl Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731856691/Firecrawl_dtriem.png)
+
 Enhance your agents with:
 - **Dynamic Content Handling**: Scrape websites with dynamic content and JavaScript rendering
 - **LLM-Ready Output**: Get clean, well-formatted markdown or structured data

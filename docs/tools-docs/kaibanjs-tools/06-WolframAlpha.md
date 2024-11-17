@@ -9,6 +9,12 @@ description: Wolfram Alpha is a computational knowledge engine that provides pre
 
 [Wolfram Alpha](https://www.wolframalpha.com/) is a powerful computational knowledge engine that provides precise calculations, mathematical analysis, and scientific data processing capabilities.
 
+![Wolfram Alpha Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731857451/WolframAlpha_em3b3a.png)
+
+:::tip[Try it in the Kaiban Board!]
+Want to see this tool in action? Check out our interactive Kaiban Board! [Try it now!](https://www.kaibanjs.com/share/rthD4nzacEpGzvlkyejU)
+:::
+
 Enhance your agents with:
 - **Mathematical Computations**: Solve complex mathematical problems
 - **Scientific Analysis**: Process scientific queries and calculations

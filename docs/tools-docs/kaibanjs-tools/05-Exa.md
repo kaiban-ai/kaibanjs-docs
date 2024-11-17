@@ -9,6 +9,12 @@ description: Exa is an AI-powered search API that provides comprehensive researc
 
 [Exa](https://exa.ai/) is an advanced search API that combines neural search with content processing capabilities. It's particularly effective for in-depth research, academic content, and comprehensive data gathering.
 
+![Exa Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731857138/Exa_wfcyee.png)
+
+:::tip[Try it in the Kaiban Board!]
+Want to see this tool in action? Check out our interactive Kaiban Board! [Try it now!](https://www.kaibanjs.com/share/euD49bj9dv1OLlJ5VEaL)
+:::
+
 Enhance your agents with:
 - **Neural Search**: Advanced semantic understanding of search queries
 - **Content Processing**: Get full text, summaries, and highlights

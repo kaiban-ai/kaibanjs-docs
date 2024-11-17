@@ -9,6 +9,12 @@ description: Serper is a Google Search API that provides fast, reliable access t
 
 [Serper](https://serper.dev/) is a powerful Google Search API that provides quick and reliable access to Google search results. It's particularly useful for gathering current news, web content, and comprehensive search data.
 
+![Serper Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1731857524/Serper_hj1zxw.png)
+
+:::tip[Try it in the Kaiban Board!]
+Want to see this tool in action? Check out our interactive Kaiban Board! [Try it now!](https://www.kaibanjs.com/share/OEznrOejkRNuf12tHj5i)
+:::
+
 Enhance your agents with:
 - **Google Search Results**: Access Google's search engine capabilities
 - **News Search**: Dedicated news search functionality
