@@ -22,7 +22,7 @@ Enhance your agents with:
 First, install the KaibanJS tools package and cheerio:
 
 ```bash
-npm install @kaibanjs/tools cheerio
+npm install @kaibanjs/tools
 ```
 
 ## API Key
