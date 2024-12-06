@@ -57,7 +57,7 @@ Provides context that enriches the agent's role and goal, enhancing interaction 
 - **Type:** String
 - **Example:** *Has extensive experience in market analysis and strategic planning*
 
-#### `tools` (optional)
+#### `tools`
 A set of capabilities or functions the agent can use, initialized with a default empty list.
 - **Type:** Array of `Tool` objects.
 - **Example:** *[SearchTool, CalculatorTool, etc]*
