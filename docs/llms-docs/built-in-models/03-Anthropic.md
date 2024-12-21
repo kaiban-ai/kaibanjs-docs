@@ -63,6 +63,30 @@ const team = new Team({
 });
 ```
 
+:::warning[CORS Issues in Browser]
+When using Anthropic's API directly in browser environments, you may encounter CORS errors. To resolve this, you have two options:
+
+1. **Use the Kaiban LLM Proxy**: Deploy our ready-to-use proxy solution:
+   - Fork and deploy [kaiban-llm-proxy](https://github.com/kaiban-ai/kaiban-llm-proxy)
+   - Add the proxy URL to your agent configuration using `apiBaseUrl`
+
+2. **Custom Integration**: Implement Anthropic as a custom integration using the latest LangchainJS integration
+
+Example with proxy:
+```javascript
+const agent = new Agent({
+    name: 'Anthropic Agent',
+    role: 'Assistant',
+    llmConfig: {
+        provider: 'anthropic',
+        model: 'claude-3-5-sonnet-20240620',
+        apiKey: 'your-api-key-here',
+        apiBaseUrl: 'https://your-proxy-url.com/proxy/anthropic'
+    }
+});
+```
+:::
+
 :::warning[API Key Security]
 Always use environment variables for API keys instead of hardcoding them. This enhances security and simplifies key management across different environments.
 
