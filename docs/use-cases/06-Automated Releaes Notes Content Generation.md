@@ -19,7 +19,11 @@ Manually drafting, refining, and aligning these pieces can be time-consuming and
 ### The Solution with KaibanJS
 KaibanJS solves this problem with an automated workflow using intelligent agents. This process enables teams to create polished content for different platforms based on a single input containing the product name, release notes URL, GitHub repository link, and community link.
 
-![Release Content Automation](https://asset.cloudinary.com/dnno8pxyy/c727b8014eaca115760abf330b87523b)
+<img 
+    src="https://asset.cloudinary.com/dnno8pxyy/c727b8014eaca115760abf330b87523b" 
+    alt="KaibanJS Illustration" 
+    style="max-width: 100%; height: auto; margin-bottom: 20px;">
+
 
 ### Traditional Approach Challenges
 :::challenges
@@ -70,7 +74,18 @@ The final outputs include:
 - **Two Discord announcements** optimized for community interaction.
 - **A detailed blog post** ready for publishing on platforms like Medium or Hugging Face.
 
-![Automated Content Output](https://asset.cloudinary.com/dnno8pxyy/da265cd8ad565f90c083ef7a07328774)
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
+<iframe width="560" height="315" 
+    src="https://asset.cloudinary.com/dnno8pxyy/da265cd8ad565f90c083ef7a07328774" 
+    title="KaibanJS Video" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin" 
+    allowfullscreen 
+    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
+</iframe>
+</div>
+
 
 ### Expected Benefits
 - **Efficiency:** Save hours by automating repetitive content creation tasks.
