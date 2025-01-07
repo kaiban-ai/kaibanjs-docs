@@ -20,8 +20,7 @@ Manually drafting, refining, and aligning these pieces can be time-consuming and
 KaibanJS solves this problem with an automated workflow using intelligent agents. This process enables teams to create polished content for different platforms based on a single input containing the product name, release notes URL, GitHub repository link, and community link.
 
 <img 
-    src="https://asset.cloudinary.com/dnno8pxyy/c727b8014eaca115760abf330b87523b" 
-    alt="KaibanJS Illustration" 
+    src="https://res.cloudinary.com/dnno8pxyy/image/upload/v1734984005/kb_newst_8_cqcdnp.gif" 
     style="max-width: 100%; height: auto; margin-bottom: 20px;">
 
 
@@ -76,7 +75,7 @@ The final outputs include:
 
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
 <iframe width="560" height="315" 
-    src="https://asset.cloudinary.com/dnno8pxyy/da265cd8ad565f90c083ef7a07328774" 
+    src="https://res.cloudinary.com/dnno8pxyy/video/upload/v1734984768/Untitled_design_9_cu2qqa.mp4" 
     title="KaibanJS Video" 
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
