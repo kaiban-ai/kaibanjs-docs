@@ -5,6 +5,10 @@ description: Learn to enhance your AI projects with the power of Retrieval Augme
 
 In this hands-on tutorial, we'll build a powerful WebRAGTool that can fetch and process web content dynamically, enhancing your AI agents' ability to provide accurate and contextually relevant responses.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 We will be using: 
 
 - [KaibanJS](https://kaibanjs.com/): For Agents Orchestration.

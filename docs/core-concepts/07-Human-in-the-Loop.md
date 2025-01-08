@@ -15,6 +15,10 @@ The HITL feature addresses the need for human judgment in scenarios where:
 - Quality assurance is critical
 - Ethical considerations necessitate human involvement
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Human in the Loop (HITL)
 
 Imagine a Kanban board for a software development team:

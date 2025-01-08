@@ -26,6 +26,10 @@ You may optionally create a custom tsconfig file to configure your typescript se
 }
 ```
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 Now you can follow the, [Quick Start](/docs/get-started/01-Quick%20Start.md) guide to get started with KaibanJS using TypeScript.
 
 ## Types

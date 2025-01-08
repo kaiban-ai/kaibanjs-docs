@@ -29,6 +29,10 @@ Watch this 1-minute video to see KaibanJS in action:
 - Node.js (v14 or later) and npm (v6 or later)
 - An API key for OpenAI or Anthropic, Google AI, or another [supported AI service](../llms-docs/01-Overview.md).
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Setup
 
 **1. Run the KaibanJS initializer in your project directory:**
@@ -127,6 +131,16 @@ This allows you to share your AI-powered workflows with team members or clients,
 - Use `npm run kaiban` to start your Kaiban Board anytime.
 - Press `Ctrl+C` in the terminal to stop the Kaiban Board.
 - Click "Share Team" in the Kaiban Board to generate a shareable link.
+- Access our LLM-friendly documentation at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt) to integrate with your AI IDE or LLM tools.
+
+## AI Development Integration
+
+KaibanJS documentation is available in an LLM-friendly format, making it easy to:
+- Feed into AI coding assistants for context-aware development
+- Use with AI IDEs for better code completion and suggestions
+- Integrate with LLM tools for automated documentation processing
+
+Simply point your AI tool to `https://docs.kaibanjs.com/llms-full.txt` to access our complete documentation in a format optimized for large language models.
 
 ## Flexible Integration
 

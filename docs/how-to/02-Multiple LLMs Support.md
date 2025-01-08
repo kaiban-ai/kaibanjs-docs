@@ -15,6 +15,10 @@ Please refer to [LLMs Docs](/category/llms-docs) for a comprehensive overview of
 
 To utilize multiple built-in language models (LLMs), you start by configuring each agent with a unique `llmConfig`. This configuration specifies the model provider and the specific model to be used, enabling agents to perform their tasks with precision.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 Here's how to set up agents with different LLM configurations:
 
 ```js

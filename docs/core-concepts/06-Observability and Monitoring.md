@@ -6,6 +6,10 @@ description: Built into KaibanJS, the observability features enable you to track
 ### Introduction to Observability and Monitoring
 > Observability in KaibanJS is foundational, ensuring clarity and explainability not just for developers but for everyone interacting with AI systems. This feature extends beyond technical oversight; it is integral to building trust and transparency across all user interactions. By implementing a robust state management system, KaibanJS tracks every state change within the application, reflecting the principles of Flux where the state flows in one direction—predictable and transparent.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 #### The workflowLogs Array
 
 A pivotal element of the Team Store is the workflowLogs array, which acts much like a **blockchain ledger** by recording all significant operations within the state. This mechanism serves as a detailed chronological record, offering insights into operational sequences, token usage, and associated costs.

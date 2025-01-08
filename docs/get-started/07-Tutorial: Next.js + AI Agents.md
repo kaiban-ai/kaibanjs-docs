@@ -19,6 +19,11 @@ Feel free to return to this tutorial to understand how we built each part of the
 
 ## Project Setup
 
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 #### 1. Create a new Next.js project:
 
 ```bash

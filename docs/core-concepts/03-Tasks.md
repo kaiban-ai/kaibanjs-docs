@@ -17,6 +17,10 @@ description: What are Tasks and how to use them.
 >
 > Tasks are essential in organizing efforts and driving projects towards successful outcomes.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Creating a Task
 
 To create a task, you start by initializing an instance of the `Task` class with the necessary properties. Here's how you can do it:

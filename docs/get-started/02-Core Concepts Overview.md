@@ -9,6 +9,11 @@ description: A brief introduction to the fundamental concepts of KaibanJS - Agen
 
 KaibanJS is built around four primary components: `Agents`, `Tools`, `Tasks`, and `Teams`. Understanding how these elements interact is key to leveraging the full power of the framework.
 
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ### Agents
 
 Agents are the autonomous actors in KaibanJS. They can:

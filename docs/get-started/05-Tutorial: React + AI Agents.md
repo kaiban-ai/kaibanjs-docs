@@ -5,6 +5,7 @@ description: A step-by-step guide to creating your first project with KaibanJS, 
 
 Welcome to our tutorial on integrating KaibanJS with React using Vite to create a dynamic blogging application. This guide will take you through setting up your environment, defining AI agents, and building a simple yet powerful React application that utilizes AI to research and generate blog posts about the latest news on any topic you choose. 
 
+
 By the end of this tutorial, you will have a solid understanding of how to leverage AI within a React application, making your projects smarter and more interactive.
 
 :::tip[For the Lazy: Jump Right In!]
@@ -16,6 +17,10 @@ Feel free to return to this tutorial to understand how we built each part of the
 :::
 
 ## Project Setup
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 #### 1. Create a new Vite React project:
 

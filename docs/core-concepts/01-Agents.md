@@ -17,6 +17,10 @@ description: What are Agents and how to use them.
 >
 > Consider an agent as a specialized team member, equipped with unique skills and designated responsibilities. Agents can assume various roles such as 'Developer', 'Tester', or 'Project Manager', each playing a crucial part in achieving the team's collective objectives.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Creating an Agent
 
 To create an agent, you start by initializing an instance of the `Agent` class with the necessary properties. Here's how you can do it:

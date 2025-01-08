@@ -7,6 +7,10 @@ description: Learn how to customize agent prompts in KaibanJS to tailor AI agent
 
 KaibanJS now supports custom agent prompts, allowing developers to fine-tune the behavior and responses of AI agents. This feature enables you to adapt agents to specific use cases or requirements, enhancing the flexibility and power of your multi-agent AI systems.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## How to Implement Custom Prompts
 
 To use custom prompts, you need to provide a `promptTemplates` object when initializing an agent. This object can contain one or more prompt types that you wish to customize.

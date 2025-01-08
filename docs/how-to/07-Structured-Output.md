@@ -7,6 +7,10 @@ description: Define the exact shape and format of your AI agent outputs to ensur
 
 This guide shows you how to implement structured output validation in your KaibanJS tasks using Zod schemas.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Prerequisites
 
 - KaibanJS installed in your project

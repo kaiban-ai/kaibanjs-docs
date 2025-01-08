@@ -17,6 +17,10 @@ description: What are Tools and how to use them.
 >
 > This includes tools from the [LangChain Tools](https://python.langchain.com/docs/integrations/tools), enabling everything from simple searches to complex interactions and effective teamwork among agents.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ### Example: Integrating a Search Tool
 
 To demonstrate the utility of tools, we will integrate a search tool into an agent, enabling it to fetch up-to-date information based on a given query.

@@ -19,6 +19,10 @@ Acting as the central hub for state management, the Team Store ensures that all 
 
 This critical infrastructure piece allows teams to function seamlessly, supporting robust state management and responsive updates to enhance the team's overall performance and capabilities.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Accessing Team State
 
 Once a team is created in KaibanJS, you can access and interact with its internal state through specific methods tailored to different development environments.

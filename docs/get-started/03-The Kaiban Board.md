@@ -8,6 +8,11 @@ description: Transform your AI workflow with Kaiban Board. Easily create, visual
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DTLdeXR2Oy8?si=B3H_mAd4iYBLbRUI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
 
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## From Kanban to Kaiban: Evolving Workflow Management for AI
 
 The Kaiban Board draws inspiration from the time-tested [Kanban methodology](https://en.wikipedia.org/wiki/Kanban_(development)), adapting it for the unique challenges of AI agent management. 

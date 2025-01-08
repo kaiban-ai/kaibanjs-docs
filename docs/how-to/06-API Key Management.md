@@ -12,6 +12,10 @@ This guide will cover:
 2. **Legitimate use cases** for browser-based API key usage.
 3. **Secure production environments** using our **Kaiban LLM Proxy**.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ---
 
 ## API Key Handling with KaibanJS

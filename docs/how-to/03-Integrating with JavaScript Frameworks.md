@@ -5,6 +5,10 @@ description: Enhance your JavaScript projects with AI capabilities using KaibanJ
 
 > KaibanJS seamlessly integrates with popular JavaScript frameworks, including React, Vue, Angular, NextJS, and Node.js. This integration allows you to leverage AI agents within your existing frontend or backend architecture, enhancing your applications with advanced AI functionalities.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Using KaibanJS with React
 
 In a React application, you can easily incorporate KaibanJS to manage tasks and monitor statuses dynamically. Below is an example of a React component that uses KaibanJS to display the status of tasks managed by AI agents.

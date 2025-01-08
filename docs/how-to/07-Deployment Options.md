@@ -12,6 +12,10 @@ npm run kaiban:deploy
 
 This command will automatically build and deploy your board to Vercel's global edge network. You'll receive a unique URL for your deployment, and you can configure a custom domain later if needed.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Manual Deployment Options
 
 The Kaiban Board is a Vite-based single-page application (SPA) that can be deployed to any web server. Here's how to deploy manually:
