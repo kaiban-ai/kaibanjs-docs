@@ -1,7 +1,12 @@
 ---
-title: Multi-Platform Release Content Generator
-description: Discover how KaibanJS streamlines the process of creating promotional content for release notes across multiple platforms. Learn how to generate tweets, LinkedIn posts, blog articles, and Discord announcements with ease.
+title: GitHub Release Social Media Team
+description: KaibanJS showcases the power of autonomous agents and agentic AI in action. Built with our advanced agent framework, this specialized team of AI agents transforms GitHub release notes into engaging social media content. Experience true agent autonomy as they collaborate to generate tweets, LinkedIn posts, blog articles, and Discord announcements with minimal human intervention.
 ---
+
+Announcing software releases across social media platforms can be challenging. KaibanJS simplifies this by using autonomous agents to automatically transform GitHub release notes into engaging tweets, LinkedIn posts, blog articles, and Discord announcements - saving time while maintaining consistent messaging across all channels.
+
+
+![GitHub Release Social Media Team](https://res.cloudinary.com/dnno8pxyy/image/upload/v1736363385/GitHub_Release_Social_Media_Team_s5isil.png)
 
 :::tip[Try it Out in the Playground!]
 Curious about how this solution comes together? Explore it interactively in our playground before getting into the details. [Try it now!](https://www.kaibanjs.com/share/RNrmzWds1MpHJEANyymJ)

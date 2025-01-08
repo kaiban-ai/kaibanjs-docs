@@ -3,6 +3,10 @@ title: AI-Driven Reddit Comment Generator
 description: Discover how KaibanJS simplifies the creation of engaging and context-aware comments for Reddit posts. Learn how to generate and refine comments using AI agents in KaibanJS.
 ---
 
+Creating thoughtful and engaging Reddit comments at scale can be challenging. KaibanJS simplifies this by using autonomous agents to automatically analyze posts, generate relevant responses, and refine comments that resonate with each community - saving time while maintaining authentic and meaningful participation across multiple subreddits.
+
+
+![AI-Driven Reddit Comment Generator](https://res.cloudinary.com/dnno8pxyy/image/upload/v1736363385/Reddit_Comments_Generator_w2wilk.png)
 :::tip[Try it Out in the Playground!]
 Curious about how this solution works? Test it interactively in our playground before diving into the details. [Try it now!](https://www.kaibanjs.com/share/vdZeou728T6bevU3BTNK)
 :::
