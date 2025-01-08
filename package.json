@@ -12,7 +12,8 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "code-snapshot": "node xscripts/codeSnapshot.js"
+    "llm-docs": "node xscripts/llm-docs.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@docusaurus/core": "^3.5.2",
@@ -25,7 +26,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.5.2",
-    "@docusaurus/types": "^3.5.2"
+    "@docusaurus/types": "^3.5.2",
+    "husky": "^9.1.7"
   },
   "browserslist": {
     "production": [

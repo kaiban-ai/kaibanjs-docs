@@ -7,19 +7,52 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const stat = util.promisify(fs.stat);
 
-const INSTRUCTIONS_PROMPT = `This markdown document provides a comprehensive snapshot of the entire codebase for the KaibanJS library. It is designed to facilitate easy understanding and navigation of the library's structure and contents for both developers and automated systems.
+// Ensure static directory exists
+if (!fs.existsSync('./static')) {
+    fs.mkdirSync('./static', { recursive: true });
+}
+
+const INSTRUCTIONS_PROMPT = `This is the /llms-full.txt file for KaibanJS documentation, providing a comprehensive snapshot of all documentation content in a format optimized for Large Language Models (LLMs) while maintaining human readability.
 
 **Directory Structure**
 
-The 'Directory Structure' section visually represents the hierarchical arrangement of all files and directories within the KaibanJS project. This tree-like structure helps in quickly locating files and understanding the organizational layout of the project.
+The 'Directory Structure' section presents a hierarchical view of the documentation files, organized into main categories:
+- Get Started guides
+- Tools documentation
+  - Custom tools
+  - Langchain tools
+- API documentation
 
-**File Contents**
+**Documentation Contents**
 
-Following the directory structure, the 'File Contents' section includes detailed listings of each JavaScript file within the KaibanJS library. Each file entry is prefixed with its relative path from the base directory, ensuring clear context and easy access. The content of each file is enclosed in code blocks, formatted for JavaScript, providing exact details of the code written in the library`;
+The 'Documentation Contents' section contains the full content of each documentation file, organized with:
+
+- Clear section headers (###) with relative file paths
+- File separators for improved readability
+- Full markdown content including:
+  - Installation guides
+  - Tool configuration instructions
+  - API usage examples
+  - Tutorials for React and Node.js
+  - Custom tool implementation guides
+  - Integration instructions
+
+Each file is clearly demarcated with:
+\`\`\`
+//--------------------------------------------
+// File: ./src/path/to/file.md
+//--------------------------------------------
+\`\`\`
+
+This format enables:
+- Efficient LLM processing and context understanding
+- Improved AI-powered documentation search
+- Better integration with AI coding assistants
+- Enhanced automated documentation analysis`;
 
 
-const baseDirectory = './docs/tools-docs';  // Adjust the base directory as needed
-const outputFilePath = './output.md';
+const baseDirectory = './docs';  // Adjust the base directory as needed
+const outputFilePath = './static/llms-full.txt';  // Place in static directory for Docusaurus
 
 // Function to recursively get all file paths
 async function getFiles(dir) {
@@ -49,7 +82,7 @@ async function generateDirStructure(dir, prefix = '') {
 
 // Function to create the markdown document
 async function createMarkdownFile(files, dirStructure) {
-    let markdownContent = `# Code Snapshot for KaibanJS\n\n`;
+    let markdownContent = `# KaibanJS Documentation - /llms-full.txt\n\n`;
     markdownContent += `${INSTRUCTIONS_PROMPT} \n\n`;
     markdownContent += `## Directory Structure\n\n\`\`\`\n${dirStructure}\`\`\`\n\n`;
     markdownContent += `## File Contents\n\n`;
