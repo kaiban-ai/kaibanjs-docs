@@ -167,6 +167,10 @@ description: What are Agents and how to use them.
 >
 > Consider an agent as a specialized team member, equipped with unique skills and designated responsibilities. Agents can assume various roles such as 'Developer', 'Tester', or 'Project Manager', each playing a crucial part in achieving the team's collective objectives.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Creating an Agent
 
 To create an agent, you start by initializing an instance of the `Agent` class with the necessary properties. Here's how you can do it:
@@ -293,6 +297,10 @@ description: What are Tools and how to use them.
 >
 > This includes tools from the [LangChain Tools](https://python.langchain.com/docs/integrations/tools), enabling everything from simple searches to complex interactions and effective teamwork among agents.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ### Example: Integrating a Search Tool
 
 To demonstrate the utility of tools, we will integrate a search tool into an agent, enabling it to fetch up-to-date information based on a given query.
@@ -386,6 +394,10 @@ description: What are Tasks and how to use them.
 > - Assigned Responsibility: Allocated to a specific agent equipped to handle the task.
 >
 > Tasks are essential in organizing efforts and driving projects towards successful outcomes.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ## Creating a Task
 
@@ -503,6 +515,10 @@ description: What are Teams and how to use them.
 
 ## What is a Team?
 > A Team represents a group of agents working together to complete assigned tasks. Each team is structured around a store, which manages the state and workflow of agents and tasks, making it the backbone of the team's functionality.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ## Creating a Team
 
@@ -802,6 +818,10 @@ Acting as the central hub for state management, the Team Store ensures that all 
 
 This critical infrastructure piece allows teams to function seamlessly, supporting robust state management and responsive updates to enhance the team's overall performance and capabilities.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Accessing Team State
 
 Once a team is created in KaibanJS, you can access and interact with its internal state through specific methods tailored to different development environments.
@@ -954,6 +974,10 @@ description: Built into KaibanJS, the observability features enable you to track
 
 ### Introduction to Observability and Monitoring
 > Observability in KaibanJS is foundational, ensuring clarity and explainability not just for developers but for everyone interacting with AI systems. This feature extends beyond technical oversight; it is integral to building trust and transparency across all user interactions. By implementing a robust state management system, KaibanJS tracks every state change within the application, reflecting the principles of Flux where the state flows in one direction—predictable and transparent.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 #### The workflowLogs Array
 
@@ -1160,6 +1184,10 @@ The HITL feature addresses the need for human judgment in scenarios where:
 - Sensitive decisions require human oversight
 - Quality assurance is critical
 - Ethical considerations necessitate human involvement
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ## Human in the Loop (HITL)
 
@@ -1484,6 +1512,10 @@ Watch this 1-minute video to see KaibanJS in action:
 - Node.js (v14 or later) and npm (v6 or later)
 - An API key for OpenAI or Anthropic, Google AI, or another [supported AI service](../llms-docs/01-Overview.md).
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Setup
 
 **1. Run the KaibanJS initializer in your project directory:**
@@ -1582,6 +1614,16 @@ This allows you to share your AI-powered workflows with team members or clients,
 - Use `npm run kaiban` to start your Kaiban Board anytime.
 - Press `Ctrl+C` in the terminal to stop the Kaiban Board.
 - Click "Share Team" in the Kaiban Board to generate a shareable link.
+- Access our LLM-friendly documentation at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt) to integrate with your AI IDE or LLM tools.
+
+## AI Development Integration
+
+KaibanJS documentation is available in an LLM-friendly format, making it easy to:
+- Feed into AI coding assistants for context-aware development
+- Use with AI IDEs for better code completion and suggestions
+- Integrate with LLM tools for automated documentation processing
+
+Simply point your AI tool to `https://docs.kaibanjs.com/llms-full.txt` to access our complete documentation in a format optimized for large language models.
 
 ## Flexible Integration
 
@@ -1617,6 +1659,11 @@ description: A brief introduction to the fundamental concepts of KaibanJS - Agen
 </div>
 
 KaibanJS is built around four primary components: `Agents`, `Tools`, `Tasks`, and `Teams`. Understanding how these elements interact is key to leveraging the full power of the framework.
+
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ### Agents
 
@@ -1690,6 +1737,11 @@ description: Transform your AI workflow with Kaiban Board. Easily create, visual
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DTLdeXR2Oy8?si=B3H_mAd4iYBLbRUI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
+
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ## From Kanban to Kaiban: Evolving Workflow Management for AI
 
@@ -1886,6 +1938,7 @@ description: A step-by-step guide to creating your first project with KaibanJS, 
 
 Welcome to our tutorial on integrating KaibanJS with React using Vite to create a dynamic blogging application. This guide will take you through setting up your environment, defining AI agents, and building a simple yet powerful React application that utilizes AI to research and generate blog posts about the latest news on any topic you choose. 
 
+
 By the end of this tutorial, you will have a solid understanding of how to leverage AI within a React application, making your projects smarter and more interactive.
 
 :::tip[For the Lazy: Jump Right In!]
@@ -1897,6 +1950,10 @@ Feel free to return to this tutorial to understand how we built each part of the
 :::
 
 ## Project Setup
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 #### 1. Create a new Vite React project:
 
@@ -2633,6 +2690,11 @@ Feel free to return to this tutorial to understand how we built each part of the
 
 ## Project Setup
 
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 #### 1. Create a new NodeJS project:
 
 ```bash
@@ -2875,6 +2937,11 @@ Feel free to return to this tutorial to understand how we built each part of the
 :::
 
 ## Project Setup
+
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 #### 1. Create a new Next.js project:
 
@@ -3739,6 +3806,10 @@ description: Learn how to customize agent prompts in KaibanJS to tailor AI agent
 
 KaibanJS now supports custom agent prompts, allowing developers to fine-tune the behavior and responses of AI agents. This feature enables you to adapt agents to specific use cases or requirements, enhancing the flexibility and power of your multi-agent AI systems.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## How to Implement Custom Prompts
 
 To use custom prompts, you need to provide a `promptTemplates` object when initializing an agent. This object can contain one or more prompt types that you wish to customize.
@@ -3853,6 +3924,10 @@ Please refer to [LLMs Docs](/category/llms-docs) for a comprehensive overview of
 
 To utilize multiple built-in language models (LLMs), you start by configuring each agent with a unique `llmConfig`. This configuration specifies the model provider and the specific model to be used, enabling agents to perform their tasks with precision.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 Here's how to set up agents with different LLM configurations:
 
 ```js
@@ -3941,6 +4016,10 @@ description: Enhance your JavaScript projects with AI capabilities using KaibanJ
 
 > KaibanJS seamlessly integrates with popular JavaScript frameworks, including React, Vue, Angular, NextJS, and Node.js. This integration allows you to leverage AI agents within your existing frontend or backend architecture, enhancing your applications with advanced AI functionalities.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Using KaibanJS with React
 
 In a React application, you can easily incorporate KaibanJS to manage tasks and monitor statuses dynamically. Below is an example of a React component that uses KaibanJS to display the status of tasks managed by AI agents.
@@ -4012,6 +4091,10 @@ description: Learn to enhance your AI projects with the power of Retrieval Augme
 ---
 
 In this hands-on tutorial, we'll build a powerful WebRAGTool that can fetch and process web content dynamically, enhancing your AI agents' ability to provide accurate and contextually relevant responses.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 We will be using: 
 
@@ -4522,6 +4605,10 @@ You may optionally create a custom tsconfig file to configure your typescript se
 }
 ```
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 Now you can follow the, [Quick Start](/docs/get-started/01-Quick%20Start.md) guide to get started with KaibanJS using TypeScript.
 
 ## Types
@@ -4567,6 +4654,10 @@ This guide will cover:
 1. **The pros and cons of using API keys in the browser**.
 2. **Legitimate use cases** for browser-based API key usage.
 3. **Secure production environments** using our **Kaiban LLM Proxy**.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ---
 
@@ -4695,6 +4786,10 @@ npm run kaiban:deploy
 
 This command will automatically build and deploy your board to Vercel's global edge network. You'll receive a unique URL for your deployment, and you can configure a custom domain later if needed.
 
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
 ## Manual Deployment Options
 
 The Kaiban Board is a Vite-based single-page application (SPA) that can be deployed to any web server. Here's how to deploy manually:
@@ -4790,6 +4885,10 @@ description: Define the exact shape and format of your AI agent outputs to ensur
 # How to Use Structured Output Validation
 
 This guide shows you how to implement structured output validation in your KaibanJS tasks using Zod schemas.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
 
 ## Prerequisites
 
