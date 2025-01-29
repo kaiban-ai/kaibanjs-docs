@@ -1,7 +1,6 @@
-[---
+---
 title: Create a Custom Tool
 description: Learn how to create and integrate custom tools for Kaiban agents, extending their capabilities with external APIs, services, or npm utilities.
-
 ---
 
 # Create a Custom Tool
@@ -84,6 +83,35 @@ export class CustomTool extends Tool {
 }
 ```
 
+**Implementation Note:**
+There are two valid approaches to define tool properties in LangChain:
+
+1. **Direct Property Assignment** (as shown above):
+
+   ```javascript
+   constructor(fields) {
+       super(fields);
+       this.name = "custom_tool";
+       this.description = "Tool description";
+       this.schema = z.object({...});
+   }
+   ```
+
+2. **Constructor Fields** (LangChain's preferred way):
+   ```javascript
+   constructor(fields) {
+       super({
+           name: "custom_tool",
+           description: "Tool description",
+           schema: z.object({...}),
+           ...fields
+       });
+   }
+   ```
+
+Both approaches work correctly with KaibanJS. The second approach is more aligned with LangChain's implementation, but either method will function properly in your applications.
+:::
+
 ### Step 3: Implement the `_call` Method
 
 The `_call` method is where you implement the main functionality of your tool. This method should:
@@ -115,19 +143,19 @@ async _call(input) {
 Once you've created your custom tool, you can use it with a Kaiban agent:
 
 ```javascript
-import { Agent } from 'kaibanjs';
-import { CustomTool } from './CustomTool';
+import { Agent } from "kaibanjs";
+import { CustomTool } from "./CustomTool";
 
 const customTool = new CustomTool({
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_API_KEY"
 });
 
 const agent = new Agent({
-    name: 'CustomAgent',
-    role: 'Specialized Task Performer',
-    goal: 'Utilize the custom tool to perform specific tasks.',
-    background: 'Expert in using specialized tools for task completion',
-    tools: \[customTool\]
+  name: "CustomAgent",
+  role: "Specialized Task Performer",
+  goal: "Utilize the custom tool to perform specific tasks.",
+  background: "Expert in using specialized tools for task completion",
+  tools: [customTool]
 });
 
 // Use the agent in your Kaiban workflow
@@ -246,6 +274,6 @@ These are just a few examples. The possibilities for custom tools are virtually 
 
 Creating custom tools allows you to significantly extend the capabilities of your Kaiban agents. By following this tutorial and exploring various npm packages and APIs, you can create a wide range of specialized tools, enabling your agents to perform complex and diverse tasks.
 
-:::info\[We Love Feedback!\]
-Is there something unclear or quirky in this tutorial? Have a suggestion or spotted an issue? Help us improve by \[submitting an issue on GitHub\](https://github.com/kaiban-ai/KaibanJS/issues). Your input is valuable!
-:::](https://github.com/kaiban-ai/kaibanjs-docs.git)
+:::info[We Love Feedback!]
+Is there something unclear or quirky in this tutorial? Have a suggestion or spotted an issue? Help us improve by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). Your input is valuable!
+:::
