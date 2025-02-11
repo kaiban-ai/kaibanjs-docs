@@ -203,6 +203,78 @@ It's important to note that once the Promise resolves (whether due to completion
 
 For full HITL implementation, you would need to use this method in conjunction with other Team methods like `provideFeedback` and `validateTask`, and potentially set up additional listeners `onWorkflowStatusChange` to monitor the workflow's progress after it has been unblocked.
 
+#### `pause()`
+Temporarily halts the workflow execution. Tasks that are currently executing will be paused, and no new tasks will start until the workflow is resumed.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `DOING` state will transition to `PAUSED` state. The workflow status will change to `PAUSED`.
+
+**Example:**
+```js
+// Pause workflow after 5 minutes to check intermediate results
+setTimeout(() => {
+  team.pause()
+    .then(() => {
+      const tasks = team.getTasks();
+      console.log('Workflow paused. Current task states:', 
+        tasks.map(t => ({ id: t.id, status: t.status }))
+      );
+    });
+}, 5 * 60 * 1000);
+```
+
+#### `resume()`
+Continues the workflow execution from its paused state. Previously paused tasks will resume execution, and new tasks will start according to their dependencies and execution strategy.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `PAUSED` state will transition back to `DOING` state. The workflow status will change back to `RUNNING`.
+
+**Example:**
+```js
+// Monitor workflow status and resume after validation
+team.onWorkflowStatusChange((status) => {
+  if (status === 'PAUSED') {
+    validateIntermediateResults()
+      .then((isValid) => {
+        if (isValid) {
+          team.resume()
+            .then(() => console.log('Validation passed, workflow resumed'));
+        } else {
+          team.stop()
+            .then(() => console.log('Validation failed, workflow stopped'));
+        }
+      });
+  }
+});
+```
+
+#### `stop()`
+Permanently stops the workflow execution. All executing tasks will be stopped, and the workflow cannot be resumed after being stopped.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `DOING` or `PAUSED` state will transition to `TODO` state, except for tasks that were already `DONE`. The workflow status will change to `STOPPED`.
+
+**Example:**
+```js
+// Stop workflow if execution time exceeds 30 minutes
+const MAX_EXECUTION_TIME = 30 * 60 * 1000; // 30 minutes
+const startTime = Date.now();
+
+team.onWorkflowStatusChange((status) => {
+  if (status === 'RUNNING' && (Date.now() - startTime > MAX_EXECUTION_TIME)) {
+    team.stop()
+      .then(() => {
+        console.log('Workflow stopped: Maximum execution time exceeded');
+        console.log('Completed tasks:', team.getTasksByStatus('DONE').length);
+      });
+  }
+});
+```
+
+**Workflow Control Best Practices:**
+1. Always monitor workflow status changes when using control methods
+2. Handle state transitions appropriately in your application
+3. Consider implementing cleanup procedures when stopping workflows
+4. Use pause/resume for temporary interruptions and stop for permanent termination
+5. Ensure all team members are notified of workflow state changes
+
 #### `getStore()`
 Provides NodeJS developers direct access to the team's store.
 - **Returns:** The store object.
@@ -273,11 +345,11 @@ The store serves as the backbone for state management within the KaibanJS framew
 
 Each team operates with its own dedicated store instance. This store orchestrates all aspects of the team's function, from initiating tasks and updating agent statuses to managing inputs and outputs. This ensures that all components within the team are synchronized and function cohesively.
 
-**Further Reading:** For an in-depth exploration of the store’s capabilities and setup, please refer to the detailed store documentation.
+**Further Reading:** For an in-depth exploration of the store's capabilities and setup, please refer to the detailed store documentation.
 
 ### Conclusion
 The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within KaibanJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
