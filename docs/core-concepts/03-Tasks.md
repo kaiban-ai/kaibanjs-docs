@@ -107,6 +107,32 @@ A system-generated unique identifier for the task. This is automatically created
 - **Type:** String (Read-only)
 - **Example:** `"579db4dd-deea-4e09-904d-a436a38e65cf"`
 
+#### `hooks`
+Functions that are executed at specific points during task execution.
+
+- **Type:** Object
+- **Properties:**
+  - `beforeTaskExecution`: Function - Called before the task starts executing
+  - `afterTaskExecution`: Function - Called after the task has completed
+- **Example:**
+```js
+const task = new Task({
+  // ... other task configuration ...
+  hooks: {
+    beforeTaskExecution: async ({ workflowLogs, tasks, state }) => {
+      console.log('Task is starting execution');
+      // Perform any setup or validation before the task starts
+    },
+    afterTaskExecution: async ({ result, workflowLogs, tasks, state }) => {
+      console.log('Task has finished execution');
+      // Process or validate the task result
+    }
+  }
+});
+```
+
+See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
+
 ## Human-in-the-Loop (HITL) Features
 
 KaibanJS supports Human-in-the-Loop functionality for tasks, allowing for manual intervention and validation when necessary. This feature enhances the accuracy and reliability of task outcomes by incorporating human oversight into the workflow.

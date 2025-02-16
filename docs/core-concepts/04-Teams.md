@@ -134,6 +134,32 @@ The logging level set for monitoring and debugging the team's activities.
 - **Example:** *'debug', 'info', 'warn', 'error'*
 - **Default:** *info*
 
+#### `hooks`
+A collection of functions that are executed at specific points in the workflow lifecycle.
+
+- **Type:** Object
+- **Properties:**
+  - `beforeTeamExecution`: Function - Called before the team starts executing tasks
+  - `afterTeamExecution`: Function - Called after all tasks have been completed
+- **Example:**
+```js
+const team = new Team({
+  // ... other team configuration ...
+  hooks: {
+    beforeTeamExecution: async ({ workflowLogs, tasks, state }) => {
+      console.log('Team is starting execution');
+      // Perform any setup or validation before the team starts
+    },
+    afterTeamExecution: async ({ result, workflowLogs, tasks, state }) => {
+      console.log('Team has finished execution');
+      // Process or validate the final results
+    }
+  }
+});
+```
+
+See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
+
 ### Team Methods
 
 #### `start(inputs)`
@@ -248,108 +274,4 @@ team.onWorkflowStatusChange((status) => {
 
 #### `stop()`
 Permanently stops the workflow execution. All executing tasks will be stopped, and the workflow cannot be resumed after being stopped.
-- **Returns:** `Promise<void>`
-- **Note:** Tasks in `DOING` or `PAUSED` state will transition to `TODO` state, except for tasks that were already `DONE`. The workflow status will change to `STOPPED`.
-
-**Example:**
-```js
-// Stop workflow if execution time exceeds 30 minutes
-const MAX_EXECUTION_TIME = 30 * 60 * 1000; // 30 minutes
-const startTime = Date.now();
-
-team.onWorkflowStatusChange((status) => {
-  if (status === 'RUNNING' && (Date.now() - startTime > MAX_EXECUTION_TIME)) {
-    team.stop()
-      .then(() => {
-        console.log('Workflow stopped: Maximum execution time exceeded');
-        console.log('Completed tasks:', team.getTasksByStatus('DONE').length);
-      });
-  }
-});
-```
-
-**Workflow Control Best Practices:**
-1. Always monitor workflow status changes when using control methods
-2. Handle state transitions appropriately in your application
-3. Consider implementing cleanup procedures when stopping workflows
-4. Use pause/resume for temporary interruptions and stop for permanent termination
-5. Ensure all team members are notified of workflow state changes
-
-#### `getStore()`
-Provides NodeJS developers direct access to the team's store.
-- **Returns:** The store object.
-
-#### `useStore()`
-Provides a React hook for accessing the team's store in React applications.
-- **Returns:** The store object.
-
-#### `provideFeedback(taskId, feedbackContent)`
-Provides feedback on a specific task, enabling human intervention in the AI workflow. This method triggers the human-in-the-loop workflow by setting the task status to REVISE, prompting the agent to reconsider and improve its work based on the provided feedback.
-- **Parameters:** 
-  - `taskId` (String): The ID of the task to provide feedback for.
-  - `feedbackContent` (String): The feedback to be incorporated into the task.
-- **Returns:** void
-- **Note:** Calling this method initiates the human-in-the-loop process, allowing for iterative refinement of task outputs. You can track the workflow status using the `onWorkflowStatusChange` method.
-
-#### `validateTask(taskId)`
-Marks a task as validated, used in the HITL process to approve a task that required validation.
-- **Parameters:**
-  - `taskId` (String): The ID of the task to be marked as validated.
-- **Returns:** void
-
-#### `onWorkflowStatusChange(callback)`
-Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
-- **Parameters:**
-  - `callback` (Function): A function to be called when the workflow status changes.
-- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-**Example:**
-
-```js
-team.onWorkflowStatusChange((status) => {
-  console.log('Workflow status:', status);
-});
-```
-
-#### `getTasksByStatus(status)`
-Retrieves tasks filtered by a specific status.
-- **Parameters:**
-  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L58) values.
-- **Returns:** Array of tasks with the specified status.
-
-**Example:**
-
-```js
-const completedTasks = team.getTasksByStatus('DONE');
-console.log(pendingTasks);
-```
-
-#### `getWorkflowStatus()`
-Retrieves the current status of the workflow.
-- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-#### `getWorkflowResult()`
-Retrieves the final result of the workflow. Should be called only after the workflow has finished.
-- **Returns:** The workflow result if finished, null otherwise.
-- **Type:** String
-
-#### `getTasks()`
-Retrieves all tasks in the team's workflow.
-- **Returns:** Array of all tasks.
-
-### The Team Store
-The store serves as the backbone for state management within the KaibanJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.
-
-
-**Integration with Team:** 
-
-Each team operates with its own dedicated store instance. This store orchestrates all aspects of the team's function, from initiating tasks and updating agent statuses to managing inputs and outputs. This ensures that all components within the team are synchronized and function cohesively.
-
-**Further Reading:** For an in-depth exploration of the store's capabilities and setup, please refer to the detailed store documentation.
-
-### Conclusion
-The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within KaibanJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
-
-:::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
-:::
+- **Returns:** `
