@@ -158,6 +158,59 @@ const team = new Team({
 });
 ```
 
+#### `workflowInternalMemory`
+A shared memory space that persists throughout the workflow execution. This can be used to store and share data between tasks, hooks, or any other workflow components.
+
+- **Type:** Object
+- **Default:** `{}`
+- **Access Methods:**
+  - `updateWorkflowInternalMemory(updates)`: Merges new data into the memory
+  - `clearWorkflowInternalMemory()`: Clears all stored data
+- **Example:**
+```js
+// Store data in a hook
+const team = new Team({
+  hooks: {
+    beforeTeamExecution: async ({ state }) => {
+      // Store initial configuration
+      state.updateWorkflowInternalMemory({
+        startTime: Date.now(),
+        configuration: { /* ... */ }
+      });
+    }
+  }
+});
+
+// Access data in a task
+const analysisTask = new Task({
+  description: 'Analyze data',
+  hooks: {
+    beforeTaskExecution: async ({ state }) => {
+      const { configuration } = state.workflowInternalMemory;
+      // Use the configuration data
+    }
+  }
+});
+
+// Update data from another task
+const processingTask = new Task({
+  description: 'Process results',
+  hooks: {
+    afterTaskExecution: async ({ result, state }) => {
+      // Store processed results
+      state.updateWorkflowInternalMemory({
+        processedData: result
+      });
+    }
+  }
+});
+```
+
+The `workflowInternalMemory` is automatically cleared when:
+- The workflow is reset
+- A new workflow execution starts
+- The `clearWorkflowInternalMemory()` method is called
+
 See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
 
 ### Team Methods
