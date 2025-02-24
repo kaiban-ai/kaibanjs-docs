@@ -42,6 +42,98 @@ Here’s how KaibanJS automates metadata extraction and publishing:
 3. **Automated Output:** The final message is visually appealing and standardized, ensuring professional community engagement.
 :::
 
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { Tool } from "@langchain/core/tools";
+import { z } from "zod";
+import axios from "axios";
+import * as cheerio from 'cheerio';
+
+// === MetadataTool ===
+export class MetadataTool extends Tool {
+  constructor(fields) {
+    super(fields);
+    this.name = "metadata_tool";
+    this.description = "Extracts metadata from a URL in a structured format";
+    this.schema = z.object({
+      url: z
+        .string()
+        .url()
+        .describe("The URL from which to extract metadata"),
+    });
+  }
+
+  async _call(input) {
+    try {
+      const response = await axios.get(input.url);
+      const $ = cheerio.load(response.data);
+      
+      const metadata = {
+        title: $('title').text(),
+        description: $('meta[property="og:description"]').attr('content'),
+        url: $('link[rel="canonical"]').attr('href'),
+        image: $('meta[property="og:image"]').attr('content'),
+        author: $('meta[name="twitter:data1"]').attr('content'),
+        twitter: $('meta[name="twitter:creator"]').attr('content'),
+        published_time: $('meta[property="article:published_time"]').attr('content')
+      };
+      return metadata;
+    } catch (error) {
+      return `Error extracting metadata: ${error.message}`;
+    }
+  }
+}
+
+// === DiscordTool ===
+export class DiscordTool extends Tool {
+  name = "discord_tool";
+  description = "Sends a message to Discord using a webhook";
+
+  async _call(input) {
+    try {
+      const payload = {
+        username: "Metadata Bot",
+        content: `New content update: ${input.title}`,
+        embeds: [{
+          title: input.title,
+          description: input.description,
+          url: input.url,
+          image: { url: input.image }
+        }]
+      };
+      await axios.post(process.env.DISCORD_WEBHOOK_URL, payload);
+      return `Message sent to Discord successfully`;
+    } catch (error) {
+      return `Error sending message to Discord: ${error.message}`;
+    }
+  }
+}
+
+const metadataTool = new MetadataTool();
+const discordTool = new DiscordTool();
+
+const metadataExtractor = new Agent({
+  name: 'MetadataExtractor',
+  tools: [metadataTool]
+});
+
+const discordPublisher = new Agent({
+  name: 'DiscordPublisher',
+  tools: [discordTool]
+});
+
+const tasks = [
+  new Task({ agent: metadataExtractor }),
+  new Task({ agent: discordPublisher })
+];
+
+const team = new Team({ agents: [metadataExtractor, discordPublisher], tasks });
+export default team;
+```
+
 ### Outcome
 With KaibanJS, teams can:
 
