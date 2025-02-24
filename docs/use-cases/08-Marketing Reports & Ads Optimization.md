@@ -43,6 +43,88 @@ Here’s how KaibanJS automates marketing optimization:
 4. **Output Compilation:** Delivers a complete marketing report with actionable insights and ready-to-use ad copies.
 :::
 
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { Tool } from "@langchain/core/tools";
+import { z } from "zod";
+import axios from "axios";
+
+// === UrlMarkdown Tool ===
+export class UrlMarkdown extends Tool {
+  constructor(fields) {
+    super(fields);
+    this.name = "url_markdown_tool";
+    this.description = "Gets content in Markdown format from a URL.";
+    this.schema = z.object({
+      url: z
+        .string()
+        .url()
+        .describe("The URL from which to extract content in Markdown format."),
+    });
+  }
+
+  async _call(input) {
+    try {
+      const requestUrl = `https://r.jina.ai/${encodeURIComponent(input.url)}`;
+      const response = await axios.get(requestUrl);
+      return response.data;
+    } catch (error) {
+      return `Error getting content from URL: ${error.message}`;
+    }
+  }
+}
+
+// Tool instance
+const urlMarkdownTool = new UrlMarkdown();
+
+// === AGENTS ===
+
+// Content Analysis Agent
+const contentAnalyzer = new Agent({
+  name: 'ContentAnalyzer',
+  role: 'Content Analysis Specialist',
+  goal: 'Extract and analyze relevant information from URLs',
+  background: 'Expert in web content analysis and key information extraction',
+  tools: [urlMarkdownTool]
+});
+
+// Report Generator Agent
+const reportGenerator = new Agent({
+  name: 'ReportGenerator',
+  role: 'Marketing Report Specialist',
+  goal: 'Generate detailed marketing reports and optimized ads',
+  background: 'Specialist in digital marketing and Google Ads generation',
+  tools: []
+});
+
+// === TASKS ===
+const tasks = [
+  new Task({
+    description: `Analyze the provided URL: {url} and extract key information.`,
+    agent: contentAnalyzer,
+    priority: 1
+  }),
+  new Task({
+    description: `Generate a complete marketing report and optimized ads using extracted information.`,
+    agent: reportGenerator,
+    priority: 2
+  })
+];
+
+// === TEAM ===
+const team = new Team({
+  name: 'Marketing Ads Team',
+  agents: [contentAnalyzer, reportGenerator],
+  tasks: tasks,
+  inputs: { url: 'https://example.com', language: 'en' }
+});
+
+export default team;
+```
+
 ### Outcome
 With KaibanJS, teams receive:
 
