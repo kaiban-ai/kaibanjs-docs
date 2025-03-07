@@ -73,7 +73,15 @@ const team = new Team({
      where I worked with Vue and Tailwind. 
      I earned a Bachelor of Science in Computer Science from FIU in 2018, 
      and I completed a JavaScript bootcamp that same year.` },  // Initial input for the first task
-    env: {OPENAI_API_KEY: 'your-open-ai-api-key'}  // Environment variables for the team
+    env: {OPENAI_API_KEY: 'your-open-ai-api-key'},  // Environment variables for the team
+    insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
 });
 
 // Listen to the workflow status changes
@@ -126,6 +134,26 @@ A collection of environment variables that configure access to AI model APIs nee
   - `MISTRAL_API_KEY` for Mistral.
 
 **Note:** It is crucial to use environment variables to manage these API keys. This method prevents sensitive information from being hardcoded into the source code, enhancing the security and adaptability of your system. It allows for easy updates and changes without altering the codebase, providing a secure and scalable solution for integrating AI services.
+
+#### `insights`
+A string containing the team's knowledge base and experience that can be referenced by agents during task execution. This allows agents to make informed decisions based on historical data, patterns, and previous experiences.
+
+- **Type:** String (optional)
+- **Example:**
+```js
+const team = new Team({
+  // ... other team configuration ...
+  insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
+});
+```
+- **Usage:** Agents can access and utilize these insights to provide more personalized and context-aware responses, improving the quality of their task outputs.
 
 #### `logLevel`
 The logging level set for monitoring and debugging the team's activities.
@@ -228,56 +256,4 @@ Marks a task as validated, used in the HITL process to approve a task that requi
 #### `onWorkflowStatusChange(callback)`
 Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
 - **Parameters:**
-  - `callback` (Function): A function to be called when the workflow status changes.
-- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-**Example:**
-
-```js
-team.onWorkflowStatusChange((status) => {
-  console.log('Workflow status:', status);
-});
-```
-
-#### `getTasksByStatus(status)`
-Retrieves tasks filtered by a specific status.
-- **Parameters:**
-  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L58) values.
-- **Returns:** Array of tasks with the specified status.
-
-**Example:**
-
-```js
-const completedTasks = team.getTasksByStatus('DONE');
-console.log(pendingTasks);
-```
-
-#### `getWorkflowStatus()`
-Retrieves the current status of the workflow.
-- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-#### `getWorkflowResult()`
-Retrieves the final result of the workflow. Should be called only after the workflow has finished.
-- **Returns:** The workflow result if finished, null otherwise.
-- **Type:** String
-
-#### `getTasks()`
-Retrieves all tasks in the team's workflow.
-- **Returns:** Array of all tasks.
-
-### The Team Store
-The store serves as the backbone for state management within the KaibanJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.
-
-
-**Integration with Team:** 
-
-Each team operates with its own dedicated store instance. This store orchestrates all aspects of the team's function, from initiating tasks and updating agent statuses to managing inputs and outputs. This ensures that all components within the team are synchronized and function cohesively.
-
-**Further Reading:** For an in-depth exploration of the store’s capabilities and setup, please refer to the detailed store documentation.
-
-### Conclusion
-The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within KaibanJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
-
-:::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
-:::
+  - `callback`
