@@ -35,7 +35,7 @@ Feel free to explore the project and return to this tutorial for a detailed walk
 :::note[Note]
 This tutorial assumes you have a basic understanding of the KaibanJS framework and custom tool creation. If you're new to these topics, we recommend reviewing the following resources before proceeding:
 
-- [Getting Started with KaibanJS](/category/get-started)
+- [Getting Started with KaibanJS](/)
 - [Creating Custom Tools in KaibanJS](/tools-docs/custom-tools/Create%20a%20Custom%20Tool)
 
 These guides will provide you with the foundational knowledge needed to make the most of this tutorial.

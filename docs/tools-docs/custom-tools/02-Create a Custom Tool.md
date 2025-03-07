@@ -60,28 +60,57 @@ Create a new class that extends the `Tool` class:
 
 ```javascript
 export class CustomTool extends Tool {
-    constructor(fields) {
-        super(fields);
-        // Initialize any required fields
-        this.apiKey = fields.apiKey;
-        
-        // Set the tool's name and description
-        this.name = "custom_tool";
-        this.description = `Describe what your tool does and how it should be used.`;
-        
-        // Define the input schema using zod
-        this.schema = z.object({
-            query: z.string().describe("Describe the expected input"),
-        });
-    }
+  constructor(fields) {
+    super(fields);
+    // Initialize any required fields
+    this.apiKey = fields.apiKey;
 
-    async _call(input) {
-        // Implement the core functionality of your tool here
-        // This method will be called when the agent uses the tool
-        // Process the input and return the result
-    }
+    // Set the tool's name and description
+    this.name = "custom_tool";
+    this.description = `Describe what your tool does and how it should be used.`;
+
+    // Define the input schema using zod
+    this.schema = z.object({
+      query: z.string().describe("Describe the expected input")
+    });
+  }
+
+  async _call(input) {
+    // Implement the core functionality of your tool here
+    // This method will be called when the agent uses the tool
+    // Process the input and return the result
+  }
 }
 ```
+
+**Implementation Note:**
+There are two valid approaches to define tool properties in LangChain:
+
+1. **Direct Property Assignment** (as shown above):
+
+   ```javascript
+   constructor(fields) {
+       super(fields);
+       this.name = "custom_tool";
+       this.description = "Tool description";
+       this.schema = z.object({...});
+   }
+   ```
+
+2. **Constructor Fields** (LangChain's preferred way):
+   ```javascript
+   constructor(fields) {
+       super({
+           name: "custom_tool",
+           description: "Tool description",
+           schema: z.object({...}),
+           ...fields
+       });
+   }
+   ```
+
+Both approaches work correctly with KaibanJS. The second approach is more aligned with LangChain's implementation, but either method will function properly in your applications.
+:::
 
 ### Step 3: Implement the `_call` Method
 
@@ -114,19 +143,19 @@ async _call(input) {
 Once you've created your custom tool, you can use it with a Kaiban agent:
 
 ```javascript
-import { Agent } from 'kaibanjs';
-import { CustomTool } from './CustomTool';
+import { Agent } from "kaibanjs";
+import { CustomTool } from "./CustomTool";
 
 const customTool = new CustomTool({
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_API_KEY"
 });
 
 const agent = new Agent({
-    name: 'CustomAgent', 
-    role: 'Specialized Task Performer', 
-    goal: 'Utilize the custom tool to perform specific tasks.',
-    background: 'Expert in using specialized tools for task completion',
-    tools: [customTool]
+  name: "CustomAgent",
+  role: "Specialized Task Performer",
+  goal: "Utilize the custom tool to perform specific tasks.",
+  background: "Expert in using specialized tools for task completion",
+  tools: [customTool]
 });
 
 // Use the agent in your Kaiban workflow
@@ -141,9 +170,11 @@ The key to creating a highly reliable tool is to minimize its responsibilities a
 You can create a wide variety of custom tools using npm packages or external APIs. Here are some ideas:
 
 1. **Web Scraping Tool** (using Puppeteer):
+
    - Scrape dynamic web content or take screenshots of web pages.
+
    ```javascript
-   import puppeteer from 'puppeteer';
+   import puppeteer from "puppeteer";
 
    class WebScraperTool extends Tool {
      async _call(input) {
@@ -158,9 +189,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 2. **PDF Processing Tool** (using pdf-parse):
+
    - Extract text from PDF files.
+
    ```javascript
-   import pdf from 'pdf-parse';
+   import pdf from "pdf-parse";
 
    class PDFExtractorTool extends Tool {
      async _call(input) {
@@ -172,9 +205,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 3. **Image Analysis Tool** (using sharp):
+
    - Analyze or manipulate images.
+
    ```javascript
-   import sharp from 'sharp';
+   import sharp from "sharp";
 
    class ImageAnalyzerTool extends Tool {
      async _call(input) {
@@ -185,9 +220,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 4. **Natural Language Processing Tool** (using natural):
+
    - Perform NLP tasks like tokenization or sentiment analysis.
+
    ```javascript
-   import natural from 'natural';
+   import natural from "natural";
 
    class NLPTool extends Tool {
      async _call(input) {
@@ -198,16 +235,21 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 5. **Database Query Tool** (using a database driver):
+
    - Execute database queries and return results.
+
    ```javascript
-   import { MongoClient } from 'mongodb';
+   import { MongoClient } from "mongodb";
 
    class DatabaseQueryTool extends Tool {
      async _call(input) {
        const client = new MongoClient(this.dbUrl);
        await client.connect();
        const db = client.db(this.dbName);
-       const result = await db.collection(input.collection).find(input.query).toArray();
+       const result = await db
+         .collection(input.collection)
+         .find(input.query)
+         .toArray();
        await client.close();
        return result;
      }
