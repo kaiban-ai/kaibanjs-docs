@@ -74,6 +74,7 @@ This format enables:
     └── 06-API Key Management.md
     └── 07-Deployment Options.md
     └── 07-Structured-Output.md
+    └── 08-Using Team Insights.md
     └── _category_.json
 └── llms-docs
     └── 01-Overview.md
@@ -136,6 +137,10 @@ This format enables:
     └── 05-Hardware Optimization for PC Games.md
     └── 06-GitHub-Release-Social-Media-Team.md
     └── 07-AI-Driven Reddit Comment Generator.md
+    └── 08-Marketing Reports & Ads Optimization.md
+    └── 09-Automating Metadata Extraction and Discord Publishing.md
+    └── 10-SSL Security Analysis.md
+    └── 11-Automated LinkedIn Content Creation.md
     └── _category_.json
 ```
 
@@ -579,7 +584,15 @@ const team = new Team({
      where I worked with Vue and Tailwind. 
      I earned a Bachelor of Science in Computer Science from FIU in 2018, 
      and I completed a JavaScript bootcamp that same year.` },  // Initial input for the first task
-    env: {OPENAI_API_KEY: 'your-open-ai-api-key'}  // Environment variables for the team
+    env: {OPENAI_API_KEY: 'your-open-ai-api-key'},  // Environment variables for the team
+    insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
 });
 
 // Listen to the workflow status changes
@@ -632,6 +645,26 @@ A collection of environment variables that configure access to AI model APIs nee
   - `MISTRAL_API_KEY` for Mistral.
 
 **Note:** It is crucial to use environment variables to manage these API keys. This method prevents sensitive information from being hardcoded into the source code, enhancing the security and adaptability of your system. It allows for easy updates and changes without altering the codebase, providing a secure and scalable solution for integrating AI services.
+
+#### `insights`
+A string containing the team's knowledge base and experience that can be referenced by agents during task execution. This allows agents to make informed decisions based on historical data, patterns, and previous experiences.
+
+- **Type:** String (optional)
+- **Example:**
+```js
+const team = new Team({
+  // ... other team configuration ...
+  insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
+});
+```
+- **Usage:** Agents can access and utilize these insights to provide more personalized and context-aware responses, improving the quality of their task outputs.
 
 #### `logLevel`
 The logging level set for monitoring and debugging the team's activities.
@@ -734,60 +767,7 @@ Marks a task as validated, used in the HITL process to approve a task that requi
 #### `onWorkflowStatusChange(callback)`
 Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
 - **Parameters:**
-  - `callback` (Function): A function to be called when the workflow status changes.
-- **Returns:** Function to unsubscribe from the status changes. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-**Example:**
-
-```js
-team.onWorkflowStatusChange((status) => {
-  console.log('Workflow status:', status);
-});
-```
-
-#### `getTasksByStatus(status)`
-Retrieves tasks filtered by a specific status.
-- **Parameters:**
-  - `status` (String): The status to filter tasks by. Should be one of [TASK_STATUS_enum](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L58) values.
-- **Returns:** Array of tasks with the specified status.
-
-**Example:**
-
-```js
-const completedTasks = team.getTasksByStatus('DONE');
-console.log(pendingTasks);
-```
-
-#### `getWorkflowStatus()`
-Retrieves the current status of the workflow.
-- **Returns:** String representing the current workflow status. Refer to the [WORKFLOW_STATUS_ENUM](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js#L78) for more details.
-
-#### `getWorkflowResult()`
-Retrieves the final result of the workflow. Should be called only after the workflow has finished.
-- **Returns:** The workflow result if finished, null otherwise.
-- **Type:** String
-
-#### `getTasks()`
-Retrieves all tasks in the team's workflow.
-- **Returns:** Array of all tasks.
-
-### The Team Store
-The store serves as the backbone for state management within the KaibanJS framework. It uses [Zustand](https://github.com/pmndrs/zustand) to provide a centralized and reactive system that efficiently manages and maintains the state of agents, tasks, and entire team workflows.
-
-
-**Integration with Team:** 
-
-Each team operates with its own dedicated store instance. This store orchestrates all aspects of the team's function, from initiating tasks and updating agent statuses to managing inputs and outputs. This ensures that all components within the team are synchronized and function cohesively.
-
-**Further Reading:** For an in-depth exploration of the store’s capabilities and setup, please refer to the detailed store documentation.
-
-### Conclusion
-The `Team` class, with its underlying store, orchestrates the flow of tasks and agent interactions within KaibanJS. Detailed documentation of the store's mechanisms will be provided separately to delve into its state management capabilities and how it supports the team's dynamic operations.
-
-:::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
-:::
-
+  - `callback`
 
 
 ### ./src/core-concepts/05-State Management.md
@@ -4122,7 +4102,7 @@ Feel free to explore the project and return to this tutorial for a detailed walk
 :::note[Note]
 This tutorial assumes you have a basic understanding of the KaibanJS framework and custom tool creation. If you're new to these topics, we recommend reviewing the following resources before proceeding:
 
-- [Getting Started with KaibanJS](/category/get-started)
+- [Getting Started with KaibanJS](/)
 - [Creating Custom Tools in KaibanJS](/tools-docs/custom-tools/Create%20a%20Custom%20Tool)
 
 These guides will provide you with the foundational knowledge needed to make the most of this tutorial.
@@ -5061,6 +5041,217 @@ Common issues and solutions:
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
+
+
+### ./src/how-to/08-Using Team Insights.md
+
+
+//--------------------------------------------
+// File: ./src/how-to/08-Using Team Insights.md
+//--------------------------------------------
+
+---
+title: Using Team Insights
+description: Learn how to leverage team insights in KaibanJS to provide agents with historical knowledge and context for better decision-making.
+---
+
+## Introduction
+
+Team insights in KaibanJS allow you to provide your agents with a shared knowledge base of historical data, patterns, and experiences. This feature enables agents to make more informed decisions and provide context-aware responses based on past experiences and established patterns.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## How to Implement Team Insights
+
+To use team insights, you need to provide an `insights` string when creating your team. This string can contain any relevant information that you want your agents to consider during task execution.
+
+### Basic Usage
+
+Here's a simple example of how to create a team with insights:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+
+const team = new Team({
+  name: 'Customer Service Team',
+  agents: [/* your agents */],
+  tasks: [/* your tasks */],
+  insights: `
+Customer Service History (2023):
+1. Most common inquiries relate to account access (45% of tickets)
+2. Peak support hours: 9 AM - 11 AM EST
+3. Average response time: 2.5 minutes
+4. Customer satisfaction highest with video tutorials
+5. Common pain point: password reset process
+  `
+});
+```
+
+### Structured Insights
+
+For more complex scenarios, you can structure your insights to make them more organized and easier for agents to reference:
+
+```javascript
+const team = new Team({
+  name: 'Travel Experience Team',
+  agents: [profileAnalyst, recommendationAgent],
+  tasks: [analysisTask, recommendationTask],
+  insights: `
+Passenger Profile: Michael Zhang (FF-789321)
+Travel History and Preferences (2023):
+1. Seating: Window seats (87% of flights), Row 11 preferred
+2. Dining: Asian Vegetarian meals (9/10 long-haul flights)
+3. Airport Services: Terminal 4 lounge user (avg. 2.5hr stays)
+4. Entertainment: Dissatisfied with 787 fleet options
+5. Past Issues: Delays on DXB-892, requested better updates
+
+Flight Statistics:
+- Total Flights: 24
+- Long-haul: 10
+- Domestic: 14
+- On-time Rate: 92%
+
+Customer Feedback:
+- Survey ID: CS-982
+- Satisfaction Score: 4.2/5
+- Key Comments: "Great service, needs better delay updates"
+  `
+});
+```
+
+## Best Practices
+
+1. **Structure Your Insights**
+   - Organize information into clear categories
+   - Use bullet points or numbered lists for better readability
+   - Include specific identifiers and metrics when available
+
+2. **Keep Information Relevant**
+   - Include only information that agents need for their tasks
+   - Update insights regularly to maintain relevance
+   - Remove outdated or irrelevant information
+
+3. **Include Specific Details**
+   - Use concrete numbers and statistics
+   - Reference specific IDs or identifiers
+   - Include dates and timeframes
+
+4. **Format for Readability**
+   - Use clear section headers
+   - Break down long paragraphs
+   - Highlight key information
+
+## Common Use Cases
+
+1. **Customer Service**
+   - Customer interaction history
+   - Common issues and solutions
+   - Peak service times
+   - Customer satisfaction metrics
+
+2. **Travel Services**
+   - Passenger preferences
+   - Travel history
+   - Service ratings
+   - Common complaints
+
+3. **Project Management**
+   - Team performance metrics
+   - Project success rates
+   - Common bottlenecks
+   - Best practices
+
+4. **Product Development**
+   - User feedback history
+   - Feature usage statistics
+   - Common feature requests
+   - Bug patterns
+
+## Example: Full Implementation
+
+Here's a complete example showing how insights can be used in a customer service context:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+
+// Define agents
+const analysisAgent = new Agent({
+  name: 'Alice',
+  role: 'Customer Profile Analyst',
+  goal: 'Analyze customer history and identify key patterns',
+  background: 'Customer Behavior Analysis',
+});
+
+const supportAgent = new Agent({
+  name: 'Bob',
+  role: 'Support Specialist',
+  goal: 'Provide personalized support solutions',
+  background: 'Customer Service and Problem Resolution',
+});
+
+// Define tasks
+const analysisTask = new Task({
+  description: 'Analyze customer profile and recent interactions',
+  expectedOutput: 'Detailed analysis of customer needs and patterns',
+  agent: analysisAgent,
+});
+
+const supportTask = new Task({
+  description: 'Create personalized support plan based on analysis',
+  expectedOutput: 'Support plan with specific recommendations',
+  agent: supportAgent,
+  isDeliverable: true,
+});
+
+// Create team with insights
+const team = new Team({
+  name: 'Customer Support Team',
+  agents: [analysisAgent, supportAgent],
+  tasks: [analysisTask, supportTask],
+  insights: `
+Customer: John Smith (ID: CS-45678)
+Support History (Last 90 Days):
+1. Ticket #T-892: Login issues with mobile app
+   - Resolution: Guided through app reinstallation
+   - Satisfaction: 4/5
+
+2. Ticket #T-923: Billing inquiry
+   - Resolution: Explained premium features
+   - Satisfaction: 5/5
+
+Usage Patterns:
+- Primary platform: Mobile (iOS)
+- Feature usage: Heavy user of analytics dashboard
+- Login frequency: Daily
+- Subscription: Premium tier
+
+Previous Feedback:
+- Appreciates quick responses
+- Prefers video tutorials over text
+- Has mentioned interest in API access
+  `,
+  env: { OPENAI_API_KEY: process.env.OPENAI_API_KEY }
+});
+
+// Start the workflow
+team.start()
+  .then(output => {
+    console.log('Support plan:', output.result);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+```
+
+## Conclusion
+
+Team insights are a powerful feature in KaibanJS that enable you to create more context-aware and effective multi-agent systems. By providing your agents with relevant historical data and patterns, you can significantly improve the quality and relevance of their outputs.
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+::: 
 
 
 ### ./src/llms-docs/01-Overview.md
@@ -6904,28 +7095,57 @@ Create a new class that extends the `Tool` class:
 
 ```javascript
 export class CustomTool extends Tool {
-    constructor(fields) {
-        super(fields);
-        // Initialize any required fields
-        this.apiKey = fields.apiKey;
-        
-        // Set the tool's name and description
-        this.name = "custom_tool";
-        this.description = `Describe what your tool does and how it should be used.`;
-        
-        // Define the input schema using zod
-        this.schema = z.object({
-            query: z.string().describe("Describe the expected input"),
-        });
-    }
+  constructor(fields) {
+    super(fields);
+    // Initialize any required fields
+    this.apiKey = fields.apiKey;
 
-    async _call(input) {
-        // Implement the core functionality of your tool here
-        // This method will be called when the agent uses the tool
-        // Process the input and return the result
-    }
+    // Set the tool's name and description
+    this.name = "custom_tool";
+    this.description = `Describe what your tool does and how it should be used.`;
+
+    // Define the input schema using zod
+    this.schema = z.object({
+      query: z.string().describe("Describe the expected input")
+    });
+  }
+
+  async _call(input) {
+    // Implement the core functionality of your tool here
+    // This method will be called when the agent uses the tool
+    // Process the input and return the result
+  }
 }
 ```
+
+**Implementation Note:**
+There are two valid approaches to define tool properties in LangChain:
+
+1. **Direct Property Assignment** (as shown above):
+
+   ```javascript
+   constructor(fields) {
+       super(fields);
+       this.name = "custom_tool";
+       this.description = "Tool description";
+       this.schema = z.object({...});
+   }
+   ```
+
+2. **Constructor Fields** (LangChain's preferred way):
+   ```javascript
+   constructor(fields) {
+       super({
+           name: "custom_tool",
+           description: "Tool description",
+           schema: z.object({...}),
+           ...fields
+       });
+   }
+   ```
+
+Both approaches work correctly with KaibanJS. The second approach is more aligned with LangChain's implementation, but either method will function properly in your applications.
+:::
 
 ### Step 3: Implement the `_call` Method
 
@@ -6958,19 +7178,19 @@ async _call(input) {
 Once you've created your custom tool, you can use it with a Kaiban agent:
 
 ```javascript
-import { Agent } from 'kaibanjs';
-import { CustomTool } from './CustomTool';
+import { Agent } from "kaibanjs";
+import { CustomTool } from "./CustomTool";
 
 const customTool = new CustomTool({
-  apiKey: "YOUR_API_KEY",
+  apiKey: "YOUR_API_KEY"
 });
 
 const agent = new Agent({
-    name: 'CustomAgent', 
-    role: 'Specialized Task Performer', 
-    goal: 'Utilize the custom tool to perform specific tasks.',
-    background: 'Expert in using specialized tools for task completion',
-    tools: [customTool]
+  name: "CustomAgent",
+  role: "Specialized Task Performer",
+  goal: "Utilize the custom tool to perform specific tasks.",
+  background: "Expert in using specialized tools for task completion",
+  tools: [customTool]
 });
 
 // Use the agent in your Kaiban workflow
@@ -6985,9 +7205,11 @@ The key to creating a highly reliable tool is to minimize its responsibilities a
 You can create a wide variety of custom tools using npm packages or external APIs. Here are some ideas:
 
 1. **Web Scraping Tool** (using Puppeteer):
+
    - Scrape dynamic web content or take screenshots of web pages.
+
    ```javascript
-   import puppeteer from 'puppeteer';
+   import puppeteer from "puppeteer";
 
    class WebScraperTool extends Tool {
      async _call(input) {
@@ -7002,9 +7224,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 2. **PDF Processing Tool** (using pdf-parse):
+
    - Extract text from PDF files.
+
    ```javascript
-   import pdf from 'pdf-parse';
+   import pdf from "pdf-parse";
 
    class PDFExtractorTool extends Tool {
      async _call(input) {
@@ -7016,9 +7240,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 3. **Image Analysis Tool** (using sharp):
+
    - Analyze or manipulate images.
+
    ```javascript
-   import sharp from 'sharp';
+   import sharp from "sharp";
 
    class ImageAnalyzerTool extends Tool {
      async _call(input) {
@@ -7029,9 +7255,11 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 4. **Natural Language Processing Tool** (using natural):
+
    - Perform NLP tasks like tokenization or sentiment analysis.
+
    ```javascript
-   import natural from 'natural';
+   import natural from "natural";
 
    class NLPTool extends Tool {
      async _call(input) {
@@ -7042,16 +7270,21 @@ You can create a wide variety of custom tools using npm packages or external API
    ```
 
 5. **Database Query Tool** (using a database driver):
+
    - Execute database queries and return results.
+
    ```javascript
-   import { MongoClient } from 'mongodb';
+   import { MongoClient } from "mongodb";
 
    class DatabaseQueryTool extends Tool {
      async _call(input) {
        const client = new MongoClient(this.dbUrl);
        await client.connect();
        const db = client.db(this.dbName);
-       const result = await db.collection(input.collection).find(input.query).toArray();
+       const result = await db
+         .collection(input.collection)
+         .find(input.query)
+         .toArray();
        await client.close();
        return result;
      }
@@ -7079,6 +7312,7 @@ Creating custom tools allows you to significantly extend the capabilities of you
 :::info[We Love Feedback!]
 Is there something unclear or quirky in this tutorial? Have a suggestion or spotted an issue? Help us improve by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). Your input is valuable!
 :::
+
 
 
 ### ./src/tools-docs/custom-tools/04-Serper.md
@@ -9911,6 +10145,712 @@ Ready to simplify your Reddit comment generation? Explore KaibanJS and revolutio
 Have suggestions or questions about this use case? Join our community or submit an issue on GitHub to help us improve. [Contribute Now](https://github.com/kaiban-ai/KaibanJS/issues)
 :::
 
+
+
+
+### ./src/use-cases/08-Marketing Reports & Ads Optimization.md
+
+
+//--------------------------------------------
+// File: ./src/use-cases/08-Marketing Reports & Ads Optimization.md
+//--------------------------------------------
+
+---
+title: Marketing Reports & Ads Optimization
+description: KaibanJS automates marketing report generation and ad campaign optimization. AI agents analyze content, extract keywords, and generate ready-to-use strategies, streamlining workflows and enhancing precision.
+---
+
+Creating marketing reports and optimizing ads manually can be inefficient. KaibanJS automates this process with AI agents that extract insights, identify keywords, and generate ad strategies—saving time and improving precision.
+
+![image](https://github.com/user-attachments/assets/ccf3c265-0bc0-43df-ad35-a0f35c4cd165)
+
+### The Challenge
+Marketing teams often struggle with:
+
+- Extracting key insights from website content.
+- Identifying and structuring effective keywords.
+- Creating compelling ad copies tailored to the audience.
+- Managing multiple campaigns while ensuring consistency.
+
+Manual processes can be inconsistent and time-consuming, especially for large-scale campaigns.
+
+### The Solution with KaibanJS
+KaibanJS automates marketing workflows using AI agents that extract content insights, generate keyword-focused reports, and create optimized ad templates. This ensures efficiency and consistency across multiple campaigns.
+
+### The Agentic Solution
+KaibanJS utilizes two specialized AI agents:
+
+:::agents
+- **ContentAnalyzer**:
+  - **Extracts** key themes, keywords, and value propositions from website content.
+  - **Identifies** tone, style, and unique selling points.
+- **ReportGenerator**:
+  - **Compiles** marketing insights into structured reports.
+  - **Generates** keyword-focused ad templates with optimized headlines and descriptions.
+  - **Recommends** ad optimization strategies, including negative keyword suggestions.
+:::
+
+### Process Overview
+Here’s how KaibanJS automates marketing optimization:
+
+:::tasks
+1. **Content Analysis:** The **ContentAnalyzer** scans the provided URL to extract keywords, tone, and value propositions.
+2. **Report Generation:** The **ReportGenerator** structures insights into a marketing report and generates ad templates.
+3. **Optimization Suggestions:** Includes keyword improvements and performance-enhancing strategies.
+4. **Output Compilation:** Delivers a complete marketing report with actionable insights and ready-to-use ad copies.
+:::
+
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { Tool } from "@langchain/core/tools";
+import { z } from "zod";
+import axios from "axios";
+
+// === UrlMarkdown Tool ===
+export class UrlMarkdown extends Tool {
+  constructor(fields) {
+    super(fields);
+    this.name = "url_markdown_tool";
+    this.description = "Gets content in Markdown format from a URL.";
+    this.schema = z.object({
+      url: z
+        .string()
+        .url()
+        .describe("The URL from which to extract content in Markdown format."),
+    });
+  }
+
+  async _call(input) {
+    try {
+      const requestUrl = `https://r.jina.ai/${encodeURIComponent(input.url)}`;
+      const response = await axios.get(requestUrl);
+      return response.data;
+    } catch (error) {
+      return `Error getting content from URL: ${error.message}`;
+    }
+  }
+}
+
+// Tool instance
+const urlMarkdownTool = new UrlMarkdown();
+
+// === AGENTS ===
+
+// Content Analysis Agent
+const contentAnalyzer = new Agent({
+  name: 'ContentAnalyzer',
+  role: 'Content Analysis Specialist',
+  goal: 'Extract and analyze relevant information from URLs',
+  background: 'Expert in web content analysis and key information extraction',
+  tools: [urlMarkdownTool]
+});
+
+// Report Generator Agent
+const reportGenerator = new Agent({
+  name: 'ReportGenerator',
+  role: 'Marketing Report Specialist',
+  goal: 'Generate detailed marketing reports and optimized ads',
+  background: 'Specialist in digital marketing and Google Ads generation',
+  tools: []
+});
+
+// === TASKS ===
+const tasks = [
+  new Task({
+    description: `Analyze the provided URL: {url} and extract key information.`,
+    agent: contentAnalyzer,
+    priority: 1
+  }),
+  new Task({
+    description: `Generate a complete marketing report and optimized ads using extracted information.`,
+    agent: reportGenerator,
+    priority: 2
+  })
+];
+
+// === TEAM ===
+const team = new Team({
+  name: 'Marketing Ads Team',
+  agents: [contentAnalyzer, reportGenerator],
+  tasks: tasks,
+  inputs: { url: 'https://example.com', language: 'en' }
+});
+
+export default team;
+```
+
+### Outcome
+With KaibanJS, teams receive:
+
+- **Marketing Reports:** Structured insights on keywords, messaging, and ad performance recommendations.
+- **Optimized Ad Templates:** Ready-to-use headlines, descriptions, and calls-to-action.
+- **Scalable Automation:** Repeatable workflows for multiple clients or campaigns.
+
+### Expected Benefits
+- **Time Savings:** Automates content analysis and report creation.
+- **Higher Performance:** Generates data-driven ad strategies with optimized relevance.
+- **Scalability:** Easily adapts to various business needs.
+- **Consistency:** Ensures uniform quality across all campaigns.
+
+### Get Started Today
+Ready to streamline your marketing workflows? Explore KaibanJS and elevate your ad campaigns.
+
+🌐 **Website**: [KaibanJS](https://www.kaibanjs.com/)  
+💻 **GitHub Repository**: [KaibanJS on GitHub](https://github.com/kaiban-ai/KaibanJS)  
+🤝 **Discord Community**: [Join the Community](https://kaibanjs.com/discord)  
+
+---
+
+:::info[We Value Your Feedback!]
+Have ideas or suggestions? Join our community or contribute on GitHub. [Contribute Now](https://github.com/kaiban-ai/KaibanJS/issues)
+:::
+
+
+
+### ./src/use-cases/09-Automating Metadata Extraction and Discord Publishing.md
+
+
+//--------------------------------------------
+// File: ./src/use-cases/09-Automating Metadata Extraction and Discord Publishing.md
+//--------------------------------------------
+
+---
+title: Automating Metadata Extraction and Discord Publishing
+description: KaibanJS automates metadata extraction from websites and publishing updates to Discord channels, streamlining content workflows with AI agents.
+---
+
+Manually extracting metadata from web pages and sharing updates on Discord is time-consuming and prone to inconsistencies. KaibanJS automates this process using AI agents, ensuring efficient and structured communication.
+
+![image](https://github.com/user-attachments/assets/4e768fe9-4561-4a42-b9f6-4141c686affe)
+
+
+### The Challenge
+Managing content updates and community announcements requires:
+
+- **Extracting Metadata:** Parsing web pages for titles, descriptions, images, and key details.
+- **Formatting Messages:** Ensuring updates are structured and visually appealing.
+- **Publishing Consistently:** Sharing updates regularly while maintaining accuracy.
+- **Reducing Manual Work:** Automating repetitive tasks to save time.
+
+Traditional methods are slow, error-prone, and difficult to scale.
+
+### The Solution with KaibanJS
+KaibanJS automates metadata extraction and publication by combining AI agents into a seamless workflow. Teams can extract key content from web pages and instantly share it on Discord channels, reducing effort and improving consistency.
+
+### The Agentic Solution
+KaibanJS employs two specialized agents to handle metadata extraction and publication:
+
+:::agents
+- **MetadataExtractor:**
+  - **Extracts** metadata such as title, description, images, author, and publication date from a web page.
+  - **Formats** extracted content for reuse and structured outputs.
+- **DiscordPublisher:**
+  - **Creates** engaging and visually appealing Discord messages using structured metadata.
+  - **Ensures** consistency with professional formatting and key details.
+:::
+
+### Process Overview
+Here’s how KaibanJS automates metadata extraction and publishing:
+
+:::tasks
+1. **Metadata Extraction:** The **MetadataExtractor** parses the provided URL and retrieves key details such as title, description, image, author, and publication date.
+2. **Publishing to Discord:** The **DiscordPublisher** formats the extracted metadata into a structured message and sends it to a designated Discord channel.
+3. **Automated Output:** The final message is visually appealing and standardized, ensuring professional community engagement.
+:::
+
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { Tool } from "@langchain/core/tools";
+import { z } from "zod";
+import axios from "axios";
+import * as cheerio from 'cheerio';
+
+// === MetadataTool ===
+export class MetadataTool extends Tool {
+  constructor(fields) {
+    super(fields);
+    this.name = "metadata_tool";
+    this.description = "Extracts metadata from a URL in a structured format";
+    this.schema = z.object({
+      url: z
+        .string()
+        .url()
+        .describe("The URL from which to extract metadata"),
+    });
+  }
+
+  async _call(input) {
+    try {
+      const response = await axios.get(input.url);
+      const $ = cheerio.load(response.data);
+      
+      const metadata = {
+        title: $('title').text(),
+        description: $('meta[property="og:description"]').attr('content'),
+        url: $('link[rel="canonical"]').attr('href'),
+        image: $('meta[property="og:image"]').attr('content'),
+        author: $('meta[name="twitter:data1"]').attr('content'),
+        twitter: $('meta[name="twitter:creator"]').attr('content'),
+        published_time: $('meta[property="article:published_time"]').attr('content')
+      };
+      return metadata;
+    } catch (error) {
+      return `Error extracting metadata: ${error.message}`;
+    }
+  }
+}
+
+// === DiscordTool ===
+export class DiscordTool extends Tool {
+  name = "discord_tool";
+  description = "Sends a message to Discord using a webhook";
+
+  async _call(input) {
+    try {
+      const payload = {
+        username: "Metadata Bot",
+        content: `New content update: ${input.title}`,
+        embeds: [{
+          title: input.title,
+          description: input.description,
+          url: input.url,
+          image: { url: input.image }
+        }]
+      };
+      await axios.post(process.env.DISCORD_WEBHOOK_URL, payload);
+      return `Message sent to Discord successfully`;
+    } catch (error) {
+      return `Error sending message to Discord: ${error.message}`;
+    }
+  }
+}
+
+const metadataTool = new MetadataTool();
+const discordTool = new DiscordTool();
+
+const metadataExtractor = new Agent({
+  name: 'MetadataExtractor',
+  tools: [metadataTool]
+});
+
+const discordPublisher = new Agent({
+  name: 'DiscordPublisher',
+  tools: [discordTool]
+});
+
+const tasks = [
+  new Task({ agent: metadataExtractor }),
+  new Task({ agent: discordPublisher })
+];
+
+const team = new Team({ agents: [metadataExtractor, discordPublisher], tasks });
+export default team;
+```
+
+### Outcome
+With KaibanJS, teams can:
+
+- **Automate Content Updates:** Eliminate manual metadata extraction and formatting.
+- **Improve Efficiency:** Save time and reduce effort with AI-driven workflows.
+- **Ensure Consistency:** Standardize Discord messages for better communication.
+- **Scale Effortlessly:** Handle multiple updates without increasing workload.
+
+### Get Started Today
+Ready to simplify your content workflows? Explore KaibanJS and revolutionize how you manage updates for your community.
+
+🌐 **Website**: [KaibanJS](https://www.kaibanjs.com/)  
+💻 **GitHub Repository**: [KaibanJS on GitHub](https://github.com/kaiban-ai/KaibanJS)  
+🤝 **Discord Community**: [Join the Community](https://kaibanjs.com/discord)  
+
+---
+
+:::info[We Value Your Feedback!]
+Have ideas or suggestions to improve this use case? Join our community or contribute on GitHub. [Contribute Now](https://github.com/kaiban-ai/KaibanJS/issues)
+:::
+
+
+
+### ./src/use-cases/10-SSL Security Analysis.md
+
+
+//--------------------------------------------
+// File: ./src/use-cases/10-SSL Security Analysis.md
+//--------------------------------------------
+
+---
+title: SSL Security Analysis
+description: KaibanJS automates SSL security assessments with intelligent agents that analyze certificate data, identify risks, and generate detailed security reports.
+---
+
+In today's cybersecurity landscape, ensuring SSL certificate integrity and domain security is crucial for businesses, website owners, and IT security teams. Manually analyzing SSL certificates and identifying vulnerabilities can be time-consuming and prone to oversight.
+
+![image](https://github.com/user-attachments/assets/efc77dd5-50a6-44b9-b3cf-76d8e43a10b3)
+
+### Traditional Approach Challenges
+SSL security audits are typically conducted manually by security teams or system administrators. These traditional methods come with notable challenges:
+
+1. **Certificate Enumeration:** Security professionals must manually query SSL certificate databases like crt.sh to retrieve certificate details for a given domain.
+2. **Risk Analysis:** Identifying potential vulnerabilities in SSL configurations requires expertise and manual review of certificate issuers, expiration dates, and security policies.
+3. **Report Generation:** Creating structured reports with risk assessments, compliance checks, and security recommendations is a time-intensive task.
+
+*Note: This use case automates SSL certificate retrieval, analysis, and report generation while leaving final security decisions to human experts.*
+
+### The Agentic Solution
+KaibanJS automates SSL security analysis by leveraging intelligent agents that fetch and analyze SSL certificates, generate security reports, and recommend improvements.
+
+- **Scenario:** Auditing SSL certificates for a given domain to ensure compliance, security, and proper configuration.
+
+Before diving into the automated process, let’s introduce the **key Agent** responsible for this task:
+
+:::agents
+- **SSL Certificate Analyzer:**
+  - **Retrieves** certificates using crt.sh.
+  - **Analyzes** certificate details, including issuers, validity periods, and risks.
+  - **Identifies** subdomains associated with the target domain.
+  - **Generates** a structured security report with recommendations.
+:::
+
+### Process Overview
+Here’s how the agent-driven workflow automates SSL certificate analysis:
+
+:::tasks
+1. **Certificate Retrieval:** The agent queries crt.sh via a proxy to fetch SSL certificate data for the target domain.
+2. **Security Analysis:** Extracts subdomain information, certificate issuers, expiration dates, and potential misconfigurations.
+3. **Risk Assessment:** Flags vulnerabilities such as outdated certificates, wildcard usage risks, and compatibility issues.
+4. **Report Generation:** Creates a structured SSL security report in markdown format, highlighting risks and recommended actions.
+:::
+
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { Tool } from "@langchain/core/tools";
+import { z } from "zod";
+import axios from "axios";
+
+// === CRTTool ===
+export class CRTTool extends Tool {
+  constructor(fields) {
+    super(fields);
+    this.name = "crt_tool";
+    this.description = "Fetches JSON data of certificates from crt.sh for a given domain using a CORS proxy.";
+    this.schema = z.object({
+      domain: z
+        .string()
+        .describe("The domain to fetch certificate JSON data for."),
+    });
+  }
+
+  async _call(input) {
+    try {
+      const requestUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+        `https://crt.sh/json?q=${input.domain}`
+      )}`;
+      const response = await axios.get(requestUrl);
+
+      // Parse the raw JSON response
+      const data = response.data;
+      if (typeof data === 'string') {
+        return JSON.parse(data); // Ensure string JSON is parsed
+      }
+      return data;
+    } catch (error) {
+      return `Error fetching JSON data from crt.sh: ${error.message}`;
+    }
+  }
+}
+
+// Tool instance
+const crtTool = new CRTTool();
+
+// === AGENTS ===
+const sslAnalyzer = new Agent({
+  name: 'SSL Certificate Analyzer',
+  role: 'SSL Certificate Security Analyst',
+  goal: 'Analyze SSL certificates and generate detailed security reports',
+  background: 'Expert in SSL certificate analysis and domain security configuration',
+  description: `Analyzes SSL certificate data issued for the domain {domain} and generates a report in {language}. Provides a report including:
+
+- List of identified subdomains
+- Information about certificate issuers and validity periods
+- Potential risks related to subdomains and SSL configuration
+- Recommendations to improve domain security`,
+  tools: [crtTool],
+});
+
+// === TASKS ===
+const analyzeSSL = new Task({
+  name: 'analyze_ssl',
+  description: 'Analyzes SSL certificates for {domain} and generates a security report in {language}',
+  agent: sslAnalyzer,
+  expectedOutput: `Report template:
+
+[![Nimbox Logo](https://crm.nimboxcrm.cloud/uploads/company/9e85677a40aafa432269e8b241f4ddae.png)](https://nimbox360.com)
+
+# 🔒 SSL Security Report for {domain}
+
+*Generated by [Nimbox360](https://nimbox360.com) with KaibanJS*
+
+## 📊 Executive Summary
+[Brief description of analysis and key findings]
+
+## 🌐 Identified Subdomains
+- List of found subdomains
+- Each on a separate line with bullet point
+
+## 📜 SSL Certificates
+| Domain | Issuer | Valid From | Valid Until | Status |
+|---------|---------|--------------|--------------|---------|
+[Table with certificate information]
+
+### ⚠️ Certificate Compatibility
+If Let's Encrypt certificates are detected:
+- ❗ Let's Encrypt certificates are not compatible with older iPhone devices
+- ❗ May present issues with older operating system versions
+- 💡 Consider commercial certificates for broader compatibility
+
+## 🚨 Risk Analysis
+1. [Identified Risk]
+   - Risk details
+   - Potential impact
+2. [Next risk...]
+
+### 🔍 Information Exposure
+- Evaluation of critical subdomain exposure
+- Identification of potential entry points for attackers
+
+## 💡 Recommendations
+1. **Wildcard Certificates**
+   - 🛡️ Use wildcard certificates (*.domain.com) to hide specific subdomains
+   - 🔐 Reduces exposure of sensitive information
+   - 📊 Simplifies certificate management
+
+2. **Security Improvements**
+   - 🔄 Implement automatic certificate renewal
+   - 🛡️ Configure HSTS to prevent attacks
+   - 🔒 Keep SSL/TLS configurations up to date
+
+## 📝 Conclusions
+[Summary of findings and recommended next steps]
+
+---
+
+*🔒 Analysis performed by [Nimbox360](https://nimbox360.com) SSL Analyzer*`
+});
+
+// === TEAM ===
+const team = new Team({
+  name: 'SSL Security Team',
+  agents: [sslAnalyzer],
+  tasks: [analyzeSSL],
+  inputs: {
+    domain: 'kaibanjs.com', // Domain to analyze SSL certificates
+    language: 'english', // Language for the report (english, spanish)
+  },
+  env: {
+    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY ?? (() => { throw new Error('OPENAI_API_KEY is required') })(),
+  }
+});
+
+export default team;
+```
+
+### Outcome
+The result is an automatically generated **SSL Security Report** that provides:
+
+- A list of subdomains associated with the target domain.
+- Certificate issuer details, validity periods, and expiration warnings.
+- Identification of potential security risks and misconfigurations.
+- Actionable recommendations for improving SSL security posture.
+
+By leveraging KaibanJS for SSL security analysis, cybersecurity teams and IT administrators can **streamline their workflow**, **reduce manual effort**, and **improve security monitoring** with AI-powered automation.
+
+### Expected Benefits
+- **Automated Security Audits:** Reduce manual effort by automating SSL certificate retrieval and analysis.
+- **Faster Threat Detection:** Quickly identify security risks related to SSL misconfigurations.
+- **Structured Compliance Reporting:** Generate consistent and detailed security reports for audit and compliance purposes.
+- **Enhanced Domain Protection:** Improve overall web security by proactively identifying vulnerabilities.
+
+### Get Started Today
+Ready to enhance your SSL security assessment workflow? Start using KaibanJS today and explore its powerful AI-driven capabilities.
+
+🌐 **Website**: [KaibanJS](https://www.kaibanjs.com/)  
+💻 **GitHub Repository**: [KaibanJS on GitHub](https://github.com/kaiban-ai/KaibanJS)  
+🤝 **Discord Community**: [Join the Community](https://kaibanjs.com/discord)  
+
+---
+
+:::info[We Value Your Feedback!]
+Help improve this use case by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We appreciate your input!
+:::
+
+
+
+### ./src/use-cases/11-Automated LinkedIn Content Creation.md
+
+
+//--------------------------------------------
+// File: ./src/use-cases/11-Automated LinkedIn Content Creation.md
+//--------------------------------------------
+
+---
+title: Automated LinkedIn Content Creation
+description: KaibanJS automates LinkedIn content creation by extracting insights from web articles and generating high-engagement posts tailored for LinkedIn audiences.
+---
+
+Creating impactful LinkedIn posts requires more than just good writing—it demands insight extraction, audience engagement, and content optimization. Traditionally, marketing professionals spend hours analyzing articles, summarizing key insights, and crafting posts designed to maximize visibility and interaction.
+
+![image](https://github.com/user-attachments/assets/0859c85d-1c8b-4574-ba81-3aeef86654cf)
+
+### Traditional Approach Challenges
+Creating LinkedIn content manually involves several time-consuming steps:
+
+1. **Article Analysis:** Marketing professionals must read and analyze web articles to extract key points and trends.
+2. **Content Structuring:** Identifying the best format and approach for LinkedIn posts, balancing professionalism with engagement.
+3. **Post Optimization:** Crafting posts that encourage comments, shares, and interactions, while maintaining relevance to the audience.
+
+*Note: This use case automates content extraction, analysis, and LinkedIn post generation, allowing professionals to focus on refining engagement strategies.*
+
+### The Agentic Solution
+KaibanJS automates LinkedIn post creation by leveraging intelligent agents that extract article content, identify key insights, and generate structured and viral posts.
+
+- **Scenario:** A marketing team needs to generate LinkedIn posts based on a trending article without manually reading and summarizing it.
+
+Before diving into the automated process, let’s introduce the **key Agents** responsible for this task:
+
+:::agents
+- **Content Analyzer:**
+  - **Retrieves** and processes web content using **Jina.ai**.
+  - **Extracts** main topics, takeaways, and notable insights.
+  - **Summarizes** the article in a structured, digestible format for LinkedIn post creation.
+- **LinkedIn Post Generator:**
+  - **Creates** LinkedIn posts in two styles:
+    - **Informative Posts:** Professional, structured posts summarizing the article, with a call to action.
+    - **Viral Posts:** Engaging, interactive posts optimized for maximum LinkedIn interaction, including open-ended questions, bold statements, and incentives for user engagement.
+:::
+
+### Process Overview
+Here’s how the agent-driven workflow automates LinkedIn content creation:
+
+:::tasks
+1. **Content Extraction:** The **Content Analyzer** retrieves the full article text from the provided URL using Jina.ai.
+2. **Insight Extraction:** The agent processes the content, identifying the most important takeaways, trends, and key arguments.
+3. **Post Generation:** The **LinkedIn Post Generator** creates two types of posts:
+    - **3-1 Informative Posts** that summarize the article in a professional, engaging format.
+    - **3-2 Viral Posts** designed to spark discussion and maximize engagement on LinkedIn.
+:::
+
+### Implementation
+Below is an example of how this automation is implemented using KaibanJS:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+import { JinaUrlToMarkdown } from '@kaibanjs/tools';
+import { z } from 'zod';
+
+// === JinaUrlToMarkdown Tool ===
+const jinaTool = new JinaUrlToMarkdown({
+    apiKey: 'YOUR_JINA_API_KEY',
+    options: {
+        retainImages: 'none'
+    }
+});
+
+// === Agents ===
+const contentExtractor = new Agent({
+    name: 'ContentExtractor',
+    role: 'Web Content Specialist',
+    goal: 'Extract relevant content from URLs',
+    tools: [jinaTool]
+});
+
+const postCreator = new Agent({
+    name: 'PostCreator',
+    role: 'LinkedIn Post Strategist',
+    goal: 'Generate LinkedIn post ideas for informative and viral engagement',
+    background: 'Expert in LinkedIn marketing strategies and audience engagement'
+});
+
+// === Tasks ===
+const tasks = [
+    new Task({
+        title: 'Extract Content',
+        description: `Extract the main content from the given URL: {url} and identify key insights, including:
+        1. The main topic of the article.
+        2. Key benefits and takeaways.
+        3. Notable features or insights highlighted in the content.`,
+        expectedOutput: 'Clean, structured content highlighting key points and insights.',
+        agent: contentExtractor
+    }),
+    
+    new Task({
+        title: 'Generate LinkedIn Posts',
+        description: `Based on the extracted content, generate LinkedIn posts using the following guidelines:
+        Informative Posts (3-1):
+        1. Include a catchy title.
+        2. Provide a concise, professional summary of the content.
+        3. End with a clear call to action inviting readers to explore the full article.
+        4. Optionally, suggest alternative formats such as carousels, videos, or images.
+        
+        Viral Posts (3-2):
+        1. Use open-ended questions to invite audience engagement.
+        2. Include thought-provoking or controversial statements to spark discussion.
+        3. Offer incentives (e.g., exclusive resources) for those who comment.
+        4. Use emojis and a casual, engaging tone for maximum interaction.`,
+        expectedOutput: 'A set of engaging LinkedIn posts including both informative and viral styles tailored for audience engagement.',
+        agent: postCreator
+    })
+];
+
+// === Team ===
+const team = new Team({
+    name: 'LinkedIn Content Team',
+    agents: [contentExtractor, postCreator],
+    tasks: tasks,
+    inputs: {
+        url: 'https://example.com/ex',
+        audience: 'Marketing Professionals',
+        post_type: 'informative'
+    }
+});
+
+export default team;
+```
+
+### Outcome
+The result is an automatically generated **LinkedIn content pack** that includes both informative and viral posts, ready for publishing:
+
+- Professionally structured posts that summarize key insights.
+- Engaging, high-interaction posts optimized for LinkedIn visibility.
+- Faster content turnaround for marketing teams and professionals.
+
+By leveraging KaibanJS, marketing professionals and agencies can **streamline their content workflow**, **reduce manual effort**, and **increase engagement** with AI-powered automation.
+
+### Expected Benefits
+- **Automated Content Generation:** No need to manually extract insights or write posts—KaibanJS handles it for you.
+- **High-Quality LinkedIn Posts:** Ensure every post is well-structured, engaging, and tailored for your audience.
+- **Increased Efficiency:** Generate multiple high-quality posts in seconds, rather than hours.
+- **Improved Engagement:** Viral post strategies maximize reach, likes, and comments.
+
+### Get Started Today
+Ready to revolutionize your LinkedIn content strategy? Start using KaibanJS today and explore its powerful AI-driven capabilities.
+
+🌐 **Website**: [KaibanJS](https://www.kaibanjs.com/)  
+💻 **GitHub Repository**: [KaibanJS on GitHub](https://github.com/kaiban-ai/KaibanJS)  
+🤝 **Discord Community**: [Join the Community](https://kaibanjs.com/discord)  
+
+---
+
+:::info[We Value Your Feedback!]
+Help improve this use case by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We appreciate your input!
+:::
 
 
 
