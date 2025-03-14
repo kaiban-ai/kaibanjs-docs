@@ -257,3 +257,54 @@ Marks a task as validated, used in the HITL process to approve a task that requi
 Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
 - **Parameters:**
   - `callback`
+
+## Managing Task Results
+
+Teams in KaibanJS handle the passing of results between tasks automatically. This system ensures that tasks can build upon each other's outputs while maintaining a clean and organized workflow.
+
+### Task Result Flow
+
+1. **Result Storage**: When a task completes, its result is:
+   - Stored in the task object
+   - Logged in the workflow logs
+   - Made available to subsequent tasks
+
+2. **Result Access**: Tasks can access previous results through:
+   - Direct interpolation in task descriptions using `{taskResult:taskN}`
+   - The team's workflow context
+
+### Example Workflow with Result Passing
+
+```js
+const team = new Team({
+  name: 'Content Creation Team',
+  agents: [researcher, writer, editor],
+  tasks: [
+    new Task({
+      description: 'Research the topic: {topic}',
+      expectedOutput: 'Key research points in JSON format',
+      agent: researcher
+    }),
+    new Task({
+      description: 'Write an article using this research: {taskResult:task1}',
+      expectedOutput: 'Draft article in markdown format',
+      agent: writer
+    }),
+    new Task({
+      description: 'Edit and improve this article: {taskResult:task2}',
+      expectedOutput: 'Final polished article',
+      agent: editor
+    })
+  ],
+  inputs: { topic: 'Artificial Intelligence Trends 2024' }
+});
+```
+
+### Workflow Context
+
+The team maintains a workflow context that includes:
+- All completed task results
+- Input variables
+- Current workflow state
+
+This context ensures that tasks have access to all the information they need to execute successfully.
