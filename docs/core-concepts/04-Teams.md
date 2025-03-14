@@ -162,6 +162,85 @@ The logging level set for monitoring and debugging the team's activities.
 - **Example:** *'debug', 'info', 'warn', 'error'*
 - **Default:** *info*
 
+#### `hooks`
+A collection of functions that are executed at specific points in the workflow lifecycle.
+
+- **Type:** Object
+- **Properties:**
+  - `beforeTeamExecution`: Function - Called before the team starts executing tasks
+  - `afterTeamExecution`: Function - Called after all tasks have been completed
+- **Example:**
+```js
+const team = new Team({
+  // ... other team configuration ...
+  hooks: {
+    beforeTeamExecution: async ({ workflowLogs, tasks, state }) => {
+      console.log('Team is starting execution');
+      // Perform any setup or validation before the team starts
+    },
+    afterTeamExecution: async ({ result, workflowLogs, tasks, state }) => {
+      console.log('Team has finished execution');
+      // Process or validate the final results
+    }
+  }
+});
+```
+
+#### `workflowInternalMemory`
+A shared memory space that persists throughout the workflow execution. This can be used to store and share data between tasks, hooks, or any other workflow components.
+
+- **Type:** Object
+- **Default:** `{}`
+- **Access Methods:**
+  - `updateWorkflowInternalMemory(updates)`: Merges new data into the memory
+  - `clearWorkflowInternalMemory()`: Clears all stored data
+- **Example:**
+```js
+// Store data in a hook
+const team = new Team({
+  hooks: {
+    beforeTeamExecution: async ({ state }) => {
+      // Store initial configuration
+      state.updateWorkflowInternalMemory({
+        startTime: Date.now(),
+        configuration: { /* ... */ }
+      });
+    }
+  }
+});
+
+// Access data in a task
+const analysisTask = new Task({
+  description: 'Analyze data',
+  hooks: {
+    beforeTaskExecution: async ({ state }) => {
+      const { configuration } = state.workflowInternalMemory;
+      // Use the configuration data
+    }
+  }
+});
+
+// Update data from another task
+const processingTask = new Task({
+  description: 'Process results',
+  hooks: {
+    afterTaskExecution: async ({ result, state }) => {
+      // Store processed results
+      state.updateWorkflowInternalMemory({
+        processedData: result
+      });
+    }
+  }
+});
+```
+
+The `workflowInternalMemory` is automatically cleared when:
+- The workflow is reset
+- A new workflow execution starts
+- The `clearWorkflowInternalMemory()` method is called
+
+See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
+
 ### Team Methods
 
 #### `start(inputs)`
@@ -257,3 +336,50 @@ Marks a task as validated, used in the HITL process to approve a task that requi
 Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
 - **Parameters:**
   - `callback`
+
+#### `pause()`
+Temporarily halts the workflow execution. Tasks that are currently executing will be paused, and no new tasks will start until the workflow is resumed.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `DOING` state will transition to `PAUSED` state. The workflow status will change to `PAUSED`.
+
+**Example:**
+```js
+// Pause workflow after 5 minutes to check intermediate results
+setTimeout(() => {
+  team.pause()
+    .then(() => {
+      const tasks = team.getTasks();
+      console.log('Workflow paused. Current task states:', 
+        tasks.map(t => ({ id: t.id, status: t.status }))
+      );
+    });
+}, 5 * 60 * 1000);
+```
+
+#### `resume()`
+Continues the workflow execution from its paused state. Previously paused tasks will resume execution, and new tasks will start according to their dependencies and execution strategy.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `PAUSED` state will transition back to `DOING` state. The workflow status will change back to `RUNNING`.
+
+**Example:**
+```js
+// Monitor workflow status and resume after validation
+team.onWorkflowStatusChange((status) => {
+  if (status === 'PAUSED') {
+    validateIntermediateResults()
+      .then((isValid) => {
+        if (isValid) {
+          team.resume()
+            .then(() => console.log('Validation passed, workflow resumed'));
+        } else {
+          team.stop()
+            .then(() => console.log('Validation failed, workflow stopped'));
+        }
+      });
+  }
+});
+```
+
+#### `stop()`
+Permanently stops the workflow execution. All executing tasks will be stopped, and the workflow cannot be resumed after being stopped.
+- **Returns:** `
