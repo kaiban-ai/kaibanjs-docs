@@ -34,6 +34,7 @@ const searchAgent = new Agent({
     goal: 'Find up-to-date information about the given sports query.',
     background: 'Research',
     tools: [searchTool],
+    kanbanTools: ['block-task-tool'], // Optional: Enable workflow control tools like 'block-task-tool'
 });
 ```
 
@@ -66,6 +67,13 @@ A set of capabilities or functions the agent can use, initialized with a default
 - **Type:** Array of `Tool` objects.
 - **Example:** *[SearchTool, CalculatorTool, etc]*
 - **Default:** []
+
+#### `kanbanTools` (optional)
+Special tools for workflow control and task management, such as task blocking.
+- **Type:** Array of strings
+- **Example:** *['block-task-tool']*
+- **Default:** []
+- **Available Tools:** See [Kanban Tools](../how-to/09-Kanban-Tools.md) for details and usage
 
 #### `llmConfig` (optional)
 Configures the underlying language model used by the agent.

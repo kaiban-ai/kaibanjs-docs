@@ -73,7 +73,15 @@ const team = new Team({
      where I worked with Vue and Tailwind. 
      I earned a Bachelor of Science in Computer Science from FIU in 2018, 
      and I completed a JavaScript bootcamp that same year.` },  // Initial input for the first task
-    env: {OPENAI_API_KEY: 'your-open-ai-api-key'}  // Environment variables for the team
+    env: {OPENAI_API_KEY: 'your-open-ai-api-key'},  // Environment variables for the team
+    insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
 });
 
 // Listen to the workflow status changes
@@ -126,6 +134,26 @@ A collection of environment variables that configure access to AI model APIs nee
   - `MISTRAL_API_KEY` for Mistral.
 
 **Note:** It is crucial to use environment variables to manage these API keys. This method prevents sensitive information from being hardcoded into the source code, enhancing the security and adaptability of your system. It allows for easy updates and changes without altering the codebase, providing a secure and scalable solution for integrating AI services.
+
+#### `insights`
+A string containing the team's knowledge base and experience that can be referenced by agents during task execution. This allows agents to make informed decisions based on historical data, patterns, and previous experiences.
+
+- **Type:** String (optional)
+- **Example:**
+```js
+const team = new Team({
+  // ... other team configuration ...
+  insights: `
+Resume Success Metrics (2023):
+1. Format Impact: STAR format results in 89% interview rate
+2. Professional Titles: Using Mr./Ms. increases callbacks by 100%
+3. Content Structure: 4-6 bullet points per role optimal
+4. Keywords: "Implemented" + metrics = 76% success rate
+5. Experience Focus: Last 10 years most relevant to employers
+  `
+});
+```
+- **Usage:** Agents can access and utilize these insights to provide more personalized and context-aware responses, improving the quality of their task outputs.
 
 #### `logLevel`
 The logging level set for monitoring and debugging the team's activities.
@@ -281,6 +309,33 @@ Initiates the team's task processing workflow and monitors its progress.
 It's important to note that once the Promise resolves (whether due to completion, error, or blockage), it won't resolve again, even if the workflow continues after being unblocked.
 
 For full HITL implementation, you would need to use this method in conjunction with other Team methods like `provideFeedback` and `validateTask`, and potentially set up additional listeners `onWorkflowStatusChange` to monitor the workflow's progress after it has been unblocked.
+
+#### `getStore()`
+Provides NodeJS developers direct access to the team's store.
+- **Returns:** The store object.
+
+#### `useStore()`
+Provides a React hook for accessing the team's store in React applications.
+- **Returns:** The store object.
+
+#### `provideFeedback(taskId, feedbackContent)`
+Provides feedback on a specific task, enabling human intervention in the AI workflow. This method triggers the human-in-the-loop workflow by setting the task status to REVISE, prompting the agent to reconsider and improve its work based on the provided feedback.
+- **Parameters:** 
+  - `taskId` (String): The ID of the task to provide feedback for.
+  - `feedbackContent` (String): The feedback to be incorporated into the task.
+- **Returns:** void
+- **Note:** Calling this method initiates the human-in-the-loop process, allowing for iterative refinement of task outputs. You can track the workflow status using the `onWorkflowStatusChange` method.
+
+#### `validateTask(taskId)`
+Marks a task as validated, used in the HITL process to approve a task that required validation.
+- **Parameters:**
+  - `taskId` (String): The ID of the task to be marked as validated.
+- **Returns:** void
+
+#### `onWorkflowStatusChange(callback)`
+Subscribes to changes in the workflow status, allowing real-time monitoring of the overall workflow progress.
+- **Parameters:**
+  - `callback`
 
 #### `pause()`
 Temporarily halts the workflow execution. Tasks that are currently executing will be paused, and no new tasks will start until the workflow is resumed.
