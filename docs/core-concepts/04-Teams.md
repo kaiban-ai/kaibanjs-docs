@@ -162,6 +162,16 @@ The logging level set for monitoring and debugging the team's activities.
 - **Example:** *'debug', 'info', 'warn', 'error'*
 - **Default:** *info*
 
+#### `memory`
+Controls whether tasks maintain context and history from previous task executions in the workflow.
+
+- **Type:** Boolean (optional)
+- **Default:** *true*
+- **Usage:**
+  - When enabled (default), tasks have access to the workflow history and can build upon previous task contexts
+  - When disabled, tasks operate in isolation with access only to explicit task results
+  - Useful for controlling context sharing and optimizing token usage in complex workflows
+
 ### Team Methods
 
 #### `start(inputs)`

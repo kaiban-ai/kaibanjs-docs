@@ -127,12 +127,42 @@ When a task is executed, its description is automatically interpolated with:
 
 The interpolation happens at runtime, ensuring that tasks have access to the most current data and results.
 
+### Task Context and Memory
+
+Tasks can operate with or without memory of previous task executions, controlled by the team's `memory` configuration:
+
+```js
+const team = new Team({
+  name: 'Content Creation Team',
+  agents: [researcher, writer, editor],
+  tasks: [researchTask, writingTask, editingTask],
+  memory: true, // Enable task context sharing (default)
+  // memory: false, // Disable task context sharing
+});
+```
+
+When memory is enabled (default):
+- Tasks have access to the full workflow history
+- Agents can understand the context of previous task executions
+- Better for complex workflows where context improves task execution
+- May use more tokens due to additional context
+
+When memory is disabled:
+- Tasks operate in isolation
+- Only explicit task results are passed between tasks
+- Better for independent tasks or when minimizing token usage
+- Reduces context but may affect task coherence
+
 ### Best Practices
 
 1. **Clear Dependencies**: Make task dependencies explicit in your task descriptions
 2. **Result Format**: Ensure task results are in a format that can be easily used by subsequent tasks
 3. **Error Handling**: Consider what happens if a referenced task result is unavailable
 4. **Documentation**: Document the expected format of task results for better maintainability
+5. **Memory Usage**: Consider enabling/disabling memory based on:
+   - Workflow complexity and interdependence
+   - Token usage requirements
+   - Need for contextual awareness between tasks
 
 ## Human-in-the-Loop (HITL) Features
 
