@@ -91,109 +91,16 @@ In this example:
 - Tasks execute strictly in the order they appear in the array
 - Each task starts only after the previous task completes
 
-### Dependency-based Execution
+### Dependency-based Execution with Parallel Tasks
 
-To achieve dependency-based execution:
-1. Define explicit dependencies between tasks using the `dependencies` array
-2. Do not set `allowParallelExecution: true` on any task
-3. List tasks in any order (execution order is determined by dependencies)
-
-> **Note**: Without `allowParallelExecution`, even tasks that could theoretically run in parallel will execute sequentially based on their position in the tasks array.
-
-Tasks will execute in an order that respects their dependencies, but only one task will execute at a time. This is useful for complex workflows where task order is determined by prerequisites rather than array position.
-
-Here's an example from event planning:
-
-```javascript
-const eventManagerAgent = new Agent({
-  name: 'Peter Atlas',
-  role: 'Event Manager',
-  goal: 'Coordinate tasks and ensure timely execution'
-});
-
-const venueCoordinatorAgent = new Agent({
-  name: 'Sophia Lore',
-  role: 'Venue Coordinator',
-  goal: 'Manage venue logistics and setup'
-});
-
-const cateringAgent = new Agent({
-  name: 'Maxwell Journey',
-  role: 'Catering Manager',
-  goal: 'Organize food and beverages'
-});
-
-const marketingAgent = new Agent({
-  name: 'Riley Morgan',
-  role: 'Marketing Manager',
-  goal: 'Handle event promotion and registrations'
-});
-
-const team = new Team({
-  name: 'Event Planning Team',
-  agents: [eventManagerAgent, venueCoordinatorAgent, cateringAgent, marketingAgent],
-  tasks: [
-    new Task({
-      id: 'selectEventDate',
-      description: 'Select the optimal event date considering stakeholder availability',
-      agent: eventManagerAgent
-    }),
-    new Task({
-      id: 'bookVenue',
-      description: 'Book and confirm venue for the selected date',
-      agent: venueCoordinatorAgent,
-      dependencies: ['selectEventDate']
-    }),
-    new Task({
-      id: 'createGuestList',
-      description: 'Create initial guest list and send invitations',
-      agent: marketingAgent,
-      dependencies: ['selectEventDate']
-    }),
-    new Task({
-      id: 'createCateringPlan',
-      description: 'Create menu and select vendors',
-      agent: cateringAgent,
-      dependencies: ['bookVenue', 'createGuestList']
-    }),
-    new Task({
-      id: 'planVenueLayout',
-      description: 'Design venue layout and seating arrangements',
-      agent: venueCoordinatorAgent,
-      dependencies: ['bookVenue', 'createGuestList']
-    }),
-    new Task({
-      id: 'orderSupplies',
-      description: 'Order all necessary supplies and decorations',
-      agent: venueCoordinatorAgent,
-      dependencies: ['planVenueLayout']
-    }),
-    new Task({
-      id: 'finalizeStaffing',
-      description: 'Coordinate staffing requirements with venue and caterers',
-      agent: eventManagerAgent,
-      dependencies: ['createCateringPlan', 'planVenueLayout']
-    })
-  ]
-});
-```
-
-In this example:
-- Tasks specify their dependencies explicitly
-- No tasks have `allowParallelExecution` set
-- Execution order is determined by dependency resolution
-- Only one task executes at a time, even when multiple tasks are ready
-
-### Mixed Execution with Parallel Tasks
-
-To achieve mixed execution with parallel tasks:
+To achieve dependency-based execution with parallel tasks:
 1. Define dependencies between tasks using the `dependencies` array
 2. Set `allowParallelExecution: true` on tasks that can run concurrently
 3. List tasks in a logical order (though execution order will be determined by dependencies and parallel execution flags)
 
-> **Note**: Tasks marked with `allowParallelExecution: true` can run simultaneously with other tasks if their dependencies are met. Tasks without this flag will still execute sequentially.
-
 This pattern combines the flexibility of dependency-based execution with the efficiency of parallel processing. It's ideal for complex workflows where some tasks can safely run concurrently while others must maintain strict ordering.
+
+> **Note**: Tasks marked with `allowParallelExecution: true` can run simultaneously with other tasks if their dependencies are met. Tasks without this flag will still execute sequentially.
 
 ```javascript
 const eventManagerAgent = new Agent({
@@ -319,6 +226,32 @@ In this example:
 - Parallel tasks can run concurrently when their dependencies are met
 - Non-parallel tasks maintain sequential execution
 
+
+```
+                            [selectEventDate]
+                                    ↓
+                           ┌────────┴────────┬────────────┐
+                           ↓                 ↓            ↓
+                     [bookVenue]    [finalizeGu...]*   [prepareEv...]
+                           ↓                 ↓
+                           ↓                 ↓
+                           ↓           [createCater...]
+                           ↓                 ↓
+                           ↓                 ↓
+               [setupMarket...]*            ↓
+                           ↓                ↓
+                           ↓                ↓
+               [executeMark...]*            ↓
+                           ↓                ↓
+                           ↓         [coordVenue...]
+                           ↓                ↓
+                           └─────────┐      ↓
+                                    ↓      ↓
+                            [finalizeInsp...]
+
+* Tasks marked with asterisk (*) can run in parallel with other tasks
+  when their dependencies are met (allowParallelExecution: true)
+
 The execution flow proceeds as follows:
 1. `selectEventDateTask` executes first (no dependencies)
 2. After date selection completes:
@@ -359,4 +292,4 @@ The execution engine manages this flow by:
 3. **Avoid Circular Dependencies**: Ensure your task dependencies form a directed acyclic graph (DAG).
 4. **Consider Resource Constraints**: When using parallel execution, consider the available computational resources and agent availability.
 5. **Monitor Task Status**: Use the workflow logs to monitor task execution status and debug execution order issues.
-6. **Design for Flexibility**: Structure your tasks to allow for maximum parallelization where possible, but maintain clear dependencies where necessary. 
+6. **Design for Flexibility**: Structure your tasks to allow for maximum parallelization where possible, but maintain clear dependencies where necessary.
