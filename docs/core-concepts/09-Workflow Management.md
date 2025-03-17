@@ -1,10 +1,10 @@
-# Execution Strategies
+# Workflow Management
 
-KaibanJS provides flexible execution strategies to control how tasks are executed within a team workflow. These strategies determine the order and manner in which tasks are processed, enabling you to create workflows that match your specific needs.
+KaibanJS provides flexible workflow management capabilities to control how tasks are executed within a team workflow. These execution patterns determine the order and manner in which tasks are processed, enabling you to create workflows that match your specific needs.
 
-## Deterministic Execution Strategy
+## Deterministic Execution
 
-The Deterministic Execution Strategy ensures tasks are executed in a predictable and controlled manner. It supports three main patterns:
+The deterministic execution pattern ensures tasks are executed in a predictable and controlled manner. It supports three main approaches:
 
 1. **Sequential Execution**: Tasks execute one after another in a defined order
 2. **Dependency-based Execution**: Tasks execute based on their dependencies
@@ -39,27 +39,27 @@ const team = new Team({
   agents: [plannerAgent],
   tasks: [
     new Task({
-      id: 'research',
+      referenceId: 'research',
       description: 'Research potential destinations',
       agent: plannerAgent
     }),
     new Task({
-      id: 'selectDates',
+      referenceId: 'selectDates',
       description: 'Select optimal travel dates',
       agent: plannerAgent
     }),
     new Task({
-      id: 'bookFlights',
+      referenceId: 'bookFlights',
       description: 'Book flights for selected dates',
       agent: plannerAgent
     }),
     new Task({
-      id: 'bookHotel',
+      referenceId: 'bookHotel',
       description: 'Reserve hotel accommodation',
       agent: plannerAgent
     }),
     new Task({
-      id: 'planActivities',
+      referenceId: 'planActivities',
       description: 'Create daily activity schedule',
       agent: plannerAgent
     })
@@ -119,30 +119,30 @@ const team = new Team({
   agents: [developerAgent, qaAgent],
   tasks: [
     new Task({
-      id: 'runTests',
+      referenceId: 'runTests',
       description: 'Run the automated test suite',
       agent: developerAgent
     }),
     new Task({
-      id: 'updateVersion',
+      referenceId: 'updateVersion',
       description: 'Update version numbers in package files',
       agent: developerAgent,
       dependencies: ['runTests']  // Can only update version after tests pass
     }),
     new Task({
-      id: 'manualQA',
+      referenceId: 'manualQA',
       description: 'Perform manual QA checks',
       agent: qaAgent,
       dependencies: ['runTests']  // QA starts after tests pass
     }),
     new Task({
-      id: 'createRelease',
+      referenceId: 'createRelease',
       description: 'Create release package',
       agent: developerAgent,
       dependencies: ['updateVersion', 'manualQA']  // Release requires both version update and QA approval
     }),
     new Task({
-      id: 'deploy',
+      referenceId: 'deploy',
       description: 'Deploy to production',
       agent: developerAgent,
       dependencies: ['createRelease']  // Can only deploy after release is created
@@ -203,54 +203,54 @@ const team = new Team({
   agents: [dataAgent],
   tasks: [
     new Task({
-      id: 'loadData',
+      referenceId: 'loadData',
       description: 'Load the raw dataset from storage',
       agent: dataAgent
     }),
     new Task({
-      id: 'validateA',
+      referenceId: 'validateA',
       description: 'Validate dataset A integrity',
       agent: dataAgent,
       dependencies: ['loadData'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'validateB',
+      referenceId: 'validateB',
       description: 'Validate dataset B integrity',
       agent: dataAgent,
       dependencies: ['loadData'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'validateC',
+      referenceId: 'validateC',
       description: 'Validate dataset C integrity',
       agent: dataAgent,
       dependencies: ['loadData'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'processA',
+      referenceId: 'processA',
       description: 'Process validated dataset A',
       agent: dataAgent,
       dependencies: ['validateA'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'processB',
+      referenceId: 'processB',
       description: 'Process validated dataset B',
       agent: dataAgent,
       dependencies: ['validateB'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'processC',
+      referenceId: 'processC',
       description: 'Process validated dataset C',
       agent: dataAgent,
       dependencies: ['validateC'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'mergeSets',
+      referenceId: 'mergeSets',
       description: 'Merge all processed datasets',
       agent: dataAgent,
       dependencies: ['processA', 'processB', 'processC']
@@ -348,57 +348,57 @@ const team = new Team({
   agents: [eventManagerAgent, venueAgent, cateringAgent, marketingAgent],
   tasks: [
     new Task({
-      id: 'pickDate',
+      referenceId: 'pickDate',
       description: 'Select optimal event date based on stakeholder availability',
       agent: eventManagerAgent
     }),
     new Task({
-      id: 'bookVenue',
+      referenceId: 'bookVenue',
       description: 'Book and confirm venue for the selected date',
       agent: venueAgent,
       dependencies: ['pickDate']
     }),
     new Task({
-      id: 'guestList',
+      referenceId: 'guestList',
       description: 'Compile guest list and handle RSVPs',
       agent: marketingAgent,
       dependencies: ['pickDate'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'budget',
+      referenceId: 'budget',
       description: 'Create detailed event budget',
       agent: eventManagerAgent,
       dependencies: ['pickDate']
     }),
     new Task({
-      id: 'catering',
+      referenceId: 'catering',
       description: 'Plan menu and select vendors',
       agent: cateringAgent,
       dependencies: ['guestList']
     }),
     new Task({
-      id: 'marketing',
+      referenceId: 'marketing',
       description: 'Develop marketing campaign',
       agent: marketingAgent,
       dependencies: ['pickDate', 'bookVenue'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'setup',
+      referenceId: 'setup',
       description: 'Coordinate venue setup',
       agent: venueAgent,
       dependencies: ['bookVenue', 'catering']
     }),
     new Task({
-      id: 'promote',
+      referenceId: 'promote',
       description: 'Execute marketing campaign',
       agent: marketingAgent,
       dependencies: ['marketing'],
       allowParallelExecution: true
     }),
     new Task({
-      id: 'approve',
+      referenceId: 'approve',
       description: 'Final inspection and approval',
       agent: eventManagerAgent,
       dependencies: ['setup', 'promote']
@@ -479,9 +479,9 @@ This sequence demonstrates how the execution engine:
 - Coordinates multiple agents working simultaneously
 - Ensures all necessary prerequisites are completed before dependent tasks begin.
 
-## Non-deterministic Execution Strategy
+## Non-deterministic Execution
 
-Non-deterministic execution strategies allow for more dynamic and adaptive task execution patterns. Unlike deterministic strategies where the execution flow is pre-defined, non-deterministic strategies can adjust the workflow in real-time based on task outcomes, resource availability, and emerging requirements.
+Non-deterministic execution patterns allow for more dynamic and adaptive task execution. Unlike deterministic patterns where the execution flow is pre-defined, non-deterministic approaches can adjust the workflow in real-time based on task outcomes, resource availability, and emerging requirements.
 
 ### Manager LLM
 
