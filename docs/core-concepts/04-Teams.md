@@ -268,6 +268,53 @@ Subscribes to changes in the workflow status, allowing real-time monitoring of t
 - **Parameters:**
   - `callback`
 
+#### `pause()`
+Temporarily halts the workflow execution. Tasks that are currently executing will be paused, and no new tasks will start until the workflow is resumed.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `DOING` state will transition to `PAUSED` state. The workflow status will change to `PAUSED`.
+
+**Example:**
+```js
+// Pause workflow after 5 minutes to check intermediate results
+setTimeout(() => {
+  team.pause()
+    .then(() => {
+      const tasks = team.getTasks();
+      console.log('Workflow paused. Current task states:', 
+        tasks.map(t => ({ id: t.id, status: t.status }))
+      );
+    });
+}, 5 * 60 * 1000);
+```
+
+#### `resume()`
+Continues the workflow execution from its paused state. Previously paused tasks will resume execution, and new tasks will start according to their dependencies and execution strategy.
+- **Returns:** `Promise<void>`
+- **Note:** Tasks in `PAUSED` state will transition back to `DOING` state. The workflow status will change back to `RUNNING`.
+
+**Example:**
+```js
+// Monitor workflow status and resume after validation
+team.onWorkflowStatusChange((status) => {
+  if (status === 'PAUSED') {
+    validateIntermediateResults()
+      .then((isValid) => {
+        if (isValid) {
+          team.resume()
+            .then(() => console.log('Validation passed, workflow resumed'));
+        } else {
+          team.stop()
+            .then(() => console.log('Validation failed, workflow stopped'));
+        }
+      });
+  }
+});
+```
+
+#### `stop()`
+Permanently stops the workflow execution. All executing tasks will be stopped, and the workflow cannot be resumed after being stopped.
+- **Returns:** `
+
 ## Managing Task Results
 
 Teams in KaibanJS handle the passing of results between tasks automatically. This system ensures that tasks can build upon each other's outputs while maintaining a clean and organized workflow.
