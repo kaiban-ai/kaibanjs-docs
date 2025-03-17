@@ -162,84 +162,15 @@ The logging level set for monitoring and debugging the team's activities.
 - **Example:** *'debug', 'info', 'warn', 'error'*
 - **Default:** *info*
 
-#### `hooks`
-A collection of functions that are executed at specific points in the workflow lifecycle.
+#### `memory`
+Controls whether tasks maintain context and history from previous task executions in the workflow.
 
-- **Type:** Object
-- **Properties:**
-  - `beforeTeamExecution`: Function - Called before the team starts executing tasks
-  - `afterTeamExecution`: Function - Called after all tasks have been completed
-- **Example:**
-```js
-const team = new Team({
-  // ... other team configuration ...
-  hooks: {
-    beforeTeamExecution: async ({ workflowLogs, tasks, state }) => {
-      console.log('Team is starting execution');
-      // Perform any setup or validation before the team starts
-    },
-    afterTeamExecution: async ({ result, workflowLogs, tasks, state }) => {
-      console.log('Team has finished execution');
-      // Process or validate the final results
-    }
-  }
-});
-```
-
-#### `workflowInternalMemory`
-A shared memory space that persists throughout the workflow execution. This can be used to store and share data between tasks, hooks, or any other workflow components.
-
-- **Type:** Object
-- **Default:** `{}`
-- **Access Methods:**
-  - `updateWorkflowInternalMemory(updates)`: Merges new data into the memory
-  - `clearWorkflowInternalMemory()`: Clears all stored data
-- **Example:**
-```js
-// Store data in a hook
-const team = new Team({
-  hooks: {
-    beforeTeamExecution: async ({ state }) => {
-      // Store initial configuration
-      state.updateWorkflowInternalMemory({
-        startTime: Date.now(),
-        configuration: { /* ... */ }
-      });
-    }
-  }
-});
-
-// Access data in a task
-const analysisTask = new Task({
-  description: 'Analyze data',
-  hooks: {
-    beforeTaskExecution: async ({ state }) => {
-      const { configuration } = state.workflowInternalMemory;
-      // Use the configuration data
-    }
-  }
-});
-
-// Update data from another task
-const processingTask = new Task({
-  description: 'Process results',
-  hooks: {
-    afterTaskExecution: async ({ result, state }) => {
-      // Store processed results
-      state.updateWorkflowInternalMemory({
-        processedData: result
-      });
-    }
-  }
-});
-```
-
-The `workflowInternalMemory` is automatically cleared when:
-- The workflow is reset
-- A new workflow execution starts
-- The `clearWorkflowInternalMemory()` method is called
-
-See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
+- **Type:** Boolean (optional)
+- **Default:** *true*
+- **Usage:**
+  - When enabled (default), tasks have access to the workflow history and can build upon previous task contexts
+  - When disabled, tasks operate in isolation with access only to explicit task results
+  - Useful for controlling context sharing and optimizing token usage in complex workflows
 
 ### Team Methods
 
@@ -383,3 +314,54 @@ team.onWorkflowStatusChange((status) => {
 #### `stop()`
 Permanently stops the workflow execution. All executing tasks will be stopped, and the workflow cannot be resumed after being stopped.
 - **Returns:** `
+
+## Managing Task Results
+
+Teams in KaibanJS handle the passing of results between tasks automatically. This system ensures that tasks can build upon each other's outputs while maintaining a clean and organized workflow.
+
+### Task Result Flow
+
+1. **Result Storage**: When a task completes, its result is:
+   - Stored in the task object
+   - Logged in the workflow logs
+   - Made available to subsequent tasks
+
+2. **Result Access**: Tasks can access previous results through:
+   - Direct interpolation in task descriptions using `{taskResult:taskN}`
+   - The team's workflow context
+
+### Example Workflow with Result Passing
+
+```js
+const team = new Team({
+  name: 'Content Creation Team',
+  agents: [researcher, writer, editor],
+  tasks: [
+    new Task({
+      description: 'Research the topic: {topic}',
+      expectedOutput: 'Key research points in JSON format',
+      agent: researcher
+    }),
+    new Task({
+      description: 'Write an article using this research: {taskResult:task1}',
+      expectedOutput: 'Draft article in markdown format',
+      agent: writer
+    }),
+    new Task({
+      description: 'Edit and improve this article: {taskResult:task2}',
+      expectedOutput: 'Final polished article',
+      agent: editor
+    })
+  ],
+  inputs: { topic: 'Artificial Intelligence Trends 2024' }
+});
+```
+
+### Workflow Context
+
+The team maintains a workflow context that includes:
+- All completed task results
+- Input variables
+- Current workflow state
+
+This context ensures that tasks have access to all the information they need to execute successfully.

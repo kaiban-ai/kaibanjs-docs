@@ -15,7 +15,7 @@ Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/l
 
 Currently, KaibanJS supports the following Kanban tools:
 
-- `block-task-tool`: Enables agents to block tasks when specific conditions aren't met
+- `block_task`: Enables agents to block tasks when specific conditions aren't met
 
 ## Enabling Kanban Tools
 
@@ -28,7 +28,7 @@ const agent = new Agent({
     goal: 'Ensure all tasks meet required conditions',
     background: 'Expert in validation and compliance',
     tools: [], // Regular tools
-    kanbanTools: ['block-task-tool'] // Enable Kanban tools
+    kanbanTools: ['block_task'] // Enable Kanban tools
 });
 ```
 
@@ -45,7 +45,7 @@ const validationAgent = new Agent({
     role: 'Process Validator',
     goal: 'Ensure all tasks meet required conditions',
     background: 'Expert in validation and compliance',
-    kanbanTools: ['block-task-tool']
+    kanbanTools: ['block_task']
 });
 
 // Create a task that requires validation
@@ -96,7 +96,7 @@ const securityAgent = new Agent({
     role: 'Security Clearance Checker',
     goal: 'Validate security requirements',
     background: 'Security expert',
-    kanbanTools: ['block-task-tool']
+    kanbanTools: ['block_task']
 });
 
 const sensitiveTask = new Task({
@@ -119,7 +119,7 @@ const qualityAgent = new Agent({
     role: 'Quality Assurance',
     goal: 'Ensure output meets quality standards',
     background: 'QA specialist',
-    kanbanTools: ['block-task-tool']
+    kanbanTools: ['block_task']
 });
 
 const contentTask = new Task({

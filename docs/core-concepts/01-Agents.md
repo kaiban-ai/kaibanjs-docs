@@ -34,7 +34,7 @@ const searchAgent = new Agent({
     goal: 'Find up-to-date information about the given sports query.',
     background: 'Research',
     tools: [searchTool],
-    kanbanTools: ['block-task-tool'], // Optional: Enable workflow control tools like 'block-task-tool'
+    kanbanTools: ['block_task'], // Optional: Enable workflow control tools like 'block_task'
 });
 ```
 
@@ -71,7 +71,7 @@ A set of capabilities or functions the agent can use, initialized with a default
 #### `kanbanTools` (optional)
 Special tools for workflow control and task management, such as task blocking.
 - **Type:** Array of strings
-- **Example:** *['block-task-tool']*
+- **Example:** *['block_task']*
 - **Default:** []
 - **Available Tools:** See [Kanban Tools](../how-to/09-Kanban-Tools.md) for details and usage
 

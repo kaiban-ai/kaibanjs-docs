@@ -107,31 +107,74 @@ A system-generated unique identifier for the task. This is automatically created
 - **Type:** String (Read-only)
 - **Example:** `"579db4dd-deea-4e09-904d-a436a38e65cf"`
 
-#### `hooks`
-Functions that are executed at specific points during task execution.
+## Task Result Passing
 
-- **Type:** Object
-- **Properties:**
-  - `beforeTaskExecution`: Function - Called before the task starts executing
-  - `afterTaskExecution`: Function - Called after the task has completed
-- **Example:**
+Tasks in KaibanJS can access and utilize results from previous tasks, enabling complex workflows where tasks build upon each other's outputs. This feature is essential for creating sophisticated, multi-step processes.
+
+### Using Task Results
+
+To reference a previous task's result in your task description, use the `{taskResult:taskN}` syntax, where N is the task's position in the workflow (1-based indexing).
+
 ```js
-const task = new Task({
-  // ... other task configuration ...
-  hooks: {
-    beforeTaskExecution: async ({ workflowLogs, tasks, state }) => {
-      console.log('Task is starting execution');
-      // Perform any setup or validation before the task starts
-    },
-    afterTaskExecution: async ({ result, workflowLogs, tasks, state }) => {
-      console.log('Task has finished execution');
-      // Process or validate the task result
-    }
-  }
+// First task
+const dataCollectionTask = new Task({
+  description: 'Collect and analyze user data from the database',
+  expectedOutput: 'JSON object containing user analytics',
+  agent: dataAnalyst
+});
+
+// Second task using first task's result
+const reportGenerationTask = new Task({
+  description: 'Generate a detailed report based on this data: {taskResult:task1}',
+  expectedOutput: 'A comprehensive PDF report',
+  agent: reportWriter
 });
 ```
 
-See [Using Hooks](/how-to/using-hooks) for more information on how to use hooks.
+### Task Result Interpolation
+
+When a task is executed, its description is automatically interpolated with:
+- Input variables using `{variableName}` syntax
+- Previous task results using `{taskResult:taskN}` syntax
+
+The interpolation happens at runtime, ensuring that tasks have access to the most current data and results.
+
+### Task Context and Memory
+
+Tasks can operate with or without memory of previous task executions, controlled by the team's `memory` configuration:
+
+```js
+const team = new Team({
+  name: 'Content Creation Team',
+  agents: [researcher, writer, editor],
+  tasks: [researchTask, writingTask, editingTask],
+  memory: true, // Enable task context sharing (default)
+  // memory: false, // Disable task context sharing
+});
+```
+
+When memory is enabled (default):
+- Tasks have access to the full workflow history
+- Agents can understand the context of previous task executions
+- Better for complex workflows where context improves task execution
+- May use more tokens due to additional context
+
+When memory is disabled:
+- Tasks operate in isolation
+- Only explicit task results are passed between tasks
+- Better for independent tasks or when minimizing token usage
+- Reduces context but may affect task coherence
+
+### Best Practices
+
+1. **Clear Dependencies**: Make task dependencies explicit in your task descriptions
+2. **Result Format**: Ensure task results are in a format that can be easily used by subsequent tasks
+3. **Error Handling**: Consider what happens if a referenced task result is unavailable
+4. **Documentation**: Document the expected format of task results for better maintainability
+5. **Memory Usage**: Consider enabling/disabling memory based on:
+   - Workflow complexity and interdependence
+   - Token usage requirements
+   - Need for contextual awareness between tasks
 
 ## Human-in-the-Loop (HITL) Features
 
