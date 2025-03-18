@@ -1,6 +1,6 @@
-# Workflow Management
+# Task Orchestration
 
-KaibanJS provides flexible workflow management capabilities to control how tasks are executed within a team workflow. These execution patterns determine the order and manner in which tasks are processed, enabling you to create workflows that match your specific needs.
+KaibanJS provides flexible task orchestration capabilities to control how tasks are executed within a team workflow. These execution patterns determine the order and manner in which tasks are processed, enabling you to create workflows that match your specific needs.
 
 ## Deterministic Execution
 
