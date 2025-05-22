@@ -23,13 +23,13 @@ To use an Anthropic model in your KaibanJS agent, configure the `llmConfig` prop
 
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-5-sonnet-20240620',  // or any other Anthropic model
-        apiKey: 'your-api-key-here'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620', // or any other Anthropic model
+    apiKey: 'your-api-key-here'
+  }
 });
 ```
 
@@ -41,13 +41,13 @@ To use Anthropic models, you need to provide an API key. There are two recommend
 
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-opus-20240229',
-        apiKey: 'your-api-key-here'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-opus-20240229',
+    apiKey: 'your-api-key-here'
+  }
 });
 ```
 
@@ -55,44 +55,49 @@ const agent = new Agent({
 
 ```javascript
 const team = new Team({
-    name: 'Anthropic Team',
-    agents: [agent],
-    env: {
-        ANTHROPIC_API_KEY: 'your-api-key-here'
-    }
+  name: 'Anthropic Team',
+  agents: [agent],
+  env: {
+    ANTHROPIC_API_KEY: 'your-api-key-here'
+  }
 });
 ```
 
 :::warning[CORS Issues in Browser]
-When using Anthropic's API directly in browser environments, you may encounter CORS errors. To resolve this, you have two options:
+When using Anthropic's API directly in browser environments with KaibanJS versions prior to v0.20.0, you may encounter CORS errors. This issue has been resolved in KaibanJS v0.20.0 and later versions through the integration of the latest @langchain/anthropic package.
 
-1. **Use the Kaiban LLM Proxy**: Deploy our ready-to-use proxy solution:
+If you're using an older version of KaibanJS, you have two options to resolve CORS issues:
+
+1. **Upgrade to KaibanJS v0.20.0 or later**: This is the recommended solution as it includes the latest @langchain/anthropic package with built-in CORS handling.
+
+2. **Use the Kaiban LLM Proxy**: For older versions, you can deploy our ready-to-use proxy solution:
    - Fork and deploy [kaiban-llm-proxy](https://github.com/kaiban-ai/kaiban-llm-proxy)
    - Add the proxy URL to your agent configuration using `apiBaseUrl`
 
-2. **Custom Integration**: Implement Anthropic as a custom integration using the latest LangchainJS integration
+Example with proxy (for older versions):
 
-Example with proxy:
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-5-sonnet-20240620',
-        apiKey: 'your-api-key-here',
-        apiBaseUrl: 'https://your-proxy-url.com/proxy/anthropic'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620',
+    apiKey: 'your-api-key-here',
+    apiBaseUrl: 'https://your-proxy-url.com/proxy/anthropic'
+  }
 });
 ```
+
 :::
 
 :::warning[API Key Security]
 Always use environment variables for API keys instead of hardcoding them. This enhances security and simplifies key management across different environments.
 
 **Example:**
+
 ```javascript
-apiKey: process.env.YOUR_API_KEY
+apiKey: process.env.YOUR_API_KEY;
 ```
 
 Never commit API keys to version control. Use a `.env` file or a secure secrets management system for sensitive information.
@@ -110,15 +115,15 @@ Here's an example of how to use advanced configuration options:
 
 ```javascript
 const agent = new Agent({
-    name: 'Advanced Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-opus-20240229',
-        temperature: 0.7,
-        maxTokens: 1000,
-        // Any other Langchain-supported parameters...
-    }
+  name: 'Advanced Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-opus-20240229',
+    temperature: 0.7,
+    maxTokens: 1000
+    // Any other Langchain-supported parameters...
+  }
 });
 ```
 
