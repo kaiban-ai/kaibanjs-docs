@@ -90,6 +90,7 @@ This format enables:
         └── 03-Anthropic.md
         └── 04-Google.md
         └── 05-Mistral.md
+        └── 06-DeepSeek.md
         └── _category_.json
     └── custom-integrations
         └── 01-Overview.md
@@ -125,6 +126,7 @@ This format enables:
         └── 12-ZapierWebhook.md
         └── 13-MakeWebhook.md
         └── 14-JinaUrlToMarkdown.md
+        └── 15-SimpleRAGRetrieve.md
         └── 20-Contributing.md
         └── _category_.json
     └── langchain-tools
@@ -7198,13 +7200,13 @@ To use an Anthropic model in your KaibanJS agent, configure the `llmConfig` prop
 
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-5-sonnet-20240620',  // or any other Anthropic model
-        apiKey: 'your-api-key-here'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620', // or any other Anthropic model
+    apiKey: 'your-api-key-here'
+  }
 });
 ```
 
@@ -7216,13 +7218,13 @@ To use Anthropic models, you need to provide an API key. There are two recommend
 
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-opus-20240229',
-        apiKey: 'your-api-key-here'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-opus-20240229',
+    apiKey: 'your-api-key-here'
+  }
 });
 ```
 
@@ -7230,44 +7232,49 @@ const agent = new Agent({
 
 ```javascript
 const team = new Team({
-    name: 'Anthropic Team',
-    agents: [agent],
-    env: {
-        ANTHROPIC_API_KEY: 'your-api-key-here'
-    }
+  name: 'Anthropic Team',
+  agents: [agent],
+  env: {
+    ANTHROPIC_API_KEY: 'your-api-key-here'
+  }
 });
 ```
 
 :::warning[CORS Issues in Browser]
-When using Anthropic's API directly in browser environments, you may encounter CORS errors. To resolve this, you have two options:
+When using Anthropic's API directly in browser environments with KaibanJS versions prior to v0.20.0, you may encounter CORS errors. This issue has been resolved in KaibanJS v0.20.0 and later versions through the integration of the latest @langchain/anthropic package.
 
-1. **Use the Kaiban LLM Proxy**: Deploy our ready-to-use proxy solution:
+If you're using an older version of KaibanJS, you have two options to resolve CORS issues:
+
+1. **Upgrade to KaibanJS v0.20.0 or later**: This is the recommended solution as it includes the latest @langchain/anthropic package with built-in CORS handling.
+
+2. **Use the Kaiban LLM Proxy**: For older versions, you can deploy our ready-to-use proxy solution:
    - Fork and deploy [kaiban-llm-proxy](https://github.com/kaiban-ai/kaiban-llm-proxy)
    - Add the proxy URL to your agent configuration using `apiBaseUrl`
 
-2. **Custom Integration**: Implement Anthropic as a custom integration using the latest LangchainJS integration
+Example with proxy (for older versions):
 
-Example with proxy:
 ```javascript
 const agent = new Agent({
-    name: 'Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-5-sonnet-20240620',
-        apiKey: 'your-api-key-here',
-        apiBaseUrl: 'https://your-proxy-url.com/proxy/anthropic'
-    }
+  name: 'Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620',
+    apiKey: 'your-api-key-here',
+    apiBaseUrl: 'https://your-proxy-url.com/proxy/anthropic'
+  }
 });
 ```
+
 :::
 
 :::warning[API Key Security]
 Always use environment variables for API keys instead of hardcoding them. This enhances security and simplifies key management across different environments.
 
 **Example:**
+
 ```javascript
-apiKey: process.env.YOUR_API_KEY
+apiKey: process.env.YOUR_API_KEY;
 ```
 
 Never commit API keys to version control. Use a `.env` file or a secure secrets management system for sensitive information.
@@ -7285,15 +7292,15 @@ Here's an example of how to use advanced configuration options:
 
 ```javascript
 const agent = new Agent({
-    name: 'Advanced Anthropic Agent',
-    role: 'Assistant',
-    llmConfig: {
-        provider: 'anthropic',
-        model: 'claude-3-opus-20240229',
-        temperature: 0.7,
-        maxTokens: 1000,
-        // Any other Langchain-supported parameters...
-    }
+  name: 'Advanced Anthropic Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-opus-20240229',
+    temperature: 0.7,
+    maxTokens: 1000
+    // Any other Langchain-supported parameters...
+  }
 });
 ```
 
@@ -7320,6 +7327,7 @@ For a comprehensive list of available parameters and advanced configuration opti
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
+
 
 
 ### ./src/llms-docs/built-in-models/04-Google.md
@@ -7583,6 +7591,148 @@ For a comprehensive list of available parameters and advanced configuration opti
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
+
+
+### ./src/llms-docs/built-in-models/06-DeepSeek.md
+
+
+//--------------------------------------------
+// File: ./src/llms-docs/built-in-models/06-DeepSeek.md
+//--------------------------------------------
+
+---
+title: DeepSeek
+description: Guide to using DeepSeek's language models in KaibanJS
+---
+
+> KaibanJS seamlessly integrates with DeepSeek's powerful language models, allowing you to leverage advanced AI capabilities in your applications. This integration supports DeepSeek's chat and reasoning models through the Langchain integration.
+
+## Supported Models
+
+KaibanJS supports DeepSeek's models available through the Langchain integration. These models are designed for natural language conversations and complex reasoning tasks. The supported models include:
+
+- deepseek-chat: A powerful chat model optimized for conversational AI
+- deepseek-reasoner: A specialized model designed for complex reasoning tasks
+
+For more information about these models and their capabilities, please refer to the [official DeepSeek documentation](https://api-docs.deepseek.com/).
+
+## Configuration
+
+To use a DeepSeek model in your KaibanJS agent, configure the `llmConfig` property as follows:
+
+```javascript
+const agent = new Agent({
+  name: 'DeepSeek Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'deepseek',
+    model: 'deepseek-chat' // or 'deepseek-reasoner'
+  }
+});
+```
+
+## API Key Setup
+
+To use DeepSeek models, you need to provide an API key. There are two recommended ways to do this:
+
+1. **Agent Configuration**: Specify the API key in the `llmConfig` when creating an agent:
+
+```javascript
+const agent = new Agent({
+  name: 'DeepSeek Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'deepseek',
+    model: 'deepseek-chat',
+    apiKey: 'your-api-key-here'
+  }
+});
+```
+
+2. **Team Configuration**: Provide the API key in the `env` property when creating a team:
+
+```javascript
+const team = new Team({
+  name: 'DeepSeek Team',
+  agents: [agent],
+  env: {
+    DEEPSEEK_API_KEY: 'your-api-key-here'
+  }
+});
+```
+
+:::warning[API Key Security]
+Always use environment variables for API keys instead of hardcoding them. This enhances security and simplifies key management across different environments.
+
+**Example:**
+
+```javascript
+apiKey: process.env.YOUR_API_KEY;
+```
+
+Never commit API keys to version control. Use a `.env` file or a secure secrets management system for sensitive information.
+
+Please refer to [API Keys Management](/how-to/API%20Key%20Management) to learn more about handling API Keys safely.
+:::
+
+## Advanced Configuration and Langchain Compatibility
+
+KaibanJS uses Langchain under the hood, which means we're compatible with all the parameters that Langchain's DeepSeek integration supports. This provides you with extensive flexibility in configuring your language models.
+
+For more control over the model's behavior, you can pass additional parameters in the `llmConfig`. These parameters correspond to those supported by [Langchain's DeepSeek integration](https://js.langchain.com/docs/integrations/chat/deepseek/).
+
+Here's an example of how to use advanced configuration options:
+
+```javascript
+const agent = new Agent({
+  name: 'Advanced DeepSeek Agent',
+  role: 'Assistant',
+  llmConfig: {
+    provider: 'deepseek',
+    model: 'deepseek-chat',
+    temperature: 0.7
+    // Any other Langchain-supported parameters...
+  }
+});
+```
+
+For a comprehensive list of available parameters and advanced configuration options, please refer to the official Langchain documentation:
+
+[Langchain DeepSeek Integration Documentation](https://js.langchain.com/docs/integrations/chat/deepseek/)
+
+## Model Features
+
+DeepSeek models support various advanced features:
+
+- **Tool Calling**: Both models support function calling capabilities
+- **Structured Output**: Generate structured JSON responses
+- **Token-level Streaming**: Real-time token streaming for faster responses
+- **Token Usage Tracking**: Monitor and track token usage
+- **Logprobs**: Access to token probability information
+
+Note: As of January 2025, tool calling and structured output are not currently supported for `deepseek-reasoner`.
+
+## Best Practices
+
+1. **Model Selection**: Choose between `deepseek-chat` and `deepseek-reasoner` based on your specific use case
+2. **Cost Management**: Monitor your API usage and implement appropriate rate limiting
+3. **Error Handling**: Implement proper error handling for API rate limits and other potential issues
+
+## Limitations
+
+- Token limits vary by model. Ensure your inputs don't exceed these limits
+- Some features may not be available across all models
+- API rate limits may apply based on your subscription tier
+
+## Further Resources
+
+- [DeepSeek API Documentation](https://api-docs.deepseek.com/)
+- [Langchain DeepSeek Integration Documentation](https://js.langchain.com/docs/integrations/chat/deepseek/)
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
 
 
 ### ./src/llms-docs/custom-integrations/01-Overview.md
@@ -10625,6 +10775,204 @@ Need help with the underlying web scraping technology? You can reach out to the 
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 ::: 
+
+
+### ./src/tools-docs/kaibanjs-tools/15-SimpleRAGRetrieve.md
+
+
+//--------------------------------------------
+// File: ./src/tools-docs/kaibanjs-tools/15-SimpleRAGRetrieve.md
+//--------------------------------------------
+
+---
+title: Simple RAG Retrieve Tool
+description: Simple RAG Retrieve Tool is a specialized RAG implementation that works with pre-loaded vector stores for efficient question-answering systems.
+---
+
+# Simple RAG Retrieve Tool
+
+## Description
+
+Simple RAG Retrieve Tool is a specialized Retrieval-Augmented Generation (RAG) tool designed for scenarios where you have pre-loaded data in a vector store. Unlike the standard SimpleRAG tool, this tool requires a VectorStore instance with existing data and focuses on retrieving and answering questions about previously stored information.
+
+![Simple RAG Retrieve Tool](https://res.cloudinary.com/dnno8pxyy/image/upload/v1733521442/SimpleRAG_df8buq.png)
+
+Key features:
+
+- **Pre-loaded Data Support**: Works with existing vector stores containing processed data
+- **Flexible Vector Store Integration**: Supports various vector store implementations
+- **Customizable Components**: Configure embeddings, retrieval options, and language models
+- **Efficient Retrieval**: Optimized for querying pre-existing knowledge bases
+
+## Installation
+
+First, install the KaibanJS tools package:
+
+```bash
+npm install @kaibanjs/tools
+```
+
+## API Key
+
+Before using the tool, ensure you have an OpenAI API key to enable the RAG functionality.
+
+## Basic Example
+
+Here's how to use the SimpleRAGRetrieve tool with a pre-loaded vector store:
+
+```js
+import { SimpleRAGRetrieve } from '@kaibanjs/tools';
+import { MemoryVectorStore } from '@langchain/community/vectorstores/memory';
+import { Agent, Task, Team } from 'kaibanjs';
+
+// Create a vector store with pre-loaded data
+const vectorStore = new MemoryVectorStore();
+
+// Create the tool instance
+const simpleRAGRetrieveTool = new SimpleRAGRetrieve({
+  OPENAI_API_KEY: 'your-openai-api-key',
+  vectorStore: vectorStore
+});
+
+// Create an agent with the tool
+const knowledgeAssistant = new Agent({
+  name: 'Alex',
+  role: 'Knowledge Assistant',
+  goal: 'Answer questions using pre-loaded knowledge base',
+  background: 'RAG Specialist',
+  tools: [simpleRAGRetrieveTool]
+});
+
+// Create a task for the agent
+const answerQuestionsTask = new Task({
+  description: 'Answer questions using the pre-loaded vector store data',
+  expectedOutput: 'Accurate answers based on the stored knowledge base',
+  agent: knowledgeAssistant
+});
+
+// Create a team
+const ragTeam = new Team({
+  name: 'RAG Retrieval Team',
+  agents: [knowledgeAssistant],
+  tasks: [answerQuestionsTask],
+  inputs: {
+    query: 'What questions would you like to ask about the stored data?'
+  },
+  env: {
+    OPENAI_API_KEY: 'your-openai-api-key'
+  }
+});
+```
+
+## Advanced Example with Pinecone
+
+For production use cases, you can configure SimpleRAGRetrieve with a custom Pinecone vector store:
+
+```js
+import { SimpleRAGRetrieve } from '@kaibanjs/tools';
+import { PineconeStore } from '@langchain/pinecone';
+import { Pinecone } from '@pinecone-database/pinecone';
+import { OpenAIEmbeddings } from '@langchain/openai';
+
+// Configure embeddings
+const embeddings = new OpenAIEmbeddings({
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'text-embedding-3-small'
+});
+
+// Initialize Pinecone
+const pinecone = new Pinecone({
+  apiKey: process.env.PINECONE_API_KEY
+});
+
+// Get existing index
+const pineconeIndex = pinecone.Index('your-index-name');
+const pineconeVectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+  pineconeIndex
+});
+
+// Create the tool with custom configuration
+const simpleRAGRetrieveTool = new SimpleRAGRetrieve({
+  OPENAI_API_KEY: 'your-openai-api-key',
+  chunkOptions: {
+    chunkSize: 1000,
+    chunkOverlap: 200
+  },
+  embeddings: embeddings,
+  vectorStore: pineconeVectorStore,
+  retrieverOptions: {
+    k: 4,
+    searchType: 'similarity',
+    scoreThreshold: 0.7,
+    filter: undefined // Can be used for metadata filtering
+  }
+});
+
+// Use the tool
+const result = await simpleRAGRetrieveTool._call({
+  query: 'Your question here'
+});
+console.log(result);
+```
+
+## Components
+
+The SimpleRAGRetrieve tool uses the following langchain components by default:
+
+- **OpenAIEmbeddings**: For generating embeddings
+- **MemoryVectorStore**: For storing and retrieving vectors
+- **ChatOpenAI**: As the language model
+- **RecursiveCharacterTextSplitter**: For chunking documents
+- **TextInputLoader**: For loading text input
+- **RetrieverOptions**: For overriding retrieval options
+
+All components can be customized by passing different instances or options when creating the tool.
+
+## Parameters
+
+- `OPENAI_API_KEY` **Required**. Your OpenAI API key for embeddings and completions.
+- `vectorStore` **Required**. A VectorStore instance with pre-loaded data.
+- `embeddings` **Optional**. Custom embeddings instance (defaults to OpenAIEmbeddings).
+- `chunkOptions` **Optional**. Configuration for text chunking (size and overlap).
+- `retrieverOptions` **Optional**. Configuration for retrieval behavior:
+  - `k`: Number of documents to retrieve (default: 4)
+  - `searchType`: Type of search ('similarity' or 'mmr')
+  - `scoreThreshold`: Minimum similarity score threshold
+  - `filter`: Metadata filter for document retrieval
+
+## Input Format
+
+The tool expects a JSON object with a "query" field containing the question to ask:
+
+```js
+{
+  "query": "Your question here"
+}
+```
+
+## Output
+
+The tool returns the answer to the question, generated using the RAG approach based on the pre-loaded vector store data.
+
+## Server-Side Considerations
+
+:::warning[Important]
+Many integrations with the `langchain` library, including Pinecone, only work server-side. Ensure your environment supports server-side execution when using these integrations.
+:::
+
+## Differences from SimpleRAG
+
+| Feature      | SimpleRAG                                | SimpleRAGRetrieve                 |
+| ------------ | ---------------------------------------- | --------------------------------- |
+| Data Source  | Processes new content                    | Uses pre-loaded vector store      |
+| Vector Store | Optional (defaults to MemoryVectorStore) | Required parameter                |
+| Use Case     | Quick RAG setup with new content         | Querying existing knowledge bases |
+| Flexibility  | Content-focused                          | Retrieval-focused                 |
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
 
 
 ### ./src/tools-docs/kaibanjs-tools/20-Contributing.md
