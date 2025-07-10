@@ -65,6 +65,6 @@ jobs:
       - name: Publish to npm
         run: |
           cd .mcp-docs-server
-          npm publish --access public
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
