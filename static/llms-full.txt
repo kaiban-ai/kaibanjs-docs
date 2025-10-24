@@ -79,8 +79,7 @@ This format enables:
     └── 10-Task-Result-Passing.md
     └── 11-Structured-Output.md
     └── 12-MCP-Adapter-Integration.md
-    └── 13-Image-Processing-Agent.md
-    └── 14-A2A-Protocol-Integration.md
+    └── 13-Exporting-Traces-with-OpenTelemetry.md
     └── _category_.json
 └── llms-docs
     └── 01-Overview.md
@@ -1168,6 +1167,7 @@ description: Built into KaibanJS, the observability features enable you to track
 ---
 
 ### Introduction to Observability and Monitoring
+
 > Observability in KaibanJS is foundational, ensuring clarity and explainability not just for developers but for everyone interacting with AI systems. This feature extends beyond technical oversight; it is integral to building trust and transparency across all user interactions. By implementing a robust state management system, KaibanJS tracks every state change within the application, reflecting the principles of Flux where the state flows in one direction—predictable and transparent.
 
 :::tip[Using AI Development Tools?]
@@ -1186,37 +1186,49 @@ This example shows how to extract task completion statistics directly from the w
 
 ```js
 function getTaskCompletionStats(taskId, teamStore) {
-    // Retrieve all workflow logs from the store
-    const logs = teamStore.getState().workflowLogs;
+  // Retrieve all workflow logs from the store
+  const logs = teamStore.getState().workflowLogs;
 
-    // Find the log entry where the task is marked as completed
-    const completedLog = logs.find(log =>
-        log.task && log.task.id === taskId && log.logType === "TaskStatusUpdate" && log.task.status === "DONE"
+  // Find the log entry where the task is marked as completed
+  const completedLog = logs.find(
+    log =>
+      log.task &&
+      log.task.id === taskId &&
+      log.logType === 'TaskStatusUpdate' &&
+      log.task.status === 'DONE'
+  );
+
+  if (completedLog) {
+    const {
+      startTime,
+      endTime,
+      duration,
+      llmUsageStats,
+      iterationCount,
+      costDetails
+    } = completedLog.metadata;
+
+    // Displaying the gathered statistics
+    console.log(`Task ${taskId} completed stats:`);
+    console.log(`Start Time: ${new Date(startTime).toLocaleString()}`);
+    console.log(`End Time: ${new Date(endTime).toLocaleString()}`);
+    console.log(`Duration: ${duration} seconds`);
+    console.log(`Iterations: ${iterationCount}`);
+    console.log(
+      `Token Usage: Input - ${llmUsageStats.inputTokens}, Output - ${llmUsageStats.outputTokens}`
     );
+    console.log(`Cost Details: ${JSON.stringify(costDetails)}`);
 
-    if (completedLog) {
-        const { startTime, endTime, duration, llmUsageStats, iterationCount, costDetails } = completedLog.metadata;
-
-        // Displaying the gathered statistics
-        console.log(`Task ${taskId} completed stats:`);
-        console.log(`Start Time: ${new Date(startTime).toLocaleString()}`);
-        console.log(`End Time: ${new Date(endTime).toLocaleString()}`);
-        console.log(`Duration: ${duration} seconds`);
-        console.log(`Iterations: ${iterationCount}`);
-        console.log(`Token Usage: Input - ${llmUsageStats.inputTokens}, Output - ${llmUsageStats.outputTokens}`);
-        console.log(`Cost Details: ${JSON.stringify(costDetails)}`);
-
-        return completedLog.metadata;
-    } else {
-        console.log(`No completed log found for task ID ${taskId}`);
-        return null;
-    }
+    return completedLog.metadata;
+  } else {
+    console.log(`No completed log found for task ID ${taskId}`);
+    return null;
+  }
 }
 
 // Example usage
 const taskId = '123'; // replace with actual task ID
 const taskStats = getTaskCompletionStats(taskId, teamStore);
-
 ```
 
 ### Example: Counting Agent Errors
@@ -1225,19 +1237,23 @@ This example shows how to count the number of THINKING_ERROR statuses an agent n
 
 ```js
 function countAgentThinkingErrors(agentName, teamStore) {
-    // Retrieve all workflow logs from the store
-    const logs = teamStore.getState().workflowLogs;
+  // Retrieve all workflow logs from the store
+  const logs = teamStore.getState().workflowLogs;
 
-    // Filter the logs to find entries where the agent encountered a THINKING_ERROR
-    const errorLogs = logs.filter(log =>
-        log.agent && log.agent.name === agentName && 
-        log.logType === "AgentStatusUpdate" && 
-        log.agentStatus === "THINKING_ERROR"
-    );
+  // Filter the logs to find entries where the agent encountered a THINKING_ERROR
+  const errorLogs = logs.filter(
+    log =>
+      log.agent &&
+      log.agent.name === agentName &&
+      log.logType === 'AgentStatusUpdate' &&
+      log.agentStatus === 'THINKING_ERROR'
+  );
 
-    // Display and return the count of error logs
-    console.log(`Agent ${agentName} encountered THINKING_ERROR ${errorLogs.length} times.`);
-    return errorLogs.length;
+  // Display and return the count of error logs
+  console.log(
+    `Agent ${agentName} encountered THINKING_ERROR ${errorLogs.length} times.`
+  );
+  return errorLogs.length;
 }
 
 // Example usage
@@ -1251,32 +1267,35 @@ This example demonstrates how to retrieve statistics from the log entry recorded
 
 ```js
 function getWorkflowCompletionStats(teamStore) {
-    // Retrieve all workflow logs from the store
-    const logs = teamStore.getState().workflowLogs;
+  // Retrieve all workflow logs from the store
+  const logs = teamStore.getState().workflowLogs;
 
-    // Find the log entry for when the workflow was marked as finished
-    const completionLog = logs.find(log =>
-        log.logType === "WorkflowStatusUpdate" && 
-        log.workflowStatus === "FINISHED"
+  // Find the log entry for when the workflow was marked as finished
+  const completionLog = logs.find(
+    log =>
+      log.logType === 'WorkflowStatusUpdate' &&
+      log.workflowStatus === 'FINISHED'
+  );
+
+  // Check if a completion log exists and display the statistics
+  if (completionLog) {
+    const stats = completionLog.metadata;
+    console.log(
+      `Workflow completed for team ${stats.teamName} with the following stats:`
     );
+    console.log(`Start Time: ${new Date(stats.startTime).toLocaleString()}`);
+    console.log(`End Time: ${new Date(stats.endTime).toLocaleString()}`);
+    console.log(`Duration: ${stats.duration} seconds`);
+    console.log(`Number of Tasks: ${stats.taskCount}`);
+    console.log(`Number of Agents: ${stats.agentCount}`);
+    console.log(`LLM Usage Stats:`, stats.llmUsageStats);
+    console.log(`Cost Details:`, stats.costDetails);
 
-    // Check if a completion log exists and display the statistics
-    if (completionLog) {
-        const stats = completionLog.metadata;
-        console.log(`Workflow completed for team ${stats.teamName} with the following stats:`);
-        console.log(`Start Time: ${new Date(stats.startTime).toLocaleString()}`);
-        console.log(`End Time: ${new Date(stats.endTime).toLocaleString()}`);
-        console.log(`Duration: ${stats.duration} seconds`);
-        console.log(`Number of Tasks: ${stats.taskCount}`);
-        console.log(`Number of Agents: ${stats.agentCount}`);
-        console.log(`LLM Usage Stats:`, stats.llmUsageStats);
-        console.log(`Cost Details:`, stats.costDetails);
-
-        return stats;
-    } else {
-        console.log("No workflow completion log found.");
-        return null;
-    }
+    return stats;
+  } else {
+    console.log('No workflow completion log found.');
+    return null;
+  }
 }
 
 // Example usage
@@ -1289,33 +1308,33 @@ This example demonstrates how to count the number of validations and revisions i
 
 ```js
 function countHITLInteractions(teamStore) {
-    const logs = teamStore.getState().workflowLogs;
-    const validations = logs.filter(log =>
-        log.logType === "TaskStatusUpdate" && log.taskStatus === "VALIDATED"
-    ).length;
-    const revisions = logs.filter(log =>
-        log.logType === "TaskStatusUpdate" && log.taskStatus === "REVISE"
-    ).length;
-    console.log(`Total validations: ${validations}`);
-    console.log(`Total revisions: ${revisions}`);
-    return { validations, revisions };
+  const logs = teamStore.getState().workflowLogs;
+  const validations = logs.filter(
+    log => log.logType === 'TaskStatusUpdate' && log.taskStatus === 'VALIDATED'
+  ).length;
+  const revisions = logs.filter(
+    log => log.logType === 'TaskStatusUpdate' && log.taskStatus === 'REVISE'
+  ).length;
+  console.log(`Total validations: ${validations}`);
+  console.log(`Total revisions: ${revisions}`);
+  return { validations, revisions };
 }
 
 // Example usage
 const hitlStats = countHITLInteractions(teamStore);
 ```
 
-
-
 ### Log Types and Attributes
 
 There are three primary types of logs, each corresponding to different aspects of the system's operation:
 
 ```js
-const logType = 'AgentStatusUpdate' || 'TaskStatusUpdate' || 'WorkflowStatusUpdate'
+const logType =
+  'AgentStatusUpdate' || 'TaskStatusUpdate' || 'WorkflowStatusUpdate';
 ```
 
 #### AgentStatusUpdate
+
 This log type records any changes to an agent's status as they process tasks. The statuses recorded can vary depending on the agent's activity and any challenges they encounter.
 
 - **Key Attributes:**
@@ -1326,6 +1345,7 @@ This log type records any changes to an agent's status as they process tasks. Th
   - `metadata`: Additional data relevant to the agent's status, such as error details or iteration counts.
 
 #### TaskStatusUpdate
+
 Logs under this category track the lifecycle of tasks from start to completion, including any interruptions or issues.
 
 - **Key Attributes:**
@@ -1336,6 +1356,7 @@ Logs under this category track the lifecycle of tasks from start to completion, 
   - `metadata`: Contains specifics like output data, error messages, or other pertinent information related to the task's execution.
 
 #### WorkflowStatusUpdate
+
 These logs are vital for monitoring the overall progress and status of workflows. They provide a macro view of the workflow's lifecycle, including initiation, any stops, errors, or completion.
 
 - **Key Attributes:**
@@ -1347,6 +1368,14 @@ For a comprehensive list of possible status values and their meanings for each t
 
 [KaibanJS Enums File](https://github.com/kaiban-ai/KaibanJS/blob/main/src/utils/enums.js)
 
+---
+
+## OpenTelemetry Integration
+
+KaibanJS provides a seamless integration with OpenTelemetry, allowing you to trace and monitor your workflows in real-time.
+
+Read more about the OpenTelemetry integration in the [Exporting Traces with OpenTelemetry](../how-to/13-Exporting-Traces-with-OpenTelemetry.md) guide.
+
 ## Conclusion
 
 These logs serve as a foundational element for observability within KaibanJS, allowing developers and system administrators to trace actions, pinpoint issues, and understand the dynamics of agent interactions and task executions. They form an integral part of the system's accountability and operational insight mechanisms.
@@ -1354,6 +1383,7 @@ These logs serve as a foundational element for observability within KaibanJS, al
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We’re all ears!
 :::
+
 
 
 ### ./src/core-concepts/07-Human-in-the-Loop.md
@@ -6762,1031 +6792,262 @@ Is there something unclear or quirky in the docs? Maybe you have a suggestion or
 
 
 
-### ./src/how-to/13-Image-Processing-Agent.md
+### ./src/how-to/13-Exporting-Traces-with-OpenTelemetry.md
 
 
 //--------------------------------------------
-// File: ./src/how-to/13-Image-Processing-Agent.md
+// File: ./src/how-to/13-Exporting-Traces-with-OpenTelemetry.md
 //--------------------------------------------
 
 ---
-title: Image Processing Agent
-description: Learn how to create an AI agent that can analyze and process images using multimodal language models in KaibanJS.
+title: Exporting Traces with OpenTelemetry
+description: Learn how to enable distributed tracing and observability in KaibanJS using the @kaibanjs/opentelemetry package.
 ---
 
-> Create powerful image processing agents with KaibanJS using multimodal language models. These agents can analyze images, extract text, identify objects, and generate comprehensive reports about visual content.
+# Exporting Traces with OpenTelemetry
+
+This guide explains how to export KaibanJS workflow traces using the **@kaibanjs/opentelemetry** package. With this integration, you can visualize, debug, and monitor your AI agents’ workflows in real time through OpenTelemetry-compatible observability tools like **SigNoz**, **Langfuse**, **Phoenix**, or **Braintrust**.
 
 :::tip[Using AI Development Tools?]
-Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
-:::
-
-:::tip[Try it Out in the Playground!]
-Curious about how image processing agents work? Explore a complete example interactively in our playground. [Try it now!](https://github.com/kaiban-ai/KaibanJS/blob/main/playground/react/)
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt).  
+Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
 :::
 
 ## Introduction
 
-Image processing agents in KaibanJS leverage multimodal language models to understand and analyze visual content. These agents can perform a wide range of tasks including object detection, text extraction (OCR), image description, document analysis, and content moderation.
-
-## Supported Multimodal Models
-
-KaibanJS supports several multimodal models that can process both text and images:
-
-### OpenAI Models
-
-- **GPT-4o**: Advanced multimodal capabilities with excellent image understanding
-- **GPT-4o-mini**: Cost-effective option with solid image processing features
-
-### Anthropic Models
-
-- **Claude 3.5 Sonnet**: Superior image analysis with detailed visual understanding
-- **Claude 3 Opus**: Most advanced vision capabilities for complex image tasks
-
-### Google Models
-
-- **Gemini 1.5 Pro**: Excellent multimodal performance with strong image comprehension
-- **Gemini 1.5 Flash**: Fast and efficient for basic image processing tasks
-
-:::tip[Model Selection]
-For the best image processing results, we recommend using **Claude 3.5 Sonnet** or **GPT-4o** as they provide the most comprehensive visual understanding capabilities.
-:::
-
-## Implementation Guide
-
-### Step 1: Define Specialized Agents
-
-Create agents with specific roles for image analysis and content formatting:
-
-```javascript
-import { Agent, Task, Team } from 'kaibanjs';
-
-// Vision analysis agent
-const visionAnalyst = new Agent({
-  name: 'Vision Scout',
-  role: 'Image Analyzer',
-  goal: 'Analyze images comprehensively and extract detailed information including objects, text, colors, style, and document-specific details.',
-  background:
-    'Computer vision specialist with expertise in image analysis, OCR, and visual content interpretation',
-  tools: [],
-  llmConfig: {
-    provider: 'anthropic',
-    model: 'claude-3-5-sonnet-20240620' // Excellent for image analysis
-  }
-});
-
-// Content formatting agent
-const contentFormatter = new Agent({
-  name: 'Report Writer',
-  role: 'Content Formatter',
-  goal: 'Format the image analysis results into a well-structured markdown report with embedded image.',
-  background: 'Technical writing and content formatting specialist',
-  tools: [],
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini' // Cost-effective for formatting tasks
-  }
-});
-```
-
-### Step 2: Create Analysis Tasks
-
-Define tasks that process images and format the results:
-
-```javascript
-// Image analysis task
-const imageAnalysisTask = new Task({
-  description: `Analyze the provided image URL: {imageUrl}
-  
-  Please provide a comprehensive analysis including:
-  - General description of the image content
-  - Objects, people, animals, or items visible
-  - Text content (if any) - read all visible text
-  - Colors and visual style
-  - For documents (passports, IDs, etc.): extract all visible fields, numbers, dates, names
-  - Composition and layout
-  - Any special features or notable elements
-  - Quality and clarity of the image`,
-  expectedOutput:
-    'Detailed analysis of the image with all requested information extracted',
-  agent: visionAnalyst
-});
-
-// Report formatting task
-const markdownReportTask = new Task({
-  description: `Create a comprehensive markdown report based on the image analysis results.
-  
-  The report should include:
-  - The original image displayed using markdown image syntax. Image url: {imageUrl}
-  - A well-structured analysis with clear sections
-  - Proper formatting for readability
-  - All extracted information organized logically`,
-  expectedOutput:
-    'Complete markdown report with embedded image and detailed analysis',
-  agent: contentFormatter
-});
-```
-
-### Step 3: Configure the Team
-
-Set up the team with proper environment variables and inputs:
-
-```javascript
-// Create the image processing team
-const team = new Team({
-  name: 'Image Analysis Team',
-  agents: [visionAnalyst, contentFormatter],
-  tasks: [imageAnalysisTask, markdownReportTask],
-  inputs: {
-    imageUrl:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=face'
-  },
-  env: {
-    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
-  }
-});
-
-export default team;
-```
-
-## Complete Example
-
-Here's a complete implementation of an image processing agent:
-
-```javascript
-import { Agent, Task, Team } from 'kaibanjs';
-
-// Define agents
-const visionAnalyst = new Agent({
-  name: 'Vision Scout',
-  role: 'Image Analyzer',
-  goal: 'Analyze images comprehensively and extract detailed information including objects, text, colors, style, and document-specific details.',
-  background:
-    'Computer vision specialist with expertise in image analysis, OCR, and visual content interpretation',
-  tools: [],
-  llmConfig: {
-    provider: 'anthropic',
-    model: 'claude-3-5-sonnet-20240620'
-  }
-});
-
-const contentFormatter = new Agent({
-  name: 'Report Writer',
-  role: 'Content Formatter',
-  goal: 'Format the image analysis results into a well-structured markdown report with embedded image.',
-  background: 'Technical writing and content formatting specialist',
-  tools: [],
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini'
-  }
-});
-
-// Define tasks
-const imageAnalysisTask = new Task({
-  description: `Analyze the provided image URL: {imageUrl}
-  
-  Please provide a comprehensive analysis including:
-  - General description of the image content
-  - Objects, people, animals, or items visible
-  - Text content (if any) - read all visible text
-  - Colors and visual style
-  - For documents (passports, IDs, etc.): extract all visible fields, numbers, dates, names
-  - Composition and layout
-  - Any special features or notable elements
-  - Quality and clarity of the image`,
-  expectedOutput:
-    'Detailed analysis of the image with all requested information extracted',
-  agent: visionAnalyst
-});
-
-const markdownReportTask = new Task({
-  description: `Create a comprehensive markdown report based on the image analysis results.
-  
-  The report should include:
-  - The original image displayed using markdown image syntax. Image url: {imageUrl}
-  - A well-structured analysis with clear sections
-  - Proper formatting for readability
-  - All extracted information organized logically`,
-  expectedOutput:
-    'Complete markdown report with embedded image and detailed analysis',
-  agent: contentFormatter
-});
-
-// Create a team
-const team = new Team({
-  name: 'Image Analysis Team',
-  agents: [visionAnalyst, contentFormatter],
-  tasks: [imageAnalysisTask, markdownReportTask],
-  inputs: {
-    imageUrl:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=face'
-  },
-  env: {
-    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
-  }
-});
-
-export default team;
-```
-
-## Use Cases
-
-Image processing agents can be used for various applications:
-
-### Document Analysis
-
-- Extract text from documents, forms, and certificates
-- Analyze ID cards, passports, and official documents
-- Process invoices and receipts
-
-### Content Moderation
-
-- Detect inappropriate content in images
-- Identify objects and scenes for content categorization
-- Analyze product images for e-commerce
-
-### Medical Imaging
-
-- Analyze X-rays, MRIs, and other medical scans
-- Extract information from medical reports
-- Process lab results and charts
-
-### Social Media Analysis
-
-- Analyze user-generated content
-- Extract metadata from images
-- Process profile pictures and cover photos
-
-## Best Practices
-
-### 1. Model Selection
-
-- Use **Claude 3.5 Sonnet** or **GPT-4o** for complex image analysis
-- Use **GPT-4o-mini** or **Gemini 1.5 Flash** for simple tasks to reduce costs
-- Consider **Gemini 1.5 Pro** for balanced performance and cost
-
-### 2. Task Design
-
-- Be specific about what information you want extracted
-- Include examples in your task descriptions
-- Break complex analyses into multiple tasks
-
-### 3. Error Handling
-
-- Handle cases where images cannot be accessed
-- Provide fallback behavior for unsupported image formats
-- Implement retry logic for API failures
-
-### 4. Performance Optimization
-
-- Cache analysis results for repeated images
-- Use appropriate image sizes (not too large, not too small)
-- Consider using different models for different complexity levels
-
-## Advanced Features
-
-### Image URL Requirements
-
-When working with image processing agents, it's important to understand the different ways images can be provided to multimodal models:
-
-#### Public URLs (Recommended)
-
-Most multimodal models work best with publicly accessible image URLs:
-
-```javascript
-const team = new Team({
-  name: 'Image Analysis Team',
-  agents: [visionAnalyst, contentFormatter],
-  tasks: [imageAnalysisTask, markdownReportTask],
-  inputs: {
-    imageUrl: 'https://example.com/public-image.jpg' // Must be publicly accessible
-  },
-  env: {
-    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
-  }
-});
-```
-
-#### Base64 Encoding (Limited Support)
-
-Some models support base64-encoded images, but this approach has limitations:
-
-- **File Size**: Base64 encoding increases file size by ~33%, making it inefficient for large images
-- **Token Limits**: Large base64 strings consume significant tokens, reducing available context
-- **Model Support**: Not all models support base64 input reliably
-
-#### API Upload Services
-
-Many providers offer dedicated image upload APIs that return public URLs:
-
-- **OpenAI**: Provides image upload endpoints for GPT-4 Vision
-- **Anthropic**: Supports image uploads with URL generation
-- **Google**: Offers image processing through their AI services
-
-### Custom Tools for Image Processing
-
-Create custom tools to handle different image input methods:
-
-```javascript
-import { Tool } from 'kaibanjs';
-
-// Custom tool for uploading images to a provider's API
-const imageUploadTool = new Tool({
-  name: 'upload_image',
-  description: 'Upload an image to get a public URL for analysis',
-  parameters: {
-    type: 'object',
-    properties: {
-      imageData: {
-        type: 'string',
-        description: 'Base64 encoded image data'
-      },
-      provider: {
-        type: 'string',
-        description: 'Provider to upload to (openai, anthropic, google)'
-      }
-    },
-    required: ['imageData', 'provider']
-  },
-  execute: async ({ imageData, provider }) => {
-    // Implementation to upload image and return public URL
-    // This would integrate with the provider's upload API
-    return { publicUrl: 'https://provider-api.com/uploaded-image.jpg' };
-  }
-});
-
-const enhancedVisionAnalyst = new Agent({
-  name: 'Enhanced Vision Scout',
-  role: 'Image Analyzer with Upload Capabilities',
-  goal: 'Analyze images from various sources including uploads',
-  background: 'Computer vision specialist with image processing expertise',
-  tools: [imageUploadTool],
-  llmConfig: {
-    provider: 'anthropic',
-    model: 'claude-3-5-sonnet-20240620'
-  }
-});
-```
-
-### Integration with Web Tools
-
-Combine image processing with web tools for enhanced functionality:
-
-```javascript
-import { TavilySearch, Firecrawl } from '@kaibanjs/tools';
-
-const webImageAnalyst = new Agent({
-  name: 'Web Image Analyst',
-  role: 'Image Analyzer with Web Context',
-  goal: 'Analyze images found through web search or web scraping',
-  background: 'Computer vision specialist with web research capabilities',
-  tools: [TavilySearch, Firecrawl],
-  llmConfig: {
-    provider: 'anthropic',
-    model: 'claude-3-5-sonnet-20240620'
-  }
-});
-```
-
-**Use Cases:**
-
-- **TavilySearch**: When search results return images, analyze them for context and relevance
-- **Firecrawl**: Extract and analyze images from web pages, including screenshots of websites
-- **Combined Workflow**: Search for images, then analyze the found images for detailed insights
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Image Access Errors**: Ensure image URLs are publicly accessible
-2. **API Rate Limits**: Implement proper rate limiting and retry logic
-3. **Large Image Processing**: Consider resizing images before processing
-4. **Unsupported Formats**: Check that your chosen model supports the image format
-
-### Debug Tips
-
-- Test with simple images first
-- Use console logging to track image processing steps
-- Verify API keys and model availability
-- Check image URL accessibility
-
-## Conclusion
-
-Image processing agents in KaibanJS provide powerful capabilities for analyzing and understanding visual content. By leveraging multimodal language models and following best practices, you can create sophisticated image analysis systems that extract valuable insights from visual data.
-
-Whether you're building document processing systems, content moderation tools, or medical imaging applications, KaibanJS makes it easy to implement robust image processing workflows with AI agents.
-
-:::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
-:::
-
-
-
-### ./src/how-to/14-A2A-Protocol-Integration.md
-
-
-//--------------------------------------------
-// File: ./src/how-to/14-A2A-Protocol-Integration.md
-//--------------------------------------------
+The **@kaibanjs/opentelemetry** package bridges **KaibanJS** with **OpenTelemetry**, automatically mapping your agent and task executions to OpenTelemetry **spans**.  
+This allows for a detailed, visual representation of how your agents think, act, and collaborate within complex workflows.
+
+### Key Features
+
+- 🔍 **Automatic Trace Mapping** — KaibanJS tasks and agents are represented as OpenTelemetry spans.
+- 📈 **Built-in Metrics** — Duration, token usage, cost, and performance are automatically captured.
+- 🌐 **Multi-Service Export** — Export traces to SigNoz, Langfuse, Phoenix, Braintrust, Dash0, and any OTLP-compatible service.
+- ⚙️ **Smart Sampling** — Supports configurable sampling strategies.
+- 🧩 **Zero Breaking Changes** — Works without modifying your existing KaibanJS logic.
 
 ---
-title: A2A Protocol Integration
-description: Learn how to integrate KaibanJS teams with Google's Agent-to-Agent (A2A) protocol for seamless agent communication and collaboration.
----
 
-> Integrate your KaibanJS teams with Google's Agent-to-Agent (A2A) protocol to enable seamless communication between AI agents across different platforms and providers. This integration allows your agents to collaborate with other A2A-compatible agents in a standardized, secure, and interoperable ecosystem.
-
-:::tip[Using AI Development Tools?]
-Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
-:::
-
-## Introduction
-
-The Agent-to-Agent (A2A) protocol, developed by Google, provides a standardized framework for AI agents to communicate and collaborate effectively. It addresses the current lack of interoperability between agents built on different platforms and by various providers, enabling seamless collaboration in complex multi-agent workflows.
-
-:::warning[Server-Side Only]
-Due to protocol requirements, A2A integration with KaibanJS must be implemented server-side to ensure proper security, authentication, and performance. This integration cannot be used in browser environments.
-:::
-
-:::tip[Try the Demo!]
-See the A2A Protocol integration in action with our complete demo implementation. [Try it now!](https://github.com/kaiban-ai/a2a-protocol-kaibanjs-demo)
-:::
-
-<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4n8u8T8_eDY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
-</div>
-
-## Understanding the A2A Protocol
-
-### Key Protocol Components
-
-The A2A protocol consists of several essential components that work together to enable agent communication:
-
-#### 1. Agent Card
-
-An **Agent Card** is a JSON document that describes an agent's identity, capabilities, skills, service URL, and authentication requirements. It serves as the agent's "business card" in the A2A ecosystem.
-
-#### 2. Task Management
-
-Communication between agents is **task-oriented**. A "Task" represents a unit of work or conversation between agents, with defined lifecycle states: `submitted`, `working`, `input-required`, `completed`, `failed`, or `canceled`.
-
-#### 3. Event Bus System
-
-The protocol uses an **ExecutionEventBus** for real-time communication, supporting streaming updates through Server-Sent Events (SSE) for dynamic collaboration.
-
-#### 4. Request Context
-
-Each interaction includes a **RequestContext** containing task ID, context ID, and user message parts, providing structured communication between agents.
-
-## Implementation Guide
-
-### Step 1: Install Dependencies
-
-First, install the required dependencies for A2A protocol integration:
+## Installation
 
 ```bash
-npm install @a2a-js/sdk express cors dotenv
+npm install @kaibanjs/opentelemetry
 ```
 
-### Step 2: Create the Agent Card
+---
 
-Define your agent's capabilities and metadata in an Agent Card:
+## Quick Start
+
+Here’s a minimal setup to get started with OpenTelemetry tracing in your KaibanJS project:
 
 ```typescript
-import { AgentCard } from '@a2a-js/sdk';
+import { Team, Agent, Task } from 'kaibanjs';
+import { enableOpenTelemetry } from '@kaibanjs/opentelemetry';
 
-export const kaibanjsAgentCard: AgentCard = {
-  name: 'Kaibanjs Research Agent',
-  description:
-    'An AI agent that uses Kaibanjs to research topics and provide comprehensive summaries using web search and content generation capabilities.',
-  version: '1.0.0',
-  protocolVersion: '1.0.0',
-  url: process.env.BASE_URL || 'http://localhost:4000',
-  preferredTransport: 'JSONRPC',
-  capabilities: {
-    streaming: true,
-    pushNotifications: false,
-    stateTransitionHistory: true
-  },
-  defaultInputModes: ['text/plain'],
-  defaultOutputModes: ['text/plain'],
-  skills: [
-    {
-      id: 'research',
-      name: 'Research and Summarization',
-      description:
-        'Research topics using web search and generate comprehensive summaries',
-      tags: ['research', 'summarization', 'web-search', 'ai'],
-      examples: [
-        'What are the latest developments in AI?',
-        'Summarize the current state of renewable energy',
-        'Research the history of space exploration'
-      ]
+const team = new Team({
+  name: 'My Observability Team',
+  agents: [...],
+  tasks: [...]
+});
+
+const config = {
+  enabled: true,
+  sampling: { rate: 1.0, strategy: 'always' },
+  attributes: {
+    includeSensitiveData: false,
+    customAttributes: {
+      'service.name': 'kaiban-observability-demo',
+      'service.version': '1.0.0'
     }
-  ],
-  provider: {
-    organization: 'KaibanJS',
-    url: 'https://github.com/Kaiban-ai/a2a-protocol-kaibanjs-demo'
+  },
+  exporters: {
+    console: true,
+    otlp: {
+      endpoint: 'https://ingest.us.signoz.cloud:443',
+      protocol: 'grpc',
+      headers: { 'signoz-access-token': 'your-token' },
+      serviceName: 'kaibanjs-service'
+    }
   }
 };
+
+enableOpenTelemetry(team, config);
+await team.start({ input: 'data' });
 ```
 
-### Step 3: Create the KaibanJS Team
+---
 
-Build your KaibanJS team with agents and tasks:
+## Configuration Options
+
+### `OpenTelemetryConfig` Interface
 
 ```typescript
-import { Agent, Task, Team } from 'kaibanjs';
-import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+interface OpenTelemetryConfig {
+  enabled: boolean;
+  sampling: {
+    rate: number;
+    strategy: 'always' | 'probabilistic' | 'rate_limiting';
+  };
+  attributes: {
+    includeSensitiveData: boolean;
+    customAttributes: Record<string, string>;
+  };
+  exporters?: {
+    console?: boolean;
+    otlp?: OTLPConfig | OTLPConfig[];
+  };
+}
+```
 
-// Define tools
-const searchTool = new TavilySearchResults({
-  maxResults: 3,
-  apiKey: process.env.TAVILY_API_KEY || 'your-tavily-api-key'
-});
+### Sampling Strategies
 
-// Define agents
-const searchAgent = new Agent({
-  name: 'Scout',
-  role: 'Information Gatherer',
-  goal: 'Find up-to-date information about the given query.',
-  background:
-    'Research specialist with expertise in web search and information gathering',
-  type: 'ReactChampionAgent',
-  tools: [searchTool]
-});
+| Strategy | Description |
+|-----------|--------------|
+| `always` | Records all traces — recommended for development |
+| `probabilistic` | Samples a percentage of traces (0.0 to 1.0) |
+| `rate_limiting` | Limits trace rate for high-load production systems |
 
-const contentCreator = new Agent({
-  name: 'Writer',
-  role: 'Content Creator',
-  goal: 'Generate a comprehensive summary of the gathered information.',
-  background: 'Journalist and content creator with expertise in summarization',
-  type: 'ReactChampionAgent',
-  tools: []
-});
+---
 
-// Define tasks
-const searchTask = new Task({
-  description: `Search for detailed information about: {query}. Current date: {currentDate}. Focus on the most recent and up-to-date information available.`,
-  expectedOutput:
-    'Detailed information about the topic. Key facts, important details, and relevant information. Include timestamps and dates when available.',
-  agent: searchAgent
-});
+## Trace Structure
 
-const summarizeTask = new Task({
-  description: `Using the gathered information, create a comprehensive summary. Ensure the summary reflects the most current state of the topic.`,
-  expectedOutput:
-    'A well-structured summary with key points, main findings, and conclusions. Minimum 3 paragraphs. Include relevant dates and timestamps when available.',
-  agent: contentCreator
-});
+Each KaibanJS task or agent execution is automatically converted into OpenTelemetry spans, with a clear parent-child hierarchy:
 
-// Create team factory function
-export function createKaibanjsTeam(query: string) {
-  const currentDate = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+```
+Task Span (DOING → DONE)
+├── Agent Thinking Span (THINKING_END)
+├── Agent Thinking Span (THINKING_END)
+└── Agent Thinking Span (THINKING_END)
+```
 
-  const team = new Team({
-    name: 'Research and Summary Team',
-    agents: [searchAgent, contentCreator],
-    tasks: [searchTask, summarizeTask],
-    inputs: {
-      query,
-      currentDate
+---
+
+## Exporting Traces
+
+### Console Exporter (for Development)
+
+```typescript
+exporters: {
+  console: true
+}
+```
+
+### OTLP Exporter (for Production)
+
+You can export traces to any OTLP-compatible service.
+
+#### Example: Single Service
+
+```typescript
+exporters: {
+  otlp: {
+    endpoint: 'https://cloud.langfuse.com/api/public/otel',
+    protocol: 'http',
+    headers: {
+      Authorization: 'Basic ' + Buffer.from('pk-lf-xxx:sk-lf-xxx').toString('base64')
     },
-    env: {
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
-      ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || ''
-    }
-  });
-
-  return team;
-}
-```
-
-### Step 4: Implement the Agent Executor
-
-Create an executor that bridges KaibanJS teams with the A2A protocol:
-
-```typescript
-import {
-  AgentExecutor,
-  RequestContext,
-  ExecutionEventBus
-} from '@a2a-js/sdk/server';
-import {
-  TaskStatusUpdateEvent,
-  TaskArtifactUpdateEvent,
-  Part
-} from '@a2a-js/sdk';
-
-import { createKaibanjsTeam } from './kaibanjs-team.js';
-
-export class KaibanjsAgentExecutor implements AgentExecutor {
-  public async execute(
-    requestContext: RequestContext,
-    eventBus: ExecutionEventBus
-  ): Promise<void> {
-    const { taskId, contextId, userMessage } = requestContext;
-
-    try {
-      // Extract query from userMessage
-      const query = userMessage.parts
-        .filter((part: Part) => part.kind === 'text')
-        .map((part: Part) => (part as any).text)
-        .join(' ');
-
-      if (!query.trim()) {
-        throw new Error('No query provided in message');
-      }
-
-      // Start the task
-      eventBus.publish({
-        kind: 'status-update',
-        taskId,
-        contextId,
-        status: { state: 'working', timestamp: new Date().toISOString() },
-        final: false
-      });
-
-      // Create Kaibanjs team
-      const team = createKaibanjsTeam(query);
-      const useTeamStore = team.useStore();
-
-      // Subscribe to workflow logs for streaming updates
-      const unsubscribe = useTeamStore.subscribe(state => {
-        const { workflowLogs } = state;
-
-        // Process latest logs
-        workflowLogs.forEach(log => {
-          if (log) {
-            let logMessage = '';
-
-            if (log.logType === 'TaskStatusUpdate') {
-              logMessage = `Task Status: ${log.taskStatus}`;
-            } else if (log.logType === 'AgentStatusUpdate') {
-              logMessage = `Agent Status: ${log.agentStatus}`;
-            } else if (log.logType === 'WorkflowStatusUpdate') {
-              logMessage = `Workflow Status: ${log.workflowStatus}`;
-            }
-
-            if (logMessage) {
-              // Send log as artifact update through the event bus
-              eventBus.publish({
-                kind: 'artifact-update',
-                taskId,
-                contextId,
-                artifact: {
-                  artifactId: `log-${Date.now()}`,
-                  parts: [{ kind: 'text', text: log.logDescription }],
-                  metadata: {
-                    timestamp: new Date().toISOString(),
-                    logType: log.logType,
-                    logMessage
-                  }
-                }
-              });
-            }
-          }
-        });
-      });
-
-      // Execute the team workflow
-      await team.start();
-
-      // Wait for final logs to be processed
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Get final result
-      const finalState = useTeamStore.getState();
-      const finalResult = finalState.workflowResult;
-
-      // Send final result
-      if (finalResult) {
-        eventBus.publish({
-          kind: 'artifact-update',
-          taskId,
-          contextId,
-          artifact: {
-            artifactId: `result-${taskId}`,
-            parts: [
-              { kind: 'text', text: JSON.stringify(finalResult, null, 2) }
-            ],
-            metadata: {
-              timestamp: new Date().toISOString(),
-              type: 'final-result'
-            }
-          }
-        });
-      }
-
-      // Unsubscribe from logs
-      unsubscribe();
-
-      // Complete the task
-      eventBus.publish({
-        kind: 'status-update',
-        taskId,
-        contextId,
-        status: { state: 'completed', timestamp: new Date().toISOString() },
-        final: true
-      });
-    } catch (error) {
-      console.error('Error in KaibanjsAgentExecutor:', error);
-
-      // Send error as artifact
-      eventBus.publish({
-        kind: 'artifact-update',
-        taskId,
-        contextId,
-        artifact: {
-          artifactId: `error-${taskId}`,
-          parts: [
-            {
-              kind: 'text',
-              text: `Error: ${
-                error instanceof Error ? error.message : 'Unknown error'
-              }`
-            }
-          ],
-          metadata: {
-            timestamp: new Date().toISOString(),
-            type: 'error'
-          }
-        }
-      });
-
-      // Mark task as failed
-      eventBus.publish({
-        kind: 'status-update',
-        taskId,
-        contextId,
-        status: { state: 'failed', timestamp: new Date().toISOString() },
-        final: true
-      });
-    } finally {
-      eventBus.finished();
-    }
-  }
-
-  public async cancelTask(
-    taskId: string,
-    eventBus: ExecutionEventBus
-  ): Promise<void> {
-    // Implementation for task cancellation
-    console.log(`Task cancellation requested for task: ${taskId}`);
+    serviceName: 'kaibanjs-langfuse'
   }
 }
 ```
 
-### Step 5: Set Up the Express Server
-
-Create the main server that handles A2A protocol requests:
+#### Example: Multiple Services
 
 ```typescript
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { A2AExpressApp } from '@a2a-js/sdk/server/express';
-import { DefaultRequestHandler, InMemoryTaskStore } from '@a2a-js/sdk/server';
-import { KaibanjsAgentExecutor } from './agent-executor.js';
-import { kaibanjsAgentCard } from './agent-card.js';
-
-// Load environment variables
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 4000;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Create A2A components
-const taskStore = new InMemoryTaskStore();
-const agentExecutor = new KaibanjsAgentExecutor();
-
-// Create A2A request handler
-const requestHandler = new DefaultRequestHandler(
-  kaibanjsAgentCard,
-  taskStore,
-  agentExecutor
-);
-
-// Create A2A Express app
-const a2aApp = new A2AExpressApp(requestHandler);
-
-// Setup A2A routes
-a2aApp.setupRoutes(app);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    agent: kaibanjsAgentCard.name,
-    version: kaibanjsAgentCard.version
-  });
-});
-
-// Start server (only in development)
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`🚀 A2A Server running on port ${PORT}`);
-    console.log(
-      `📋 Agent Card available at: http://localhost:${PORT}/.well-known/agent-card.json`
-    );
-    console.log(`🔍 Health check: http://localhost:${PORT}/health`);
-    console.log(`🤖 Agent: ${kaibanjsAgentCard.name}`);
-  });
+exporters: {
+  otlp: [
+    {
+      endpoint: 'https://ingest.us.signoz.cloud:443',
+      protocol: 'grpc',
+      headers: { 'signoz-access-token': 'your-token' },
+      serviceName: 'kaibanjs-signoz'
+    },
+    {
+      endpoint: 'https://cloud.langfuse.com/api/public/otel',
+      protocol: 'http',
+      headers: {
+        Authorization:
+          'Basic ' + Buffer.from('pk-lf-xxx:sk-lf-xxx').toString('base64')
+      },
+      serviceName: 'kaibanjs-langfuse'
+    }
+  ]
 }
-
-// Export for Vercel serverless
-export default app;
 ```
 
-## Key Integration Points
+---
 
-### 1. Request Processing
+### Environment Variable Configuration
 
-The A2A protocol receives requests through the `RequestContext`, which contains:
+```bash
+export OTEL_EXPORTER_OTLP_ENDPOINT="https://your-service.com"
+export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer your-token"
+export OTEL_EXPORTER_OTLP_PROTOCOL="http"
+```
 
-- **Task ID**: Unique identifier for the current task
-- **Context ID**: Session or conversation context
-- **User Message**: The input message with parts (text, images, etc.)
+Then in your code:
 
 ```typescript
-// Extract query from userMessage
-const query = userMessage.parts
-  .filter((part: Part) => part.kind === 'text')
-  .map((part: Part) => (part as any).text)
-  .join(' ');
+exporters: {
+  otlp: { serviceName: 'kaibanjs-service' }
+}
 ```
 
-### 2. Streaming Workflow Logs
+---
 
-The integration uses KaibanJS's store subscription to stream workflow logs through the A2A event bus:
+## Monitoring Metrics
+
+- Workflow and task **duration**
+- **Cost** and **token usage**
+- **Iteration count**
+- **Error rates**
+- **Resource consumption**
+
+---
+
+## Advanced Usage
 
 ```typescript
-// Subscribe to workflow logs
-const unsubscribe = useTeamStore.subscribe(state => {
-  const { workflowLogs } = state;
+import { createOpenTelemetryIntegration } from '@kaibanjs/opentelemetry';
 
-  workflowLogs.forEach(log => {
-    if (log) {
-      // Send log as artifact update
-      eventBus.publish({
-        kind: 'artifact-update',
-        taskId,
-        contextId,
-        artifact: {
-          artifactId: `log-${Date.now()}`,
-          parts: [{ kind: 'text', text: log.logDescription }],
-          metadata: {
-            timestamp: new Date().toISOString(),
-            logType: log.logType,
-            logMessage
-          }
-        }
-      });
-    }
-  });
-});
+const integration = createOpenTelemetryIntegration(config);
+integration.integrateWithTeam(team);
+
+await team.start({ input: 'data' });
+await integration.shutdown();
 ```
 
-### 3. Status Updates
-
-The protocol requires status updates throughout the task lifecycle:
-
-```typescript
-// Start the task
-eventBus.publish({
-  kind: 'status-update',
-  taskId,
-  contextId,
-  status: { state: 'working', timestamp: new Date().toISOString() },
-  final: false
-});
-
-// Complete the task
-eventBus.publish({
-  kind: 'status-update',
-  taskId,
-  contextId,
-  status: { state: 'completed', timestamp: new Date().toISOString() },
-  final: true
-});
-```
-
-### 4. Artifact Management
-
-Results and intermediate outputs are sent as artifacts:
-
-```typescript
-// Send final result
-eventBus.publish({
-  kind: 'artifact-update',
-  taskId,
-  contextId,
-  artifact: {
-    artifactId: `result-${taskId}`,
-    parts: [{ kind: 'text', text: JSON.stringify(finalResult, null, 2) }],
-    metadata: {
-      timestamp: new Date().toISOString(),
-      type: 'final-result'
-    }
-  }
-});
-```
-
-## Environment Configuration
-
-Create a `.env` file with the required environment variables:
-
-```env
-# Server Configuration
-PORT=4000
-BASE_URL=http://localhost:4000
-NODE_ENV=development
-
-# API Keys
-OPENAI_API_KEY=your_openai_api_key
-ANTHROPIC_API_KEY=your_anthropic_api_key
-TAVILY_API_KEY=your_tavily_api_key
-```
-
-## Deployment Considerations
-
-### Server-Side Requirements
-
-- **Node.js Environment**: A2A integration requires a server-side Node.js environment
-- **HTTPS**: Production deployments should use HTTPS for secure communication
-- **Environment Variables**: Secure API key management through environment variables
-
-### Production Deployment
-
-For production deployment, consider using platforms like:
-
-- **Vercel**: Serverless deployment with automatic scaling
-- **Railway**: Simple deployment with built-in environment management
-- **Google Cloud Run**: Containerized deployment with auto-scaling
+---
 
 ## Best Practices
 
-### 1. Error Handling
+1. Use **probabilistic sampling** in production.
+2. Avoid including **sensitive data** in traces.
+3. Validate exporter endpoints and authentication tokens.
+4. Use the **console exporter** for local debugging.
+5. Monitor memory and performance when scaling agents.
 
-- Implement comprehensive error handling for all A2A protocol interactions
-- Provide meaningful error messages through the event bus
-- Handle task cancellation gracefully
-
-### 2. Performance Optimization
-
-- Use appropriate timeouts for long-running tasks
-- Implement proper cleanup of subscriptions and resources
-- Monitor memory usage for large workflow executions
-
-### 3. Security
-
-- Validate all incoming requests
-- Implement proper authentication and authorization
-- Use HTTPS in production environments
-
-### 4. Monitoring
-
-- Log all A2A protocol interactions
-- Monitor task execution times and success rates
-- Implement health checks and status endpoints
+---
 
 ## Troubleshooting
 
-### Common Issues
+| Issue | Possible Cause | Solution |
+|--------|----------------|-----------|
+| Connection refused | Wrong endpoint | Verify OTLP URL and protocol |
+| Authentication failed | Invalid API token | Double-check headers or environment variables |
+| Timeout errors | Network latency | Increase `timeout` in OTLP config |
+| No traces visible | Sampling rate too low | Use `strategy: 'always'` temporarily |
 
-1. **CORS Errors**: Ensure proper CORS configuration for cross-origin requests
-2. **Authentication Failures**: Verify API keys and authentication tokens
-3. **Task Timeouts**: Implement appropriate timeout handling for long-running tasks
-4. **Memory Leaks**: Ensure proper cleanup of subscriptions and event listeners
-
-### Debug Tips
-
-- Enable detailed logging for A2A protocol interactions
-- Use the health check endpoint to verify server status
-- Monitor the event bus for proper message flow
-- Test with simple queries before complex workflows
+---
 
 ## Conclusion
 
-Integrating KaibanJS teams with the A2A protocol enables powerful agent-to-agent communication and collaboration. By following this guide, you can create interoperable AI agents that can seamlessly work with other A2A-compatible agents across different platforms and providers.
-
-The key to successful integration lies in understanding the protocol's components, implementing proper event handling, and ensuring robust error management. With this foundation, your KaibanJS agents can participate in the broader ecosystem of AI agent collaboration.
+By integrating OpenTelemetry with KaibanJS, you gain deep visibility into your agents’ behavior and task performance.  
+This observability layer empowers you to diagnose issues faster, optimize execution flows, and scale AI systems confidently.
 
 :::tip[We Love Feedback!]
-Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+Found this guide useful or have suggestions?  
+Help us improve by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues).
 :::
 
 
