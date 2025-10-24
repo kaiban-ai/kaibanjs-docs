@@ -34,8 +34,8 @@ jobs:
           git config user.name "Dariel Noel"
           git config user.email "darielnoel@gmail.com"
 
-      - name: Install dependencies
-        run: npx @tiberriver256/docs-to-mcp-cli --docs 'docs/**/*.md' --packageName 'kaibanjs-mcp-docs-server' --outDir .mcp-docs-server
+      - name: Execute docs-to-mcp-cli
+        run: npx @tiberriver256/docs-to-mcp-cli --docs "docs/**/*.md" --packageName "kaibanjs-mcp-docs-server" --outDir .mcp-docs-server --toolName="Kaibanjs Multi-Agent Framework"
 
       - name: Display changes
         run: |
@@ -61,6 +61,11 @@ jobs:
           git push origin "mcp-docs-server-v${{ github.event.inputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+
+      - name: Install dependencies
+        run: |
+          cd .mcp-docs-server
+          npm install
 
       - name: Publish to npm
         run: |
