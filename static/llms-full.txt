@@ -51,6 +51,7 @@ This format enables:
     └── 07-Human-in-the-Loop.md
     └── 08-Memory.md
     └── 09-Task-Orchestration.md
+    └── 10-WorkflowDrivenAgent.md
     └── _category_.json
 └── get-started
     └── 01-Quick Start.md
@@ -80,6 +81,9 @@ This format enables:
     └── 11-Structured-Output.md
     └── 12-MCP-Adapter-Integration.md
     └── 13-Exporting-Traces-with-OpenTelemetry.md
+    └── 13-Image-Processing-Agent.md
+    └── 14-A2A-Protocol-Integration.md
+    └── 15-Using-WorkflowDrivenAgent.md
     └── _category_.json
 └── llms-docs
     └── 01-Overview.md
@@ -2364,6 +2368,164 @@ Non-deterministic execution patterns allow for more dynamic and adaptive task ex
 > - Intelligent resource allocation across agents
 > - Real-time decision making for optimal task execution
 > - Automated dependency management and conflict resolution
+
+
+### ./src/core-concepts/10-WorkflowDrivenAgent.md
+
+
+//--------------------------------------------
+// File: ./src/core-concepts/10-WorkflowDrivenAgent.md
+//--------------------------------------------
+
+---
+title: WorkflowDrivenAgent
+description: Learn about WorkflowDrivenAgent, a specialized agent that executes workflows instead of using LLM-based reasoning.
+---
+
+## What is a WorkflowDrivenAgent?
+
+> A **WorkflowDrivenAgent** is a specialized agent that executes predefined workflows instead of using traditional LLM-based reasoning. Unlike standard agents that use language models to make decisions, WorkflowDrivenAgents follow a deterministic workflow pattern, making them ideal for structured, repeatable processes.
+
+The `WorkflowDrivenAgent` is designed for scenarios where you need:
+- **Deterministic execution**: Predictable, step-by-step processes
+- **Complex orchestration**: Multi-step workflows with conditional logic, parallel processing, and loops
+- **State management**: Maintain workflow state between executions
+- **Suspension and resumption**: Handle long-running workflows that may require manual intervention
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## Key Differences from Standard Agents
+
+| Feature | Standard Agent (ReactChampionAgent) | WorkflowDrivenAgent |
+|---------|-----------------------------------|---------------------|
+| **Reasoning** | LLM-based decision making | Workflow-driven execution |
+| **Configuration** | Requires `role`, `goal`, `background` | Requires `workflow` definition |
+| **Execution** | Dynamic, LLM-guided | Deterministic, step-by-step |
+| **State** | Agent state | Workflow state + Agent state |
+| **Suspension** | Limited support | Native suspend/resume support |
+
+## Basic Example
+
+Here's a simple example of creating and using a `WorkflowDrivenAgent`:
+
+```typescript
+import { Agent } from 'kaibanjs';
+import { createStep, createWorkflow } from '@kaibanjs/workflow';
+import { z } from 'zod';
+
+// Create a workflow step
+const processStep = createStep({
+  id: 'process',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ result: z.string() }),
+  execute: async ({ inputData }) => {
+    const { data } = inputData as { data: string };
+    return { result: data.toUpperCase() };
+  },
+});
+
+// Create the workflow
+const workflow = createWorkflow({
+  id: 'example-workflow',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ result: z.string() }),
+});
+
+workflow.then(processStep);
+workflow.commit();
+
+// Create the WorkflowDrivenAgent
+const agent = new Agent({
+  type: 'WorkflowDrivenAgent',
+  name: 'Data Processor',
+  workflow: workflow,
+});
+```
+
+## How It Works
+
+1. **Workflow Definition**: You define a workflow using the `@kaibanjs/workflow` package with steps, input/output schemas, and execution logic.
+
+2. **Agent Creation**: The agent is created with the workflow assigned to it, replacing the traditional `role`, `goal`, and `background` configuration.
+
+3. **Task Execution**: When assigned a task, the agent executes the workflow with the task's input data, following the defined steps sequentially, in parallel, or conditionally.
+
+4. **State Management**: The agent maintains workflow state internally, tracking execution progress, results, and any suspension points.
+
+5. **Team Integration**: The agent integrates seamlessly with teams, working alongside standard LLM-based agents.
+
+## When to Use WorkflowDrivenAgent
+
+Consider using a `WorkflowDrivenAgent` when:
+
+- ✅ You have a well-defined, repeatable process
+- ✅ You need deterministic execution (same input = same output)
+- ✅ You require complex orchestration (parallel steps, conditionals, loops)
+- ✅ You need to suspend and resume workflows
+- ✅ You want to avoid LLM costs for structured processes
+- ✅ You need type-safe workflow definitions
+
+Use standard agents when:
+- ❌ You need creative problem-solving
+- ❌ The process requires dynamic decision-making
+- ❌ You need natural language understanding
+- ❌ The workflow is too complex to define upfront
+
+## Team Compatibility
+
+`WorkflowDrivenAgent` integrates seamlessly with the existing team system:
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+
+const team = new Team({
+  name: 'Mixed Team',
+  agents: [
+    new Agent({
+      type: 'WorkflowDrivenAgent',
+      name: 'Data Processor',
+      workflow: dataProcessingWorkflow,
+    }),
+    new Agent({
+      type: 'ReactChampionAgent',
+      name: 'Analyst',
+      role: 'Analyze results',
+      goal: 'Provide insights on processed data',
+      background: 'Data analysis expert',
+    }),
+  ],
+  tasks: [
+    new Task({
+      description: 'Process the input data using workflow',
+      expectedOutput: 'Processed data result',
+      agent: 'Data Processor',
+    }),
+    new Task({
+      description: 'Analyze the processed data',
+      expectedOutput: 'Analysis insights',
+      agent: 'Analyst',
+    }),
+  ],
+});
+```
+
+## Next Steps
+
+To learn more about creating and using `WorkflowDrivenAgent` in detail, check out the [Using WorkflowDrivenAgent](../how-to/15-Using-WorkflowDrivenAgent.md) guide, which covers:
+
+- Creating complex workflows with multiple patterns
+- Handling suspension and resumption
+- State management and monitoring
+- Error handling
+- Advanced workflow patterns
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
+
 
 
 ### ./src/get-started/01-Quick Start.md
@@ -6901,24 +7063,175 @@ interface OpenTelemetryConfig {
 
 ### Sampling Strategies
 
-| Strategy | Description |
-|-----------|--------------|
-| `always` | Records all traces — recommended for development |
-| `probabilistic` | Samples a percentage of traces (0.0 to 1.0) |
+| Strategy        | Description                                        |
+| --------------- | -------------------------------------------------- |
+| `always`        | Records all traces — recommended for development   |
+| `probabilistic` | Samples a percentage of traces (0.0 to 1.0)        |
 | `rate_limiting` | Limits trace rate for high-load production systems |
 
 ---
 
 ## Trace Structure
 
-Each KaibanJS task or agent execution is automatically converted into OpenTelemetry spans, with a clear parent-child hierarchy:
+The package creates simplified traces with the following structure:
 
 ```
-Task Span (DOING → DONE)
-├── Agent Thinking Span (THINKING_END)
-├── Agent Thinking Span (THINKING_END)
-└── Agent Thinking Span (THINKING_END)
+Task Span (CLIENT) - DOING → DONE
+├── Agent Thinking Span (CLIENT) - THINKING → THINKING_END
+├── Agent Thinking Span (CLIENT) - THINKING → THINKING_END
+└── Agent Thinking Span (CLIENT) - THINKING → THINKING_END
 ```
+
+### Span Hierarchy
+
+- **Task Spans**: Individual task execution spans
+- **Agent Thinking Spans**: Nested spans for agent LLM interactions
+
+### Span Kinds
+
+The package automatically determines span kinds based on span names:
+
+- **CLIENT** (2): Task and Agent spans - represent client operations
+- **INTERNAL** (0): Default for other spans - internal operations
+
+## Event Mapping
+
+The package automatically maps KaibanJS workflow events to OpenTelemetry spans:
+
+### Task Events
+
+| KaibanJS Event        | OpenTelemetry Span | Description                     |
+| --------------------- | ------------------ | ------------------------------- |
+| `TaskStatusUpdate`    | Task Span          | Task execution lifecycle events |
+| `DOING`               | Task Span Start    | Task execution started          |
+| `DONE`                | Task Span End      | Task completed successfully     |
+| `AWAITING_VALIDATION` | Task Span          | Task awaiting validation        |
+| `VALIDATED`           | Task Span          | Task validated successfully     |
+| `ERRORED`             | Task Span Error    | Task failed with error          |
+| `ABORTED`             | Task Span Abort    | Task aborted                    |
+
+### Agent Events
+
+| KaibanJS Event      | OpenTelemetry Span        | Description                         |
+| ------------------- | ------------------------- | ----------------------------------- |
+| `AgentStatusUpdate` | Agent Thinking Span       | Agent thinking and execution events |
+| `THINKING`          | Agent Thinking Span Start | Agent begins thinking process       |
+| `THINKING_END`      | Agent Thinking Span End   | Agent completes thinking process    |
+
+## KaibanJS Semantic Conventions
+
+The package uses KaibanJS-specific semantic conventions for LLM attributes that are automatically recognized by observability services:
+
+### LLM Request Attributes (`kaiban.llm.request.*`)
+
+- `kaiban.llm.request.messages` - Input messages to the LLM
+- `kaiban.llm.request.model` - Model name used for the request
+- `kaiban.llm.request.provider` - Provider of the model (openai, anthropic, google, etc.)
+- `kaiban.llm.request.iteration` - Iteration number for the thinking process
+- `kaiban.llm.request.start_time` - When the thinking process started
+- `kaiban.llm.request.status` - Status of the request (started, interrupted, completed)
+- `kaiban.llm.request.input_length` - Length of the input messages
+- `kaiban.llm.request.has_metadata` - Whether metadata is available
+- `kaiban.llm.request.metadata_keys` - Available metadata keys
+
+### LLM Usage Attributes (`kaiban.llm.usage.*`)
+
+- `kaiban.llm.usage.input_tokens` - Number of input tokens
+- `kaiban.llm.usage.output_tokens` - Number of output tokens
+- `kaiban.llm.usage.total_tokens` - Total tokens used
+- `kaiban.llm.usage.prompt_tokens` - Prompt tokens
+- `kaiban.llm.usage.completion_tokens` - Completion tokens
+- `kaiban.llm.usage.cost` - Cost in USD
+
+### LLM Response Attributes (`kaiban.llm.response.*`)
+
+- `kaiban.llm.response.messages` - Output messages from the LLM
+- `kaiban.llm.response.duration` - Duration of the response
+- `kaiban.llm.response.end_time` - When the response ended
+- `kaiban.llm.response.status` - Status of the response (completed, error, etc.)
+- `kaiban.llm.response.output_length` - Length of the output messages
+
+### Task Attributes (`task.*`)
+
+- `task.id` - Unique task identifier
+- `task.name` - Task title
+- `task.description` - Task description
+- `task.status` - Task status (started, completed, errored, aborted)
+- `task.start_time` - When task execution started
+- `task.end_time` - When task execution ended
+- `task.duration_ms` - Task execution duration in milliseconds
+- `task.iterations` - Number of iterations performed
+- `task.total_cost` - Total cost for the task
+- `task.total_tokens_input` - Total input tokens used
+- `task.total_tokens_output` - Total output tokens generated
+- `task.has_metadata` - Whether task has metadata
+- `task.metadata_keys` - Available metadata keys
+
+### Agent Attributes (`agent.*`)
+
+- `agent.id` - Unique agent identifier
+- `agent.name` - Agent name
+- `agent.role` - Agent role description
+
+### Error Attributes (`error.*`)
+
+- `error.message` - Error message
+- `error.type` - Error type
+- `error.stack` - Error stack trace
+
+### Span Types
+
+- `task.execute` - Task execution spans
+- `kaiban.agent.thinking` - Agent thinking spans (nested under task spans)
+
+These conventions ensure that observability services like Langfuse, Phoenix, and others can automatically recognize and properly display LLM-related data in their dashboards.
+
+## Span Context Management
+
+The package uses a `KaibanSpanContext` to manage span relationships and correlation across workflows:
+
+### Context Structure
+
+```typescript
+interface KaibanSpanContext {
+  teamName: string;
+  workflowId: string;
+  rootSpan?: Span;
+  taskSpans: Map<string, Span>;
+  agentSpans: Map<string, Span>;
+}
+```
+
+### Context Methods
+
+- **Root Span Management**:
+
+  - `setRootSpan(span: Span)` - Set the workflow root span
+  - `getRootSpan()` - Get the current root span
+
+- **Task Span Management**:
+
+  - `setTaskSpan(taskId: string, span: Span)` - Associate a span with a task
+  - `getTaskSpan(taskId: string)` - Retrieve task span
+  - `removeTaskSpan(taskId: string)` - Remove task span from context
+
+- **Agent Span Management**:
+  - `setAgentSpan(agentId: string, span: Span)` - Associate a span with an agent
+  - `getAgentSpan(agentId: string)` - Retrieve agent span
+  - `removeAgentSpan(agentId: string)` - Remove agent span from context
+
+### Context Lifecycle
+
+1. **Task Execution**: Task spans are created
+2. **Agent Thinking**: Agent thinking spans are nested under task spans
+3. **Task Completion**: All spans are completed and context is cleared
+
+### Span Correlation
+
+The context ensures proper parent-child relationships between spans:
+
+- Task spans are parents of agent thinking spans
+- All spans maintain proper trace context for distributed tracing
 
 ---
 
@@ -6928,7 +7241,7 @@ Task Span (DOING → DONE)
 
 ```typescript
 exporters: {
-  console: true
+  console: true;
 }
 ```
 
@@ -6971,7 +7284,7 @@ exporters: {
       },
       serviceName: 'kaibanjs-langfuse'
     }
-  ]
+  ];
 }
 ```
 
@@ -6989,7 +7302,9 @@ Then in your code:
 
 ```typescript
 exporters: {
-  otlp: { serviceName: 'kaibanjs-service' }
+  otlp: {
+    serviceName: 'kaibanjs-service';
+  }
 }
 ```
 
@@ -7031,12 +7346,12 @@ await integration.shutdown();
 
 ## Troubleshooting
 
-| Issue | Possible Cause | Solution |
-|--------|----------------|-----------|
-| Connection refused | Wrong endpoint | Verify OTLP URL and protocol |
-| Authentication failed | Invalid API token | Double-check headers or environment variables |
-| Timeout errors | Network latency | Increase `timeout` in OTLP config |
-| No traces visible | Sampling rate too low | Use `strategy: 'always'` temporarily |
+| Issue                 | Possible Cause        | Solution                                      |
+| --------------------- | --------------------- | --------------------------------------------- |
+| Connection refused    | Wrong endpoint        | Verify OTLP URL and protocol                  |
+| Authentication failed | Invalid API token     | Double-check headers or environment variables |
+| Timeout errors        | Network latency       | Increase `timeout` in OTLP config             |
+| No traces visible     | Sampling rate too low | Use `strategy: 'always'` temporarily          |
 
 ---
 
@@ -7048,6 +7363,2144 @@ This observability layer empowers you to diagnose issues faster, optimize execut
 :::tip[We Love Feedback!]
 Found this guide useful or have suggestions?  
 Help us improve by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues).
+:::
+
+
+
+### ./src/how-to/13-Image-Processing-Agent.md
+
+
+//--------------------------------------------
+// File: ./src/how-to/13-Image-Processing-Agent.md
+//--------------------------------------------
+
+---
+title: Image Processing Agent
+description: Learn how to create an AI agent that can analyze and process images using multimodal language models in KaibanJS.
+---
+
+> Create powerful image processing agents with KaibanJS using multimodal language models. These agents can analyze images, extract text, identify objects, and generate comprehensive reports about visual content.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+:::tip[Try it Out in the Playground!]
+Curious about how image processing agents work? Explore a complete example interactively in our playground. [Try it now!](https://github.com/kaiban-ai/KaibanJS/blob/main/playground/react/)
+:::
+
+## Introduction
+
+Image processing agents in KaibanJS leverage multimodal language models to understand and analyze visual content. These agents can perform a wide range of tasks including object detection, text extraction (OCR), image description, document analysis, and content moderation.
+
+## Supported Multimodal Models
+
+KaibanJS supports several multimodal models that can process both text and images:
+
+### OpenAI Models
+
+- **GPT-4o**: Advanced multimodal capabilities with excellent image understanding
+- **GPT-4o-mini**: Cost-effective option with solid image processing features
+
+### Anthropic Models
+
+- **Claude 3.5 Sonnet**: Superior image analysis with detailed visual understanding
+- **Claude 3 Opus**: Most advanced vision capabilities for complex image tasks
+
+### Google Models
+
+- **Gemini 1.5 Pro**: Excellent multimodal performance with strong image comprehension
+- **Gemini 1.5 Flash**: Fast and efficient for basic image processing tasks
+
+:::tip[Model Selection]
+For the best image processing results, we recommend using **Claude 3.5 Sonnet** or **GPT-4o** as they provide the most comprehensive visual understanding capabilities.
+:::
+
+## Implementation Guide
+
+### Step 1: Define Specialized Agents
+
+Create agents with specific roles for image analysis and content formatting:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+
+// Vision analysis agent
+const visionAnalyst = new Agent({
+  name: 'Vision Scout',
+  role: 'Image Analyzer',
+  goal: 'Analyze images comprehensively and extract detailed information including objects, text, colors, style, and document-specific details.',
+  background:
+    'Computer vision specialist with expertise in image analysis, OCR, and visual content interpretation',
+  tools: [],
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620' // Excellent for image analysis
+  }
+});
+
+// Content formatting agent
+const contentFormatter = new Agent({
+  name: 'Report Writer',
+  role: 'Content Formatter',
+  goal: 'Format the image analysis results into a well-structured markdown report with embedded image.',
+  background: 'Technical writing and content formatting specialist',
+  tools: [],
+  llmConfig: {
+    provider: 'openai',
+    model: 'gpt-4o-mini' // Cost-effective for formatting tasks
+  }
+});
+```
+
+### Step 2: Create Analysis Tasks
+
+Define tasks that process images and format the results:
+
+```javascript
+// Image analysis task
+const imageAnalysisTask = new Task({
+  description: `Analyze the provided image URL: {imageUrl}
+  
+  Please provide a comprehensive analysis including:
+  - General description of the image content
+  - Objects, people, animals, or items visible
+  - Text content (if any) - read all visible text
+  - Colors and visual style
+  - For documents (passports, IDs, etc.): extract all visible fields, numbers, dates, names
+  - Composition and layout
+  - Any special features or notable elements
+  - Quality and clarity of the image`,
+  expectedOutput:
+    'Detailed analysis of the image with all requested information extracted',
+  agent: visionAnalyst
+});
+
+// Report formatting task
+const markdownReportTask = new Task({
+  description: `Create a comprehensive markdown report based on the image analysis results.
+  
+  The report should include:
+  - The original image displayed using markdown image syntax. Image url: {imageUrl}
+  - A well-structured analysis with clear sections
+  - Proper formatting for readability
+  - All extracted information organized logically`,
+  expectedOutput:
+    'Complete markdown report with embedded image and detailed analysis',
+  agent: contentFormatter
+});
+```
+
+### Step 3: Configure the Team
+
+Set up the team with proper environment variables and inputs:
+
+```javascript
+// Create the image processing team
+const team = new Team({
+  name: 'Image Analysis Team',
+  agents: [visionAnalyst, contentFormatter],
+  tasks: [imageAnalysisTask, markdownReportTask],
+  inputs: {
+    imageUrl:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=face'
+  },
+  env: {
+    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
+    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
+  }
+});
+
+export default team;
+```
+
+## Complete Example
+
+Here's a complete implementation of an image processing agent:
+
+```javascript
+import { Agent, Task, Team } from 'kaibanjs';
+
+// Define agents
+const visionAnalyst = new Agent({
+  name: 'Vision Scout',
+  role: 'Image Analyzer',
+  goal: 'Analyze images comprehensively and extract detailed information including objects, text, colors, style, and document-specific details.',
+  background:
+    'Computer vision specialist with expertise in image analysis, OCR, and visual content interpretation',
+  tools: [],
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620'
+  }
+});
+
+const contentFormatter = new Agent({
+  name: 'Report Writer',
+  role: 'Content Formatter',
+  goal: 'Format the image analysis results into a well-structured markdown report with embedded image.',
+  background: 'Technical writing and content formatting specialist',
+  tools: [],
+  llmConfig: {
+    provider: 'openai',
+    model: 'gpt-4o-mini'
+  }
+});
+
+// Define tasks
+const imageAnalysisTask = new Task({
+  description: `Analyze the provided image URL: {imageUrl}
+  
+  Please provide a comprehensive analysis including:
+  - General description of the image content
+  - Objects, people, animals, or items visible
+  - Text content (if any) - read all visible text
+  - Colors and visual style
+  - For documents (passports, IDs, etc.): extract all visible fields, numbers, dates, names
+  - Composition and layout
+  - Any special features or notable elements
+  - Quality and clarity of the image`,
+  expectedOutput:
+    'Detailed analysis of the image with all requested information extracted',
+  agent: visionAnalyst
+});
+
+const markdownReportTask = new Task({
+  description: `Create a comprehensive markdown report based on the image analysis results.
+  
+  The report should include:
+  - The original image displayed using markdown image syntax. Image url: {imageUrl}
+  - A well-structured analysis with clear sections
+  - Proper formatting for readability
+  - All extracted information organized logically`,
+  expectedOutput:
+    'Complete markdown report with embedded image and detailed analysis',
+  agent: contentFormatter
+});
+
+// Create a team
+const team = new Team({
+  name: 'Image Analysis Team',
+  agents: [visionAnalyst, contentFormatter],
+  tasks: [imageAnalysisTask, markdownReportTask],
+  inputs: {
+    imageUrl:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=face'
+  },
+  env: {
+    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
+    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
+  }
+});
+
+export default team;
+```
+
+## Use Cases
+
+Image processing agents can be used for various applications:
+
+### Document Analysis
+
+- Extract text from documents, forms, and certificates
+- Analyze ID cards, passports, and official documents
+- Process invoices and receipts
+
+### Content Moderation
+
+- Detect inappropriate content in images
+- Identify objects and scenes for content categorization
+- Analyze product images for e-commerce
+
+### Medical Imaging
+
+- Analyze X-rays, MRIs, and other medical scans
+- Extract information from medical reports
+- Process lab results and charts
+
+### Social Media Analysis
+
+- Analyze user-generated content
+- Extract metadata from images
+- Process profile pictures and cover photos
+
+## Best Practices
+
+### 1. Model Selection
+
+- Use **Claude 3.5 Sonnet** or **GPT-4o** for complex image analysis
+- Use **GPT-4o-mini** or **Gemini 1.5 Flash** for simple tasks to reduce costs
+- Consider **Gemini 1.5 Pro** for balanced performance and cost
+
+### 2. Task Design
+
+- Be specific about what information you want extracted
+- Include examples in your task descriptions
+- Break complex analyses into multiple tasks
+
+### 3. Error Handling
+
+- Handle cases where images cannot be accessed
+- Provide fallback behavior for unsupported image formats
+- Implement retry logic for API failures
+
+### 4. Performance Optimization
+
+- Cache analysis results for repeated images
+- Use appropriate image sizes (not too large, not too small)
+- Consider using different models for different complexity levels
+
+## Advanced Features
+
+### Image URL Requirements
+
+When working with image processing agents, it's important to understand the different ways images can be provided to multimodal models:
+
+#### Public URLs (Recommended)
+
+Most multimodal models work best with publicly accessible image URLs:
+
+```javascript
+const team = new Team({
+  name: 'Image Analysis Team',
+  agents: [visionAnalyst, contentFormatter],
+  tasks: [imageAnalysisTask, markdownReportTask],
+  inputs: {
+    imageUrl: 'https://example.com/public-image.jpg' // Must be publicly accessible
+  },
+  env: {
+    OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
+    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
+  }
+});
+```
+
+#### Base64 Encoding (Limited Support)
+
+Some models support base64-encoded images, but this approach has limitations:
+
+- **File Size**: Base64 encoding increases file size by ~33%, making it inefficient for large images
+- **Token Limits**: Large base64 strings consume significant tokens, reducing available context
+- **Model Support**: Not all models support base64 input reliably
+
+#### API Upload Services
+
+Many providers offer dedicated image upload APIs that return public URLs:
+
+- **OpenAI**: Provides image upload endpoints for GPT-4 Vision
+- **Anthropic**: Supports image uploads with URL generation
+- **Google**: Offers image processing through their AI services
+
+### Custom Tools for Image Processing
+
+Create custom tools to handle different image input methods:
+
+```javascript
+import { Tool } from 'kaibanjs';
+
+// Custom tool for uploading images to a provider's API
+const imageUploadTool = new Tool({
+  name: 'upload_image',
+  description: 'Upload an image to get a public URL for analysis',
+  parameters: {
+    type: 'object',
+    properties: {
+      imageData: {
+        type: 'string',
+        description: 'Base64 encoded image data'
+      },
+      provider: {
+        type: 'string',
+        description: 'Provider to upload to (openai, anthropic, google)'
+      }
+    },
+    required: ['imageData', 'provider']
+  },
+  execute: async ({ imageData, provider }) => {
+    // Implementation to upload image and return public URL
+    // This would integrate with the provider's upload API
+    return { publicUrl: 'https://provider-api.com/uploaded-image.jpg' };
+  }
+});
+
+const enhancedVisionAnalyst = new Agent({
+  name: 'Enhanced Vision Scout',
+  role: 'Image Analyzer with Upload Capabilities',
+  goal: 'Analyze images from various sources including uploads',
+  background: 'Computer vision specialist with image processing expertise',
+  tools: [imageUploadTool],
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620'
+  }
+});
+```
+
+### Integration with Web Tools
+
+Combine image processing with web tools for enhanced functionality:
+
+```javascript
+import { TavilySearch, Firecrawl } from '@kaibanjs/tools';
+
+const webImageAnalyst = new Agent({
+  name: 'Web Image Analyst',
+  role: 'Image Analyzer with Web Context',
+  goal: 'Analyze images found through web search or web scraping',
+  background: 'Computer vision specialist with web research capabilities',
+  tools: [TavilySearch, Firecrawl],
+  llmConfig: {
+    provider: 'anthropic',
+    model: 'claude-3-5-sonnet-20240620'
+  }
+});
+```
+
+**Use Cases:**
+
+- **TavilySearch**: When search results return images, analyze them for context and relevance
+- **Firecrawl**: Extract and analyze images from web pages, including screenshots of websites
+- **Combined Workflow**: Search for images, then analyze the found images for detailed insights
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Image Access Errors**: Ensure image URLs are publicly accessible
+2. **API Rate Limits**: Implement proper rate limiting and retry logic
+3. **Large Image Processing**: Consider resizing images before processing
+4. **Unsupported Formats**: Check that your chosen model supports the image format
+
+### Debug Tips
+
+- Test with simple images first
+- Use console logging to track image processing steps
+- Verify API keys and model availability
+- Check image URL accessibility
+
+## Conclusion
+
+Image processing agents in KaibanJS provide powerful capabilities for analyzing and understanding visual content. By leveraging multimodal language models and following best practices, you can create sophisticated image analysis systems that extract valuable insights from visual data.
+
+Whether you're building document processing systems, content moderation tools, or medical imaging applications, KaibanJS makes it easy to implement robust image processing workflows with AI agents.
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
+
+
+### ./src/how-to/14-A2A-Protocol-Integration.md
+
+
+//--------------------------------------------
+// File: ./src/how-to/14-A2A-Protocol-Integration.md
+//--------------------------------------------
+
+---
+title: A2A Protocol Integration
+description: Learn how to integrate KaibanJS teams with Google's Agent-to-Agent (A2A) protocol for seamless agent communication and collaboration.
+---
+
+> Integrate your KaibanJS teams with Google's Agent-to-Agent (A2A) protocol to enable seamless communication between AI agents across different platforms and providers. This integration allows your agents to collaborate with other A2A-compatible agents in a standardized, secure, and interoperable ecosystem.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## Introduction
+
+The Agent-to-Agent (A2A) protocol, developed by Google, provides a standardized framework for AI agents to communicate and collaborate effectively. It addresses the current lack of interoperability between agents built on different platforms and by various providers, enabling seamless collaboration in complex multi-agent workflows.
+
+:::warning[Server-Side Only]
+Due to protocol requirements, A2A integration with KaibanJS must be implemented server-side to ensure proper security, authentication, and performance. This integration cannot be used in browser environments.
+:::
+
+:::tip[Try the Demo!]
+See the A2A Protocol integration in action with our complete demo implementation. [Try it now!](https://github.com/kaiban-ai/a2a-protocol-kaibanjs-demo)
+:::
+
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4n8u8T8_eDY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
+</div>
+
+## Understanding the A2A Protocol
+
+### Key Protocol Components
+
+The A2A protocol consists of several essential components that work together to enable agent communication:
+
+#### 1. Agent Card
+
+An **Agent Card** is a JSON document that describes an agent's identity, capabilities, skills, service URL, and authentication requirements. It serves as the agent's "business card" in the A2A ecosystem.
+
+#### 2. Task Management
+
+Communication between agents is **task-oriented**. A "Task" represents a unit of work or conversation between agents, with defined lifecycle states: `submitted`, `working`, `input-required`, `completed`, `failed`, or `canceled`.
+
+#### 3. Event Bus System
+
+The protocol uses an **ExecutionEventBus** for real-time communication, supporting streaming updates through Server-Sent Events (SSE) for dynamic collaboration.
+
+#### 4. Request Context
+
+Each interaction includes a **RequestContext** containing task ID, context ID, and user message parts, providing structured communication between agents.
+
+## Implementation Guide
+
+### Step 1: Install Dependencies
+
+First, install the required dependencies for A2A protocol integration:
+
+```bash
+npm install @a2a-js/sdk express cors dotenv
+```
+
+### Step 2: Create the Agent Card
+
+Define your agent's capabilities and metadata in an Agent Card:
+
+```typescript
+import { AgentCard } from '@a2a-js/sdk';
+
+export const kaibanjsAgentCard: AgentCard = {
+  name: 'Kaibanjs Research Agent',
+  description:
+    'An AI agent that uses Kaibanjs to research topics and provide comprehensive summaries using web search and content generation capabilities.',
+  version: '1.0.0',
+  protocolVersion: '1.0.0',
+  url: process.env.BASE_URL || 'http://localhost:4000',
+  preferredTransport: 'JSONRPC',
+  capabilities: {
+    streaming: true,
+    pushNotifications: false,
+    stateTransitionHistory: true
+  },
+  defaultInputModes: ['text/plain'],
+  defaultOutputModes: ['text/plain'],
+  skills: [
+    {
+      id: 'research',
+      name: 'Research and Summarization',
+      description:
+        'Research topics using web search and generate comprehensive summaries',
+      tags: ['research', 'summarization', 'web-search', 'ai'],
+      examples: [
+        'What are the latest developments in AI?',
+        'Summarize the current state of renewable energy',
+        'Research the history of space exploration'
+      ]
+    }
+  ],
+  provider: {
+    organization: 'KaibanJS',
+    url: 'https://github.com/Kaiban-ai/a2a-protocol-kaibanjs-demo'
+  }
+};
+```
+
+### Step 3: Create the KaibanJS Team
+
+Build your KaibanJS team with agents and tasks:
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+
+// Define tools
+const searchTool = new TavilySearchResults({
+  maxResults: 3,
+  apiKey: process.env.TAVILY_API_KEY || 'your-tavily-api-key'
+});
+
+// Define agents
+const searchAgent = new Agent({
+  name: 'Scout',
+  role: 'Information Gatherer',
+  goal: 'Find up-to-date information about the given query.',
+  background:
+    'Research specialist with expertise in web search and information gathering',
+  type: 'ReactChampionAgent',
+  tools: [searchTool]
+});
+
+const contentCreator = new Agent({
+  name: 'Writer',
+  role: 'Content Creator',
+  goal: 'Generate a comprehensive summary of the gathered information.',
+  background: 'Journalist and content creator with expertise in summarization',
+  type: 'ReactChampionAgent',
+  tools: []
+});
+
+// Define tasks
+const searchTask = new Task({
+  description: `Search for detailed information about: {query}. Current date: {currentDate}. Focus on the most recent and up-to-date information available.`,
+  expectedOutput:
+    'Detailed information about the topic. Key facts, important details, and relevant information. Include timestamps and dates when available.',
+  agent: searchAgent
+});
+
+const summarizeTask = new Task({
+  description: `Using the gathered information, create a comprehensive summary. Ensure the summary reflects the most current state of the topic.`,
+  expectedOutput:
+    'A well-structured summary with key points, main findings, and conclusions. Minimum 3 paragraphs. Include relevant dates and timestamps when available.',
+  agent: contentCreator
+});
+
+// Create team factory function
+export function createKaibanjsTeam(query: string) {
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  const team = new Team({
+    name: 'Research and Summary Team',
+    agents: [searchAgent, contentCreator],
+    tasks: [searchTask, summarizeTask],
+    inputs: {
+      query,
+      currentDate
+    },
+    env: {
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
+      ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || ''
+    }
+  });
+
+  return team;
+}
+```
+
+### Step 4: Implement the Agent Executor
+
+Create an executor that bridges KaibanJS teams with the A2A protocol:
+
+```typescript
+import {
+  AgentExecutor,
+  RequestContext,
+  ExecutionEventBus
+} from '@a2a-js/sdk/server';
+import {
+  TaskStatusUpdateEvent,
+  TaskArtifactUpdateEvent,
+  Part
+} from '@a2a-js/sdk';
+
+import { createKaibanjsTeam } from './kaibanjs-team.js';
+
+export class KaibanjsAgentExecutor implements AgentExecutor {
+  public async execute(
+    requestContext: RequestContext,
+    eventBus: ExecutionEventBus
+  ): Promise<void> {
+    const { taskId, contextId, userMessage } = requestContext;
+
+    try {
+      // Extract query from userMessage
+      const query = userMessage.parts
+        .filter((part: Part) => part.kind === 'text')
+        .map((part: Part) => (part as any).text)
+        .join(' ');
+
+      if (!query.trim()) {
+        throw new Error('No query provided in message');
+      }
+
+      // Start the task
+      eventBus.publish({
+        kind: 'status-update',
+        taskId,
+        contextId,
+        status: { state: 'working', timestamp: new Date().toISOString() },
+        final: false
+      });
+
+      // Create Kaibanjs team
+      const team = createKaibanjsTeam(query);
+      const useTeamStore = team.useStore();
+
+      // Subscribe to workflow logs for streaming updates
+      const unsubscribe = useTeamStore.subscribe(state => {
+        const { workflowLogs } = state;
+
+        // Process latest logs
+        workflowLogs.forEach(log => {
+          if (log) {
+            let logMessage = '';
+
+            if (log.logType === 'TaskStatusUpdate') {
+              logMessage = `Task Status: ${log.taskStatus}`;
+            } else if (log.logType === 'AgentStatusUpdate') {
+              logMessage = `Agent Status: ${log.agentStatus}`;
+            } else if (log.logType === 'WorkflowStatusUpdate') {
+              logMessage = `Workflow Status: ${log.workflowStatus}`;
+            }
+
+            if (logMessage) {
+              // Send log as artifact update through the event bus
+              eventBus.publish({
+                kind: 'artifact-update',
+                taskId,
+                contextId,
+                artifact: {
+                  artifactId: `log-${Date.now()}`,
+                  parts: [{ kind: 'text', text: log.logDescription }],
+                  metadata: {
+                    timestamp: new Date().toISOString(),
+                    logType: log.logType,
+                    logMessage
+                  }
+                }
+              });
+            }
+          }
+        });
+      });
+
+      // Execute the team workflow
+      await team.start();
+
+      // Wait for final logs to be processed
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Get final result
+      const finalState = useTeamStore.getState();
+      const finalResult = finalState.workflowResult;
+
+      // Send final result
+      if (finalResult) {
+        eventBus.publish({
+          kind: 'artifact-update',
+          taskId,
+          contextId,
+          artifact: {
+            artifactId: `result-${taskId}`,
+            parts: [
+              { kind: 'text', text: JSON.stringify(finalResult, null, 2) }
+            ],
+            metadata: {
+              timestamp: new Date().toISOString(),
+              type: 'final-result'
+            }
+          }
+        });
+      }
+
+      // Unsubscribe from logs
+      unsubscribe();
+
+      // Complete the task
+      eventBus.publish({
+        kind: 'status-update',
+        taskId,
+        contextId,
+        status: { state: 'completed', timestamp: new Date().toISOString() },
+        final: true
+      });
+    } catch (error) {
+      console.error('Error in KaibanjsAgentExecutor:', error);
+
+      // Send error as artifact
+      eventBus.publish({
+        kind: 'artifact-update',
+        taskId,
+        contextId,
+        artifact: {
+          artifactId: `error-${taskId}`,
+          parts: [
+            {
+              kind: 'text',
+              text: `Error: ${
+                error instanceof Error ? error.message : 'Unknown error'
+              }`
+            }
+          ],
+          metadata: {
+            timestamp: new Date().toISOString(),
+            type: 'error'
+          }
+        }
+      });
+
+      // Mark task as failed
+      eventBus.publish({
+        kind: 'status-update',
+        taskId,
+        contextId,
+        status: { state: 'failed', timestamp: new Date().toISOString() },
+        final: true
+      });
+    } finally {
+      eventBus.finished();
+    }
+  }
+
+  public async cancelTask(
+    taskId: string,
+    eventBus: ExecutionEventBus
+  ): Promise<void> {
+    // Implementation for task cancellation
+    console.log(`Task cancellation requested for task: ${taskId}`);
+  }
+}
+```
+
+### Step 5: Set Up the Express Server
+
+Create the main server that handles A2A protocol requests:
+
+```typescript
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { A2AExpressApp } from '@a2a-js/sdk/server/express';
+import { DefaultRequestHandler, InMemoryTaskStore } from '@a2a-js/sdk/server';
+import { KaibanjsAgentExecutor } from './agent-executor.js';
+import { kaibanjsAgentCard } from './agent-card.js';
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Create A2A components
+const taskStore = new InMemoryTaskStore();
+const agentExecutor = new KaibanjsAgentExecutor();
+
+// Create A2A request handler
+const requestHandler = new DefaultRequestHandler(
+  kaibanjsAgentCard,
+  taskStore,
+  agentExecutor
+);
+
+// Create A2A Express app
+const a2aApp = new A2AExpressApp(requestHandler);
+
+// Setup A2A routes
+a2aApp.setupRoutes(app);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    agent: kaibanjsAgentCard.name,
+    version: kaibanjsAgentCard.version
+  });
+});
+
+// Start server (only in development)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 A2A Server running on port ${PORT}`);
+    console.log(
+      `📋 Agent Card available at: http://localhost:${PORT}/.well-known/agent-card.json`
+    );
+    console.log(`🔍 Health check: http://localhost:${PORT}/health`);
+    console.log(`🤖 Agent: ${kaibanjsAgentCard.name}`);
+  });
+}
+
+// Export for Vercel serverless
+export default app;
+```
+
+## Key Integration Points
+
+### 1. Request Processing
+
+The A2A protocol receives requests through the `RequestContext`, which contains:
+
+- **Task ID**: Unique identifier for the current task
+- **Context ID**: Session or conversation context
+- **User Message**: The input message with parts (text, images, etc.)
+
+```typescript
+// Extract query from userMessage
+const query = userMessage.parts
+  .filter((part: Part) => part.kind === 'text')
+  .map((part: Part) => (part as any).text)
+  .join(' ');
+```
+
+### 2. Streaming Workflow Logs
+
+The integration uses KaibanJS's store subscription to stream workflow logs through the A2A event bus:
+
+```typescript
+// Subscribe to workflow logs
+const unsubscribe = useTeamStore.subscribe(state => {
+  const { workflowLogs } = state;
+
+  workflowLogs.forEach(log => {
+    if (log) {
+      // Send log as artifact update
+      eventBus.publish({
+        kind: 'artifact-update',
+        taskId,
+        contextId,
+        artifact: {
+          artifactId: `log-${Date.now()}`,
+          parts: [{ kind: 'text', text: log.logDescription }],
+          metadata: {
+            timestamp: new Date().toISOString(),
+            logType: log.logType,
+            logMessage
+          }
+        }
+      });
+    }
+  });
+});
+```
+
+### 3. Status Updates
+
+The protocol requires status updates throughout the task lifecycle:
+
+```typescript
+// Start the task
+eventBus.publish({
+  kind: 'status-update',
+  taskId,
+  contextId,
+  status: { state: 'working', timestamp: new Date().toISOString() },
+  final: false
+});
+
+// Complete the task
+eventBus.publish({
+  kind: 'status-update',
+  taskId,
+  contextId,
+  status: { state: 'completed', timestamp: new Date().toISOString() },
+  final: true
+});
+```
+
+### 4. Artifact Management
+
+Results and intermediate outputs are sent as artifacts:
+
+```typescript
+// Send final result
+eventBus.publish({
+  kind: 'artifact-update',
+  taskId,
+  contextId,
+  artifact: {
+    artifactId: `result-${taskId}`,
+    parts: [{ kind: 'text', text: JSON.stringify(finalResult, null, 2) }],
+    metadata: {
+      timestamp: new Date().toISOString(),
+      type: 'final-result'
+    }
+  }
+});
+```
+
+## Environment Configuration
+
+Create a `.env` file with the required environment variables:
+
+```env
+# Server Configuration
+PORT=4000
+BASE_URL=http://localhost:4000
+NODE_ENV=development
+
+# API Keys
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+TAVILY_API_KEY=your_tavily_api_key
+```
+
+## Deployment Considerations
+
+### Server-Side Requirements
+
+- **Node.js Environment**: A2A integration requires a server-side Node.js environment
+- **HTTPS**: Production deployments should use HTTPS for secure communication
+- **Environment Variables**: Secure API key management through environment variables
+
+### Production Deployment
+
+For production deployment, consider using platforms like:
+
+- **Vercel**: Serverless deployment with automatic scaling
+- **Railway**: Simple deployment with built-in environment management
+- **Google Cloud Run**: Containerized deployment with auto-scaling
+
+## Best Practices
+
+### 1. Error Handling
+
+- Implement comprehensive error handling for all A2A protocol interactions
+- Provide meaningful error messages through the event bus
+- Handle task cancellation gracefully
+
+### 2. Performance Optimization
+
+- Use appropriate timeouts for long-running tasks
+- Implement proper cleanup of subscriptions and resources
+- Monitor memory usage for large workflow executions
+
+### 3. Security
+
+- Validate all incoming requests
+- Implement proper authentication and authorization
+- Use HTTPS in production environments
+
+### 4. Monitoring
+
+- Log all A2A protocol interactions
+- Monitor task execution times and success rates
+- Implement health checks and status endpoints
+
+## Troubleshooting
+
+### Common Issues
+
+1. **CORS Errors**: Ensure proper CORS configuration for cross-origin requests
+2. **Authentication Failures**: Verify API keys and authentication tokens
+3. **Task Timeouts**: Implement appropriate timeout handling for long-running tasks
+4. **Memory Leaks**: Ensure proper cleanup of subscriptions and event listeners
+
+### Debug Tips
+
+- Enable detailed logging for A2A protocol interactions
+- Use the health check endpoint to verify server status
+- Monitor the event bus for proper message flow
+- Test with simple queries before complex workflows
+
+## Conclusion
+
+Integrating KaibanJS teams with the A2A protocol enables powerful agent-to-agent communication and collaboration. By following this guide, you can create interoperable AI agents that can seamlessly work with other A2A-compatible agents across different platforms and providers.
+
+The key to successful integration lies in understanding the protocol's components, implementing proper event handling, and ensuring robust error management. With this foundation, your KaibanJS agents can participate in the broader ecosystem of AI agent collaboration.
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
+
+
+### ./src/how-to/15-Using-WorkflowDrivenAgent.md
+
+
+//--------------------------------------------
+// File: ./src/how-to/15-Using-WorkflowDrivenAgent.md
+//--------------------------------------------
+
+---
+title: Using WorkflowDrivenAgent
+description: Learn how to create and use WorkflowDrivenAgent with complex workflows, LLM SDKs integration, suspension, and team integration.
+---
+
+## Introduction
+
+The `WorkflowDrivenAgent` is a specialized agent that executes workflows instead of using LLM-based reasoning. This agent maintains workflow state and can handle suspension and resumption operations for long-running workflows. Unlike standard agents, `WorkflowDrivenAgent` focuses on deterministic, step-by-step execution while still allowing you to use LLM SDKs within workflow steps.
+
+For a conceptual overview, see [WorkflowDrivenAgent](../core-concepts/10-WorkflowDrivenAgent.md).
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## Features
+
+- **Workflow Execution**: Executes workflows defined using the `@kaibanjs/workflow` package
+- **State Management**: Maintains workflow state between executions
+- **Suspension and Resumption**: Supports workflows that can be suspended and resumed
+- **Team Compatibility**: Integrates seamlessly with the existing team system
+- **Error Handling**: Robust error handling with detailed logging
+- **Real-time Logging**: Specific logs for workflow events mixed with general team logs
+- **LLM SDK Integration**: Use LangChain, AI SDK, or other LLM libraries within workflow steps
+
+## Installation
+
+First, ensure you have the required packages installed:
+
+```bash
+npm install kaibanjs @kaibanjs/workflow zod
+```
+
+Or with pnpm:
+
+```bash
+pnpm install kaibanjs @kaibanjs/workflow zod
+```
+
+For LLM SDK integration, you may also need:
+
+```bash
+npm install @langchain/openai @langchain/community @ai-sdk/openai ai
+```
+
+## Basic Usage
+
+### Creating a WorkflowDrivenAgent
+
+```typescript
+import { Agent } from 'kaibanjs';
+import { createStep, createWorkflow } from '@kaibanjs/workflow';
+import { z } from 'zod';
+
+// Create workflow steps
+const processStep = createStep({
+  id: 'process',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ result: z.string() }),
+  execute: async ({ inputData }) => {
+    const { data } = inputData as { data: string };
+    return { result: data.toUpperCase() };
+  }
+});
+
+// Create the workflow
+const workflow = createWorkflow({
+  id: 'example-workflow',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ result: z.string() })
+});
+
+workflow.then(processStep);
+workflow.commit();
+
+// Create the WorkflowDrivenAgent using the Agent wrapper
+const agent = new Agent({
+  type: 'WorkflowDrivenAgent',
+  name: 'Workflow Agent',
+  workflow: workflow
+});
+
+// The agent will be automatically initialized when assigned to a team
+```
+
+### Using the Agent in a Team
+
+The `WorkflowDrivenAgent` integrates seamlessly with the existing team system:
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+
+const team = new Team({
+  name: 'Workflow Team',
+  agents: [
+    new Agent({
+      type: 'WorkflowDrivenAgent',
+      name: 'Data Processor',
+      workflow: workflow
+    }),
+    new Agent({
+      type: 'ReactChampionAgent',
+      name: 'Analyst',
+      role: 'Analyze results',
+      goal: 'Provide insights on processed data',
+      background: 'Data analysis expert'
+    })
+  ],
+  tasks: [
+    new Task({
+      description: 'Process the input data using workflow',
+      expectedOutput: 'Processed data result',
+      agent: 'Data Processor'
+    }),
+    new Task({
+      description: 'Analyze the processed data',
+      expectedOutput: 'Analysis insights',
+      agent: 'Analyst'
+    })
+  ]
+});
+
+// Execute the team
+const result = await team.start({ data: 'input data' });
+```
+
+## Using LLM SDKs in Workflow Steps
+
+One of the powerful features of `WorkflowDrivenAgent` is the ability to use LLM SDKs (like LangChain, AI SDK, etc.) within workflow steps. This allows you to combine deterministic workflow orchestration with LLM-powered steps.
+
+### Example: LangChain + AI SDK Integration
+
+Here's a complete example showing how to use both LangChain and Vercel AI SDK within a workflow:
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+import { createStep, createWorkflow } from '@kaibanjs/workflow';
+import { z } from 'zod';
+import { ChatOpenAI } from '@langchain/openai';
+import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+import { AgentExecutor, createToolCallingAgent } from 'langchain/agents';
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+  SystemMessagePromptTemplate,
+  HumanMessagePromptTemplate
+} from '@langchain/core/prompts';
+import { generateText } from 'ai';
+import { createOpenAI } from '@ai-sdk/openai';
+
+const openai = createOpenAI({
+  apiKey: process.env.OPENAI_API_KEY || ''
+});
+
+// Step 1: LangChain-based search agent
+const searchStep = createStep({
+  id: 'search',
+  inputSchema: z.object({ query: z.string() }),
+  outputSchema: z.object({
+    searchResults: z.string(),
+    sources: z.array(z.string())
+  }),
+  execute: async ({ inputData }) => {
+    const { query } = inputData;
+
+    // Create search tool
+    const searchTool = new TavilySearchResults({
+      apiKey: process.env.TAVILY_API_KEY || ''
+    });
+
+    // Create search agent with LangChain
+    const model = new ChatOpenAI({
+      modelName: 'gpt-4o-mini',
+      temperature: 0,
+      apiKey: process.env.OPENAI_API_KEY || ''
+    });
+
+    const prompt = ChatPromptTemplate.fromMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        `You are a search agent that helps find relevant information on the internet.
+        Your task is to search for information about the given topic and return the most relevant results.
+        Be thorough and comprehensive in your search.
+        Focus on finding factual, up-to-date information.`
+      ),
+      HumanMessagePromptTemplate.fromTemplate('{input}'),
+      new MessagesPlaceholder('agent_scratchpad')
+    ]);
+
+    const agent = createToolCallingAgent({
+      llm: model,
+      tools: [searchTool],
+      prompt
+    });
+
+    const agentExecutor = new AgentExecutor({
+      agent,
+      tools: [searchTool]
+    });
+
+    const result = await agentExecutor.invoke({
+      input: query
+    });
+
+    // Extract sources from the search results
+    const sources =
+      result.intermediateSteps?.map(
+        step => step.action?.toolInput?.query || 'Unknown source'
+      ) || [];
+
+    return {
+      searchResults: result.output,
+      sources: sources.slice(0, 5) // Limit to 5 sources
+    };
+  }
+});
+
+// Step 2: AI SDK-based analysis and summarization
+const analyzeStep = createStep({
+  id: 'analyze',
+  inputSchema: z.object({
+    searchResults: z.string(),
+    sources: z.array(z.string())
+  }),
+  outputSchema: z.object({
+    analysis: z.string(),
+    keyPoints: z.array(z.string()),
+    summary: z.string(),
+    confidence: z.number()
+  }),
+  execute: async ({ inputData, getInitData }) => {
+    const { searchResults, sources } = inputData;
+    const { query } = getInitData();
+
+    // Use Vercel AI SDK for analysis
+    const { text: response } = await generateText({
+      model: openai('gpt-4o-mini'),
+      system: `You are an expert analyst that processes search results and provides comprehensive analysis.
+      Your task is to:
+      1. Analyze the search results for the query: "${query}"
+      2. Extract key points and insights
+      3. Provide a concise summary
+      4. Assess the confidence level of the information (0-1 scale)
+      
+      Be objective, factual, and highlight the most important information.`,
+      prompt: `Search Results: ${searchResults}
+      
+      Sources: ${sources.join(', ')}
+      
+      Please provide:
+      1. A detailed analysis of the findings
+      2. Key points as a bulleted list
+      3. A concise summary
+      4. Confidence level (0-1)`,
+      temperature: 0.3
+    });
+
+    // Parse the response to extract structured data
+    const analysis =
+      response
+        .split('\n')
+        .find(
+          line => line.includes('Analysis:') || line.includes('analysis:')
+        ) || response;
+    const keyPointsMatch = response.match(
+      /Key Points?:?\s*([\s\S]*?)(?=Summary:|$)/i
+    );
+    const summaryMatch = response.match(
+      /Summary:?\s*([\s\S]*?)(?=Confidence:|$)/i
+    );
+    const confidenceMatch = response.match(/Confidence:?\s*([0-9.]+)/i);
+
+    const keyPoints = keyPointsMatch
+      ? keyPointsMatch[1]
+          .split('\n')
+          .filter(
+            line => line.trim().startsWith('-') || line.trim().startsWith('•')
+          )
+          .map(point => point.replace(/^[-•]\s*/, '').trim())
+          .filter(point => point.length > 0)
+      : ['No key points extracted'];
+
+    const summary = summaryMatch
+      ? summaryMatch[1].trim()
+      : 'Summary not available';
+    const confidence = confidenceMatch ? parseFloat(confidenceMatch[1]) : 0.7;
+
+    return {
+      analysis: analysis.replace(/Analysis:?\s*/i, '').trim(),
+      keyPoints: keyPoints.slice(0, 5), // Limit to 5 key points
+      summary,
+      confidence: Math.min(Math.max(confidence, 0), 1) // Ensure between 0 and 1
+    };
+  }
+});
+
+// Create the workflow
+const researchWorkflow = createWorkflow({
+  id: 'research-workflow',
+  inputSchema: z.object({ query: z.string() }),
+  outputSchema: z.object({
+    analysis: z.string(),
+    keyPoints: z.array(z.string()),
+    summary: z.string(),
+    confidence: z.number(),
+    sources: z.array(z.string())
+  })
+});
+
+// Build the workflow: search -> analyze
+researchWorkflow.then(searchStep).then(analyzeStep);
+researchWorkflow.commit();
+
+// Define the workflow-driven agent
+const researchAgent = new Agent({
+  name: 'Research Agent',
+  type: 'WorkflowDrivenAgent',
+  workflow: researchWorkflow
+});
+
+// Define the LLM-based insights agent
+const insightsAgent = new Agent({
+  name: 'Insights Generator',
+  role: 'Research Insights Expert',
+  goal: 'Generate additional insights and recommendations based on research findings',
+  background:
+    'Expert in research analysis, trend identification, and strategic recommendations',
+  type: 'ReactChampionAgent',
+  tools: []
+});
+
+// Create a mixed team
+const team = new Team({
+  name: 'Research Team',
+  agents: [researchAgent, insightsAgent],
+  tasks: [
+    new Task({
+      description: 'Research and analyze information about: {query}',
+      expectedOutput:
+        'Comprehensive research analysis with key points, summary, and confidence assessment',
+      agent: researchAgent
+    }),
+    new Task({
+      description:
+        'Generate strategic insights and recommendations based on the research findings',
+      expectedOutput:
+        'Strategic insights, recommendations, and actionable next steps',
+      agent: insightsAgent
+    })
+  ],
+  env: {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    TAVILY_API_KEY: process.env.TAVILY_API_KEY
+  }
+});
+```
+
+### Benefits of Using LLM SDKs in Workflows
+
+- **Flexibility**: Use any LLM SDK (LangChain, AI SDK, OpenAI SDK, etc.) within workflow steps
+- **Type Safety**: Maintain type safety with Zod schemas for inputs and outputs
+- **Orchestration**: Combine multiple LLM calls in a structured, deterministic workflow
+- **Error Handling**: Built-in error handling and retry logic at the workflow level
+- **State Management**: Track the state of complex LLM-powered workflows
+- **Monitoring**: Real-time logging and monitoring of each step in the workflow
+
+## Structured Output Chaining
+
+When a `WorkflowDrivenAgent` is preceded by another agent (like `ReactChampionAgent`) in a team, the system can automatically pass structured outputs from the previous task as inputs to the workflow. This feature enables seamless data flow between different agent types.
+
+### How It Works
+
+1. **Previous Task with `outputSchema`**: The preceding task must have an `outputSchema` defined (Zod schema)
+2. **Automatic Extraction**: The system automatically extracts and validates the structured output from the previous task
+3. **Input Mapping**: The structured output is merged with team inputs and passed to the `WorkflowDrivenAgent`
+4. **Schema Matching**: If the workflow's `inputSchema` matches the previous task's `outputSchema`, the output is passed directly at the root level
+
+### Example: ReactChampion → WorkflowDriven
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+import { createStep, createWorkflow } from '@kaibanjs/workflow';
+import { z } from 'zod';
+
+// Define output schema for ReactChampionAgent task
+const textAnalysisSchema = z.object({
+  title: z.string(),
+  summary: z.string(),
+  keywords: z.array(z.string()),
+  wordCount: z.number(),
+  sentiment: z.enum(['positive', 'neutral', 'negative']),
+  topics: z.array(z.string())
+});
+
+// ReactChampionAgent for text analysis
+const textAnalyzerAgent = new Agent({
+  name: 'Text Analyzer',
+  role: 'Text Analysis Expert',
+  goal: 'Analyze text and extract structured information',
+  background: 'Expert in NLP and text analysis',
+  type: 'ReactChampionAgent'
+});
+
+// Task 1: Analyze text with structured output
+const analyzeTextTask = new Task({
+  description: 'Analyze the following text: {text}',
+  expectedOutput: 'Structured analysis with title, summary, keywords, etc.',
+  outputSchema: textAnalysisSchema, // ⚠️ Required for structured output passing
+  agent: textAnalyzerAgent
+});
+
+// Workflow that processes the structured analysis
+const validateStep = createStep({
+  id: 'validate',
+  inputSchema: textAnalysisSchema, // ⚠️ Must match the outputSchema above
+  outputSchema: z.object({
+    isValid: z.boolean(),
+    analysis: textAnalysisSchema
+  }),
+  execute: async ({ inputData }) => {
+    const { title, summary, keywords } = inputData;
+    return {
+      isValid: title.length > 0 && summary.length > 0 && keywords.length > 0,
+      analysis: inputData
+    };
+  }
+});
+
+const processingWorkflow = createWorkflow({
+  id: 'processing-workflow',
+  inputSchema: textAnalysisSchema, // ⚠️ Must match the outputSchema of Task 1
+  outputSchema: z.object({
+    isValid: z.boolean(),
+    analysis: textAnalysisSchema
+  })
+});
+
+processingWorkflow.then(validateStep);
+processingWorkflow.commit();
+
+// WorkflowDrivenAgent for processing
+const processorAgent = new Agent({
+  type: 'WorkflowDrivenAgent',
+  name: 'Analysis Processor',
+  workflow: processingWorkflow
+});
+
+// Task 2: Process the structured output from Task 1
+const processAnalysisTask = new Task({
+  description: 'Process and validate the text analysis',
+  expectedOutput: 'Validated analysis result',
+  agent: processorAgent
+});
+
+// Create team - Task 2 will automatically receive Task 1's output
+const team = new Team({
+  name: 'Structured Output Chain Team',
+  agents: [textAnalyzerAgent, processorAgent],
+  tasks: [analyzeTextTask, processAnalysisTask],
+  inputs: {
+    text: 'Sample text to analyze'
+  }
+});
+```
+
+### Constraints and Disclaimers
+
+⚠️ **Important Considerations When WorkflowDrivenAgent is Preceded by Another Agent:**
+
+1. **`outputSchema` Requirement**:
+
+   - The preceding task **MUST** have an `outputSchema` defined
+   - Without `outputSchema`, the output will be passed as a string in the context, not as structured input
+   - The `outputSchema` must be a valid Zod schema
+
+2. **Schema Matching**:
+
+   - For optimal behavior, the workflow's `inputSchema` should match the previous task's `outputSchema`
+   - When schemas match, the output is passed directly at the root level
+   - When schemas don't match, the output is passed under the task ID key (e.g., `{ [taskId]: output }`)
+
+3. **Multiple Dependencies**:
+
+   - If a task has multiple dependencies with `outputSchema`, all outputs are merged
+   - Outputs are passed under their respective task IDs
+   - The workflow must handle multiple inputs or use `getInitData()` to access specific task outputs
+
+4. **Input Precedence**:
+
+   - Structured outputs from dependencies have **higher precedence** than team inputs
+   - If both team inputs and structured outputs have the same keys, structured outputs will override team inputs
+   - This ensures that task outputs take priority over initial team configuration
+
+5. **Validation**:
+
+   - The system validates outputs against their `outputSchema` before passing them
+   - If validation fails, the original result is still passed but a warning is logged
+   - Invalid outputs may cause the workflow to fail if strict validation is required
+
+6. **Type Safety**:
+
+   - While the system attempts to maintain type safety, runtime validation is performed
+   - Always ensure your workflow's `inputSchema` can handle the actual output structure
+   - Consider using Zod's `.passthrough()` or `.catchall()` for flexible schemas
+
+7. **Backward Compatibility**:
+
+   - If no `outputSchema` is defined, the system falls back to the original behavior
+   - Outputs are passed as strings in the context, not as structured inputs
+   - Existing teams without `outputSchema` continue to work as before
+
+8. **Error Handling**:
+   - If a dependency task fails, its output won't be available
+   - The workflow will receive team inputs only (or other successful dependencies)
+   - Always handle cases where expected structured inputs might be missing
+
+### Best Practices
+
+1. **Always Define `outputSchema`**: When you want structured output passing, always define `outputSchema` on the preceding task
+2. **Match Schemas**: Design your workflow's `inputSchema` to match the previous task's `outputSchema` for seamless integration
+3. **Handle Missing Inputs**: Use optional fields or default values in your workflow to handle cases where structured inputs might not be available
+4. **Test Schema Compatibility**: Verify that your schemas are compatible before deploying to production
+5. **Use Descriptive Task IDs**: When accessing outputs from multiple dependencies, use clear task IDs to avoid confusion
+
+### Example: Handling Multiple Dependencies
+
+```typescript
+// If you have multiple dependencies, access them via task IDs
+const multiInputStep = createStep({
+  id: 'process-multi',
+  inputSchema: z.object({
+    task1Output: z.object({ data: z.string() }),
+    task2Output: z.object({ count: z.number() })
+  }),
+  outputSchema: z.object({ result: z.string() }),
+  execute: async ({ inputData, getInitData }) => {
+    // Access specific task outputs from merged inputs
+    const allInputs = getInitData() as Record<string, unknown>;
+    const task1Id = 'task-1-id'; // Your actual task ID
+    const task2Id = 'task-2-id'; // Your actual task ID
+
+    const task1Output = allInputs[task1Id] as { data: string };
+    const task2Output = allInputs[task2Id] as { count: number };
+
+    return {
+      result: `${task1Output.data} - ${task2Output.count}`
+    };
+  }
+});
+```
+
+## Complex Workflows
+
+The `WorkflowDrivenAgent` can handle complex workflows with multiple patterns:
+
+### Sequential Execution
+
+```typescript
+const addStep = createStep({
+  id: 'add',
+  inputSchema: z.object({ a: z.number(), b: z.number() }),
+  outputSchema: z.number(),
+  execute: async ({ inputData }) => {
+    const { a, b } = inputData as { a: number; b: number };
+    return a + b;
+  }
+});
+
+const multiplyStep = createStep({
+  id: 'multiply',
+  inputSchema: z.number(),
+  outputSchema: z.number(),
+  execute: async ({ inputData, getInitData }) => {
+    const sum = inputData as number;
+    const { a, b } = getInitData() as { a: number; b: number };
+    return sum * a * b;
+  }
+});
+
+const workflow = createWorkflow({
+  id: 'math-workflow',
+  inputSchema: z.object({ a: z.number(), b: z.number() }),
+  outputSchema: z.number()
+});
+
+// Sequential execution: add -> multiply
+workflow.then(addStep).then(multiplyStep);
+workflow.commit();
+```
+
+### Conditional Branching
+
+```typescript
+const evenStep = createStep({
+  id: 'even',
+  inputSchema: z.number(),
+  outputSchema: z.string(),
+  execute: async ({ inputData }) => {
+    const num = inputData as number;
+    return `even: ${num}`;
+  }
+});
+
+const oddStep = createStep({
+  id: 'odd',
+  inputSchema: z.number(),
+  outputSchema: z.string(),
+  execute: async ({ inputData }) => {
+    const num = inputData as number;
+    return `odd: ${num}`;
+  }
+});
+
+const workflow = createWorkflow({
+  id: 'conditional-workflow',
+  inputSchema: z.number(),
+  outputSchema: z.string()
+});
+
+// Conditional branching based on input
+workflow.branch([
+  [async ({ inputData }) => (inputData as number) % 2 === 0, evenStep],
+  [async () => true, oddStep] // fallback
+]);
+workflow.commit();
+```
+
+### Parallel Execution
+
+```typescript
+const fetchUserStep = createStep({
+  id: 'fetchUser',
+  inputSchema: z.object({ userId: z.string() }),
+  outputSchema: z.object({ user: z.object({ name: z.string() }) }),
+  execute: async ({ inputData }) => {
+    // Fetch user data
+    return { user: { name: 'John Doe' } };
+  }
+});
+
+const fetchPostsStep = createStep({
+  id: 'fetchPosts',
+  inputSchema: z.object({ userId: z.string() }),
+  outputSchema: z.object({ posts: z.array(z.string()) }),
+  execute: async ({ inputData }) => {
+    // Fetch posts
+    return { posts: ['Post 1', 'Post 2'] };
+  }
+});
+
+const combineStep = createStep({
+  id: 'combine',
+  inputSchema: z.any(),
+  outputSchema: z.object({
+    user: z.object({ name: z.string() }),
+    posts: z.array(z.string())
+  }),
+  execute: async ({ getStepResult }) => {
+    const userResult = getStepResult('fetchUser') as { user: { name: string } };
+    const postsResult = getStepResult('fetchPosts') as { posts: string[] };
+    return {
+      user: userResult.user,
+      posts: postsResult.posts
+    };
+  }
+});
+
+const workflow = createWorkflow({
+  id: 'parallel-workflow',
+  inputSchema: z.object({ userId: z.string() }),
+  outputSchema: z.object({
+    user: z.object({ name: z.string() }),
+    posts: z.array(z.string())
+  })
+});
+
+// Parallel execution: fetchUser and fetchPosts run simultaneously
+workflow.parallel([fetchUserStep, fetchPostsStep]).then(combineStep);
+workflow.commit();
+```
+
+### Loops
+
+```typescript
+const processItemStep = createStep({
+  id: 'processItem',
+  inputSchema: z.object({ item: z.string(), index: z.number() }),
+  outputSchema: z.object({ processed: z.string() }),
+  execute: async ({ inputData }) => {
+    const { item, index } = inputData as { item: string; index: number };
+    return { processed: `${item}-${index}` };
+  }
+});
+
+// Do-while loop
+const workflow = createWorkflow({
+  id: 'loop-workflow',
+  inputSchema: z.object({ items: z.array(z.string()) }),
+  outputSchema: z.array(z.string())
+});
+
+workflow.dowhile(processItemStep, async ({ getStepResult }) => {
+  const result = getStepResult('processItem');
+  // Continue while condition is true
+  return (result as any).index < 5;
+});
+workflow.commit();
+
+// Foreach loop with concurrency
+const foreachWorkflow = createWorkflow({
+  id: 'foreach-workflow',
+  inputSchema: z.array(z.string()),
+  outputSchema: z.array(z.string())
+});
+
+foreachWorkflow.foreach(processItemStep, { concurrency: 3 });
+foreachWorkflow.commit();
+```
+
+## Agent Methods
+
+The `WorkflowDrivenAgent` provides several key methods for managing workflow execution:
+
+### `workOnTask(task, inputs, context)`
+
+Executes the assigned workflow with task inputs. This is the main method called by the team system when a task is assigned to the agent.
+
+```typescript
+const result = await workflowAgent.workOnTask(
+  task,
+  { data: 'input' },
+  'context'
+);
+```
+
+### `workOnTaskResume(task)`
+
+Resumes a suspended workflow. Use this method when a workflow has been suspended and you want to continue execution.
+
+```typescript
+// When a workflow suspends, you can resume it later
+await workflowAgent.workOnTaskResume(task);
+```
+
+### `workOnFeedback(task, feedbackList, context)`
+
+Not applicable for workflow-based agents. This method returns an error indicating that feedback processing is not implemented for workflow-driven agents.
+
+### `reset()`
+
+Resets the agent and workflow state. This clears the current run ID, workflow status, and all execution metadata.
+
+```typescript
+workflowAgent.reset();
+```
+
+### `getCleanedAgent()`
+
+Returns a clean version of the agent without sensitive information. Useful for logging or debugging.
+
+```typescript
+const cleaned = workflowAgent.getCleanedAgent();
+```
+
+## Suspension and Resumption
+
+The `WorkflowDrivenAgent` supports workflows that can suspend and resume, which is useful for workflows requiring manual approval or external input.
+
+### Creating a Suspendable Workflow
+
+```typescript
+const approvalStep = createStep({
+  id: 'approval',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ approved: z.boolean() }),
+  suspendSchema: z.object({ reason: z.string() }),
+  resumeSchema: z.object({ approved: z.boolean() }),
+  execute: async ({ inputData, suspend, isResuming, resumeData }) => {
+    if (isResuming) {
+      return { approved: resumeData.approved };
+    }
+
+    // Suspend for manual approval
+    await suspend({ reason: 'requires_manual_approval' });
+    return { approved: false };
+  }
+});
+
+const approvalWorkflow = createWorkflow({
+  id: 'approval-workflow',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.object({ approved: z.boolean() })
+});
+
+approvalWorkflow.then(approvalStep);
+approvalWorkflow.commit();
+
+const approvalAgent = new Agent({
+  type: 'WorkflowDrivenAgent',
+  name: 'Approval Agent',
+  workflow: approvalWorkflow
+});
+```
+
+### Resuming a Suspended Workflow
+
+When a workflow suspends, the agent's status is set to `PAUSED` and the workflow status becomes `suspended`. You can resume it using the `workOnTaskResume` method:
+
+```typescript
+// When a workflow suspends, you can resume it later
+const task = new Task({
+  description: 'Approve the data',
+  expectedOutput: 'Approval result',
+  agent: 'Approval Agent',
+  inputs: { approved: true } // Resume data
+});
+
+// Resume the workflow using the agent's method
+await approvalAgent.workOnTaskResume(task);
+```
+
+## Agent State Management
+
+The `WorkflowDrivenAgent` maintains workflow state internally:
+
+- **currentRunId**: ID of the current workflow run
+- **workflowStatus**: Current workflow status (`idle`, `running`, `suspended`, `completed`, `failed`)
+- **lastResult**: Last workflow result
+- **lastError**: Last workflow error
+- **metadata**: Execution metadata (iterations, times, etc.)
+
+The agent automatically manages this state during workflow execution. The state is reset when the agent is reset or when a new workflow execution begins.
+
+## Runtime Context
+
+The `WorkflowDrivenAgent` automatically creates a runtime context that includes:
+
+- Task data (id, description, status, inputs)
+- Agent information (name)
+- Task context
+
+This context is automatically provided to all workflow steps by the agent, allowing steps to access task and agent information:
+
+```typescript
+const contextAwareStep = createStep({
+  id: 'contextStep',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.string(),
+  execute: async ({ inputData, runtimeContext }) => {
+    const taskId = runtimeContext?.get('task.id');
+    const taskDescription = runtimeContext?.get('task.description');
+    const agentName = runtimeContext?.get('agent.name');
+
+    // Use context in your step logic
+    return `Processed ${inputData.data} for task ${taskId} by ${agentName}: ${taskDescription}`;
+  }
+});
+```
+
+The agent automatically populates this context when executing workflows, so you don't need to manually create or pass it.
+
+## Monitoring and Logging
+
+The `WorkflowDrivenAgent` automatically subscribes to workflow events and generates specific logs that integrate with the team's logging system:
+
+- 🚀 WorkflowDrivenAgent started workflow execution
+- ⚡ WorkflowDrivenAgent started step: [stepId]
+- ✅ WorkflowDrivenAgent completed step: [stepId]
+- ❌ WorkflowDrivenAgent failed step: [stepId]
+- ✅ WorkflowDrivenAgent completed workflow execution
+- 🏁 WorkflowDrivenAgent completed task successfully
+
+### Logging Features
+
+- **Real-time logs**: Each workflow event is logged immediately
+- **Specific logs**: `WorkflowAgentStatusUpdate` category to distinguish from other agents
+- **Backward compatibility**: `ReactChampionAgent` logs maintain their original format
+- **Integration with workflowLogs**: Logs appear mixed in the general team flow
+
+### Accessing Workflow Logs
+
+```typescript
+const team = new Team({
+  name: 'Logging Team',
+  agents: [workflowAgent],
+  tasks: [task]
+});
+
+const result = await team.start({ data: 'test' });
+
+// Access workflow logs from the team store
+const workflowLogs = team.store.getState().workflowLogs;
+const workflowAgentLogs = workflowLogs.filter(
+  log => log.logType === 'WorkflowAgentStatusUpdate'
+);
+
+console.log('Workflow logs:', workflowAgentLogs);
+```
+
+## Error Handling
+
+The `WorkflowDrivenAgent` handles different types of errors gracefully:
+
+### Types of Errors Handled
+
+- **Workflow Failed**: When the workflow fails during execution
+- **Workflow Suspended**: When the workflow suspends for manual intervention
+- **Execution Error**: Errors during workflow execution
+- **Step Failed**: When a specific workflow step fails
+
+### Error Handling Behavior
+
+When an error occurs:
+
+1. The agent's status is set to `TASK_ABORTED`
+2. The workflow status is set to `failed`
+3. The error is stored in `lastError`
+4. The error is logged with the `WorkflowAgentStatusUpdate` log type
+5. The team's error handling system is notified
+
+### Example: Error Handling in Workflow Steps
+
+```typescript
+const errorHandlingStep = createStep({
+  id: 'errorStep',
+  inputSchema: z.object({ data: z.string() }),
+  outputSchema: z.string(),
+  execute: async ({ inputData }) => {
+    if (!inputData.data) {
+      throw new Error('Data is required');
+    }
+    return inputData.data;
+  }
+});
+
+// Errors are automatically caught and handled by the agent
+// The workflow status will be set to 'failed'
+// The error is stored in the agent's lastError property
+```
+
+### Handling Failed Workflows
+
+```typescript
+// After execution, check the result
+const result = await team.start({ data: 'test' });
+
+// If the workflow failed, the agent's status will be TASK_ABORTED
+// You can access the error through the team's state or agent's lastError
+const agentState = workflowAgent.getCleanedAgent();
+// The error information is available in the agent's state
+```
+
+## Advanced Patterns
+
+### Data Mapping Between Steps
+
+```typescript
+const userStep = createStep({
+  id: 'user',
+  inputSchema: z.object({ userId: z.string() }),
+  outputSchema: z.object({
+    user: z.object({ id: z.string(), name: z.string() })
+  }),
+  execute: async ({ inputData }) => {
+    return { user: { id: inputData.userId, name: 'John' } };
+  }
+});
+
+const profileStep = createStep({
+  id: 'profile',
+  inputSchema: z.object({
+    profile: z.object({ id: z.string(), name: z.string() })
+  }),
+  outputSchema: z.string(),
+  execute: async ({ inputData }) => {
+    return `Profile: ${inputData.profile.name}`;
+  }
+});
+
+const workflow = createWorkflow({
+  id: 'mapping-workflow',
+  inputSchema: z.object({ userId: z.string() }),
+  outputSchema: z.string()
+});
+
+// Map data between steps
+workflow
+  .then(userStep)
+  .map(async ({ getStepResult }) => {
+    const userResult = getStepResult('user') as {
+      user: { id: string; name: string };
+    };
+    return {
+      profile: {
+        id: userResult.user.id,
+        name: userResult.user.name
+      }
+    };
+  })
+  .then(profileStep);
+workflow.commit();
+```
+
+### Nested Workflows
+
+```typescript
+const nestedWorkflow = createWorkflow({
+  id: 'nested',
+  inputSchema: z.number(),
+  outputSchema: z.number()
+});
+
+const doubleStep = createStep({
+  id: 'double',
+  inputSchema: z.number(),
+  outputSchema: z.number(),
+  execute: async ({ inputData }) => {
+    return (inputData as number) * 2;
+  }
+});
+
+nestedWorkflow.then(doubleStep);
+nestedWorkflow.commit();
+
+const mainWorkflow = createWorkflow({
+  id: 'main',
+  inputSchema: z.object({ a: z.number(), b: z.number() }),
+  outputSchema: z.number()
+});
+
+const addStep = createStep({
+  id: 'add',
+  inputSchema: z.object({ a: z.number(), b: z.number() }),
+  outputSchema: z.number(),
+  execute: async ({ inputData }) => {
+    const { a, b } = inputData as { a: number; b: number };
+    return a + b;
+  }
+});
+
+mainWorkflow.then(addStep).then(nestedWorkflow);
+mainWorkflow.commit();
+```
+
+## Best Practices
+
+1. **Always commit workflows**: Call `workflow.commit()` after defining your workflow steps.
+
+2. **Use type-safe schemas**: Leverage Zod schemas for input/output validation to catch errors early.
+
+3. **Handle errors gracefully**: Implement proper error handling in your step execution functions.
+
+4. **Use runtime context**: Take advantage of the runtime context to access task and agent information.
+
+5. **Monitor workflow state**: Use the logging system to track workflow execution and debug issues.
+
+6. **Test workflows independently**: Test your workflows before integrating them into agents.
+
+7. **Keep steps focused**: Each step should have a single, well-defined responsibility.
+
+## Differences from ReactChampionAgent
+
+| Aspect            | ReactChampionAgent                    | WorkflowDrivenAgent              |
+| ----------------- | ------------------------------------- | -------------------------------- |
+| **Reasoning**     | LLM-based decision making             | Workflow-driven execution        |
+| **Configuration** | Requires `role`, `goal`, `background` | Requires `workflow` definition   |
+| **Execution**     | Dynamic, LLM-guided                   | Deterministic, step-by-step      |
+| **State**         | Agent state only                      | Workflow state + Agent state     |
+| **Logging**       | `ReactChampionAgent` logs             | `WorkflowAgentStatusUpdate` logs |
+| **Feedback**      | Supports `workOnFeedback`             | Not applicable (returns error)   |
+| **Suspension**    | Limited support                       | Native suspend/resume support    |
+| **LLM Usage**     | Built-in LLM reasoning                | Can use LLM SDKs in steps        |
+
+## Compatibility
+
+The `WorkflowDrivenAgent` is fully compatible with:
+
+- Existing team system
+- Logging and monitoring system
+- Error handling system
+- Agent state system
+- Backward compatibility with `ReactChampionAgent`
+
+## Conclusion
+
+The `WorkflowDrivenAgent` provides a powerful way to execute deterministic, structured workflows within the KaibanJS framework. By combining workflow patterns with team integration and the ability to use LLM SDKs within workflow steps, you can build complex, reliable processes that work seamlessly alongside LLM-based agents.
+
+Key advantages:
+
+- **Deterministic execution**: Predictable, repeatable workflows
+- **LLM integration**: Use LangChain, AI SDK, or other LLM libraries within steps
+- **State management**: Built-in workflow state tracking
+- **Team integration**: Works seamlessly with ReactChampionAgent in mixed teams
+- **Error handling**: Robust error handling with detailed logging
+
+For more information about workflows, see the [@kaibanjs/workflow documentation](https://github.com/kaiban-ai/KaibanJS/tree/main/packages/workflow).
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
 
 
