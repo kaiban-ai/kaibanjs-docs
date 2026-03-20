@@ -53,6 +53,10 @@ This format enables:
     └── 09-Task-Orchestration.md
     └── 10-WorkflowDrivenAgent.md
     └── _category_.json
+└── ecosystem
+    └── _category_.json
+    └── kaiban-distributed.md
+    └── overview.md
 └── get-started
     └── 01-Quick Start.md
     └── 02-Core Concepts Overview.md
@@ -2530,6 +2534,99 @@ Is there something unclear or quirky in the docs? Maybe you have a suggestion or
 
 
 
+### ./src/ecosystem/kaiban-distributed.md
+
+
+//--------------------------------------------
+// File: ./src/ecosystem/kaiban-distributed.md
+//--------------------------------------------
+
+---
+title: Kaiban Distributed
+description: A community-maintained distributed runtime for KaibanJS—multi-node workers, BullMQ or Kafka, JSON-RPC gateway, and live Kaiban Board sync.
+slug: /ecosystem/kaiban-distributed
+sidebar_position: 2
+---
+
+# Kaiban Distributed
+
+**Kaiban Distributed** is a community project that wraps KaibanJS in a **production-oriented, multi-process runtime**: workers consume tasks from queues, a gateway exposes HTTP APIs, and state can stream to browsers for a live board experience.
+
+- **Repository:** [github.com/andreibesleaga/kaiban-distributed](https://github.com/andreibesleaga/kaiban-distributed)  
+- **Author:** [@andreibesleaga](https://github.com/andreibesleaga)  
+- **Integration guide (upstream):** [KAIBANJS_INTEGRATION.md](https://github.com/andreibesleaga/kaiban-distributed/blob/main/KAIBANJS_INTEGRATION.md)
+
+:::info[Relationship to KaibanJS]
+
+**KaibanJS** provides agents, teams, tasks, tools, and the Kanban-style state model. **Kaiban Distributed** adds scalable execution across nodes (e.g. **BullMQ** on **Redis** or **Kafka**), retries and dead-letter handling, a gateway with **JSON-RPC 2.0** task APIs, optional **MCP** federation, security hooks (firewall, circuit breaker, JIT tokens, TLS), and **OpenTelemetry** hooks. Use it when a single Node process is not enough.
+
+:::
+
+## When to consider it
+
+- You want **several worker processes or containers**, each running KaibanJS agents, coordinated by messages.  
+- You need **durable queues**, retries, and failure visibility (e.g. completion / DLQ topics).  
+- You want a **central HTTP API** to submit work and optional **real-time board** updates over **Socket.io** with Redis pub/sub.  
+- You are aligning with patterns described in our docs for **[A2A](/how-to/A2A-Protocol-Integration)**, **[MCP](/how-to/MCP-Adapter-Integration)**, **[Kaiban Board](/get-started/The%20Kaiban%20Board)**, and **[telemetry](/get-started/Telemetry)**—Kaiban Distributed is a separate codebase that implements its own gateway and observability hooks.
+
+## Integration modes (summary)
+
+The upstream guide describes two main patterns:
+
+1. **Distributed agent bridge** — `createKaibanTaskHandler` turns a KaibanJS `Agent` into a queue-backed handler run by an `AgentActor` (one agent per worker role).  
+2. **Team bridge** — `KaibanTeamBridge` runs a full KaibanJS `Team` in one process and publishes Zustand state deltas for remote viewers.
+
+For message schemas, Docker examples (including a multi-agent blog pipeline), **HITL** orchestration patterns, **WorkflowDrivenAgent** on workers, and environment variables, follow **[KAIBANJS_INTEGRATION.md](https://github.com/andreibesleaga/kaiban-distributed/blob/main/KAIBANJS_INTEGRATION.md)**—that document is the canonical reference.
+
+## Related KaibanJS documentation
+
+- [Deploying Your Kaiban Board](/how-to/Deployment%20Options) — static board hosting; Kaiban Distributed adds a distributed live-view pattern.  
+- [A2A Protocol Integration](/how-to/A2A-Protocol-Integration) — Google A2A patterns in KaibanJS; Kaiban Distributed exposes its own JSON-RPC gateway for cross-service task submission.  
+- [MCP Adapter Integration](/how-to/MCP-Adapter-Integration) — MCP in KaibanJS; Kaiban Distributed includes MCP federation for tools at the infrastructure layer.  
+- [Exporting Traces with OpenTelemetry](/how-to/Exporting-Traces-with-OpenTelemetry) — tracing concepts; Kaiban Distributed documents OTLP configuration in its integration guide.
+
+## Support
+
+Questions, bugs, and contributions belong in **[andreibesleaga/kaiban-distributed](https://github.com/andreibesleaga/kaiban-distributed)**. The KaibanJS team may list or link to community projects here without taking ownership of the external codebase.
+
+
+
+### ./src/ecosystem/overview.md
+
+
+//--------------------------------------------
+// File: ./src/ecosystem/overview.md
+//--------------------------------------------
+
+---
+title: Overview
+description: Community-built projects that extend KaibanJS. These are maintained outside the kaiban-ai organization unless noted otherwise.
+slug: /ecosystem/overview
+sidebar_position: 1
+---
+
+# Ecosystem
+
+The **Ecosystem** section highlights community projects that build on KaibanJS—runtimes, tooling, and integrations that are **not** part of the core framework maintained under [github.com/kaiban-ai](https://github.com/kaiban-ai).
+
+:::caution[Third-party software]
+
+Projects listed here are **community contributions**. They are **not** officially supported by the KaibanJS core team unless explicitly stated. For bugs, features, and security issues, use each project’s own repository and maintainers.
+
+:::
+
+## Featured projects
+
+| Project | Description |
+|--------|-------------|
+| [Kaiban Distributed](/ecosystem/kaiban-distributed) | Distributed, actor-style runtime for KaibanJS with Redis/BullMQ or Kafka, HTTP JSON-RPC gateway, live board sync, and optional MCP/A2A-style APIs. |
+
+## Suggest a project
+
+If you maintain or use a KaibanJS-related project that could help others, [open an issue](https://github.com/kaiban-ai/KaibanJS/issues) or reach out on [Discord](https://kaibanjs.com/discord). We may add it here when it is clearly documented, actively maintained, and a good fit for the community.
+
+
+
 ### ./src/get-started/01-Quick Start.md
 
 
@@ -4830,8 +4927,11 @@ Congratulations on completing the Getting Started guide!
 
 3. [👥 Join the Community](https://kaibanjs.com/discord): Connect with other KaibanJS developers to share projects, ask questions, and stay updated.
 
+4. [🌿 Explore the Ecosystem](/ecosystem/overview): Discover community-built projects that extend KaibanJS with distributed runtimes, tooling, and integrations.
+
 ## Other Resources:
 
+- 🌿 [Ecosystem](/ecosystem/overview): Community projects built on KaibanJS
 - 🌐 [Website](https://www.kaibanjs.com/)
 - 📚 [Official Documentation](https://docs.kaibanjs.com/)
 - 💻 [GitHub Repository](https://github.com/kaiban-ai/KaibanJS)
@@ -5916,6 +6016,10 @@ Common deployment issues:
    - Ensure variables are prefixed with `VITE_`
    - Rebuild the application after changing environment variables
    - Verify variables are properly set in your hosting platform
+
+## Multi-node and queue-based deployments
+
+If you are splitting agents across **multiple worker processes or containers** and need **durable queues** (for example Redis/BullMQ or Kafka), a **community-maintained** option is [Kaiban Distributed](/ecosystem/kaiban-distributed). It is not part of the core KaibanJS distribution; see the [Ecosystem overview](/ecosystem/overview) for scope and support expectations.
 
 :::tip[Need Help?]
 Join our [Discord community](https://kaibanjs.com/discord) for deployment support and troubleshooting assistance.
@@ -7820,6 +7924,10 @@ Due to protocol requirements, A2A integration with KaibanJS must be implemented 
 
 :::tip[Try the Demo!]
 See the A2A Protocol integration in action with our complete demo implementation. [Try it now!](https://github.com/kaiban-ai/a2a-protocol-kaibanjs-demo)
+:::
+
+:::info[Community reference: distributed gateway]
+For a **multi-node** architecture with an HTTP **JSON-RPC** surface for creating and tracking tasks (alongside agent cards and related patterns), see the community project [Kaiban Distributed](/ecosystem/kaiban-distributed). It is maintained separately from KaibanJS; refer to its [integration guide](https://github.com/andreibesleaga/kaiban-distributed/blob/main/KAIBANJS_INTEGRATION.md) for details.
 :::
 
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>

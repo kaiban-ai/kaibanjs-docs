@@ -21,6 +21,10 @@ Due to protocol requirements, A2A integration with KaibanJS must be implemented 
 See the A2A Protocol integration in action with our complete demo implementation. [Try it now!](https://github.com/kaiban-ai/a2a-protocol-kaibanjs-demo)
 :::
 
+:::info[Community reference: distributed gateway]
+For a **multi-node** architecture with an HTTP **JSON-RPC** surface for creating and tracking tasks (alongside agent cards and related patterns), see the community project [Kaiban Distributed](/ecosystem/kaiban-distributed). It is maintained separately from KaibanJS; refer to its [integration guide](https://github.com/andreibesleaga/kaiban-distributed/blob/main/KAIBANJS_INTEGRATION.md) for details.
+:::
+
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '20px'}}>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4n8u8T8_eDY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}></iframe>
 </div>
