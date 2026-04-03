@@ -15,6 +15,8 @@ Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/l
 
 OpenClaw natively speaks the **OpenResponses API specification** — an open standard modeled after the OpenAI Responses API — making it straightforward to swap the AI backend behind any agent. This is where KaibanJS fits in: instead of a single LLM call, you can plug in a full **multi-agent pipeline** that researches, writes, reviews, and delivers structured outputs — all transparently, from the user's perspective on any channel.
 
+If you prefer **tool-based delegation** (the main OpenClaw agent calls a single tool that runs your Team) instead of exposing an HTTP **model** endpoint, use the [**OpenClaw native plugin**](./18-OpenClaw-Native-Plugin.md) (`@kaibanjs/kaibanjs-plugin` / `kaiban_run_team`).
+
 :::tip[Try the Demo!]
 See the OpenClaw integration in action with the playground implementation. [View the example](https://www.kaibanjs.com/examples/kaibanjs-team-openclaw-openresponses) and [explore the source code](https://github.com/kaiban-ai/KaibanJS/tree/main/playground/openclaw-openresponses) on GitHub.
 :::
@@ -371,6 +373,8 @@ Test the adapter with `curl` against `POST /v1/responses` before debugging chann
 ## Conclusion
 
 The OpenClaw integration lets you expose any KaibanJS team as an OpenResponses-compatible backend. A single Express server implements `POST /v1/responses` with optional SSE streaming, request normalization, and Bearer token auth. You register the adapter as a custom OpenClaw provider and point an agent at `kaiban-adapter/kaiban`. Your multi-agent pipeline then powers conversations on WhatsApp, Telegram, Discord, and other OpenClaw-supported channels without per-platform code.
+
+For the **native plugin** path (`kaiban_run_team` without this HTTP adapter), see [OpenClaw Native Plugin](./18-OpenClaw-Native-Plugin.md).
 
 For a ready-to-run implementation, use the [OpenClaw OpenResponses playground](https://github.com/kaiban-ai/KaibanJS/tree/main/playground/openclaw-openresponses) and the [example page](https://www.kaibanjs.com/examples/kaibanjs-team-openclaw-openresponses) on the KaibanJS site.
 
