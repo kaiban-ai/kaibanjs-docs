@@ -17,8 +17,11 @@ Congratulations on completing the Getting Started guide!
 
 3. [👥 Join the Community](https://kaibanjs.com/discord): Connect with other KaibanJS developers to share projects, ask questions, and stay updated.
 
+4. [🌿 Explore the Ecosystem](/ecosystem/overview): Discover community-built projects that extend KaibanJS with distributed runtimes, tooling, and integrations.
+
 ## Other Resources:
 
+- 🌿 [Ecosystem](/ecosystem/overview): Community projects built on KaibanJS
 - 🌐 [Website](https://www.kaibanjs.com/)
 - 📚 [Official Documentation](https://docs.kaibanjs.com/)
 - 💻 [GitHub Repository](https://github.com/kaiban-ai/KaibanJS)

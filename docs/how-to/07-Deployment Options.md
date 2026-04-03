@@ -87,6 +87,10 @@ Common deployment issues:
    - Rebuild the application after changing environment variables
    - Verify variables are properly set in your hosting platform
 
+## Multi-node and queue-based deployments
+
+If you are splitting agents across **multiple worker processes or containers** and need **durable queues** (for example Redis/BullMQ or Kafka), a **community-maintained** option is [Kaiban Distributed](/ecosystem/kaiban-distributed). It is not part of the core KaibanJS distribution; see the [Ecosystem overview](/ecosystem/overview) for scope and support expectations.
+
 :::tip[Need Help?]
 Join our [Discord community](https://kaibanjs.com/discord) for deployment support and troubleshooting assistance.
 :::
