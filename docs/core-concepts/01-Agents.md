@@ -38,8 +38,24 @@ const searchAgent = new Agent({
 });
 ```
 
+## Agent `type`
+
+The `Agent` class can instantiate different implementations. Omit `type` for the default **LLM-backed** agent (`ReactChampionAgent` behavior with `role`, `goal`, `background`, and optional `tools`).
+
+| `type` | Use case |
+| ------ | -------- |
+| `WorkflowDrivenAgent` | Deterministic workflows from `@kaibanjs/workflow` ([WorkflowDrivenAgent](./10-WorkflowDrivenAgent.md)). |
+| `ExternalCodingAgent` | Delegate each task to **Claude Code**, **OpenCode**, or a **`mock`** CLI on **Node.js** ([ExternalCodingAgent](./11-ExternalCodingAgent.md), [Using ExternalCodingAgent](../how-to/19-Using-ExternalCodingAgent.md)). |
+
 ## Agent Attributes
 
+
+#### `type` (optional)
+
+Selects the agent implementation. When omitted, KaibanJS uses the standard LLM agent.
+
+- **Type:** `'ReactChampionAgent'` | `'WorkflowDrivenAgent'` | `'ExternalCodingAgent'` (string)
+- **Default:** `ReactChampionAgent`
 
 #### `name`
 A descriptive or friendly identifier for easier recognition of the agent.

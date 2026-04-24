@@ -52,6 +52,7 @@ This format enables:
     └── 08-Memory.md
     └── 09-Task-Orchestration.md
     └── 10-WorkflowDrivenAgent.md
+    └── 11-ExternalCodingAgent.md
     └── _category_.json
 └── ecosystem
     └── _category_.json
@@ -91,6 +92,7 @@ This format enables:
     └── 16-Integrating-with-KaibanIO-Platform.md
     └── 17-OpenClaw-Integration.md
     └── 18-OpenClaw-Native-Plugin.md
+    └── 19-Using-ExternalCodingAgent.md
     └── _category_.json
 └── llms-docs
     └── 01-Overview.md
@@ -212,8 +214,24 @@ const searchAgent = new Agent({
 });
 ```
 
+## Agent `type`
+
+The `Agent` class can instantiate different implementations. Omit `type` for the default **LLM-backed** agent (`ReactChampionAgent` behavior with `role`, `goal`, `background`, and optional `tools`).
+
+| `type` | Use case |
+| ------ | -------- |
+| `WorkflowDrivenAgent` | Deterministic workflows from `@kaibanjs/workflow` ([WorkflowDrivenAgent](./10-WorkflowDrivenAgent.md)). |
+| `ExternalCodingAgent` | Delegate each task to **Claude Code**, **OpenCode**, or a **`mock`** CLI on **Node.js** ([ExternalCodingAgent](./11-ExternalCodingAgent.md), [Using ExternalCodingAgent](../how-to/19-Using-ExternalCodingAgent.md)). |
+
 ## Agent Attributes
 
+
+#### `type` (optional)
+
+Selects the agent implementation. When omitted, KaibanJS uses the standard LLM agent.
+
+- **Type:** `'ReactChampionAgent'` | `'WorkflowDrivenAgent'` | `'ExternalCodingAgent'` (string)
+- **Default:** `ReactChampionAgent`
 
 #### `name`
 A descriptive or friendly identifier for easier recognition of the agent.
@@ -2532,6 +2550,118 @@ To learn more about creating and using `WorkflowDrivenAgent` in detail, check ou
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
 :::
 
+
+
+
+### ./src/core-concepts/11-ExternalCodingAgent.md
+
+
+//--------------------------------------------
+// File: ./src/core-concepts/11-ExternalCodingAgent.md
+//--------------------------------------------
+
+---
+title: ExternalCodingAgent
+description: Agent that delegates tasks to local coding CLIs (Claude Code, OpenCode) or a mock backend, using the same Team and Task lifecycle as other agents.
+---
+
+## What is an ExternalCodingAgent?
+
+> An **ExternalCodingAgent** delegates each assigned task to an **external coding tool** running on your machine: [Claude Code](https://docs.anthropic.com/en/docs/claude-code/headless) (`claude`), [OpenCode](https://opencode.ai/docs/cli/) (`opencode run`), or an in-process **`mock`** backend that echoes the composed prompt (useful for tests and wiring checks).
+
+It is **not** an LLM-backed `ReactChampionAgent`. KaibanJS still drives **tasks, stores, errors, and results** the same way: one task maps to **one CLI invocation** (single iteration, forced final answer). The agent builds a text prompt from the task description (with interpolation), optional workflow context, `expectedOutput`, and—on feedback—reviewer comments.
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## Runtime: Node.js
+
+`ExternalCodingAgent` uses Node’s `child_process.spawn` with **no shell**. It is intended for **Node.js** runtimes. Bundles that target the browser are not a supported environment for this agent type.
+
+## Backends
+
+| `codingBackend` | Behavior |
+| ----------------- | -------- |
+| `claude-code`     | Runs `claude` with `-p`, `--output-format json`, optional [`--bare`](https://docs.anthropic.com/en/docs/claude-code/headless), tool and permission flags. Parses JSON stdout (`result`, optional `structured_output`). |
+| `opencode`        | Runs `opencode run --format json` with the prompt. Parses stdout (tolerant of NDJSON; last JSON object wins). |
+| `mock`            | No subprocess; returns a short string derived from the prompt (no API keys or CLIs required). |
+
+Non-zero CLI exit codes surface as task errors (task can move to **BLOCKED** per store rules). Missing binaries (`ENOENT`) produce a clear error suggesting `PATH` or `cliPath`.
+
+## How prompts are built
+
+For each run, the agent composes a markdown-style prompt with:
+
+1. **Task** — interpolated description (`{inputKey}`, `{taskResult:task1}`, etc.; see [Task result passing](./09-Task-Orchestration.md) and [Using task results in descriptions](../how-to/10-Task-Result-Passing.md)).
+2. **Prior output / context** — workflow context string when present.
+3. **Expected output** — the task’s `expectedOutput` text.
+
+On **feedback**, the same base prompt is extended with a `## Reviewer feedback` section before re-invoking the backend.
+
+## When to use it
+
+- You already use **Claude Code** or **OpenCode** locally and want a **Team** to orchestrate **who** runs **which task** in order.
+- You want **deterministic “one shot per task”** behavior instead of an internal ReAct loop.
+- You need a **mock** agent to validate team wiring without calling a CLI.
+
+Use **ReactChampionAgent** when you want in-process LLM tool use. Use **WorkflowDrivenAgent** for `@kaibanjs/workflow` graphs. **ExternalCodingAgent** is for **delegating the heavy lifting to an external CLI** you trust in that environment.
+
+## Team compatibility
+
+`ExternalCodingAgent` is a normal `Agent` with `type: 'ExternalCodingAgent'`. It participates in teams, task ordering, interpolation, and store callbacks like other agents.
+
+```typescript
+import { Agent, Task, Team } from 'kaibanjs';
+
+const worker = new Agent({
+  type: 'ExternalCodingAgent',
+  name: 'RepoWorker',
+  role: 'Repository assistant',
+  goal: 'Answer using the configured external CLI',
+  background: 'Runs in the team’s Node process',
+  codingBackend: 'mock',
+  workspaceRoot: process.cwd(),
+});
+
+const team = new Team({
+  name: 'Mixed team',
+  agents: [
+    worker,
+    new Agent({
+      name: 'Analyst',
+      role: 'Analyst',
+      goal: 'Refine answers',
+      background: 'LLM-based review',
+    }),
+  ],
+  tasks: [
+    new Task({
+      description: 'Summarize the repo README for: {topic}',
+      expectedOutput: 'Short plain-text summary',
+      agent: worker,
+    }),
+    new Task({
+      description: 'Improve the summary: {taskResult:task1}',
+      expectedOutput: 'Polished summary',
+      agent: 'Analyst',
+    }),
+  ],
+  inputs: { topic: 'installation' },
+});
+```
+
+## Sample project
+
+The KaibanJS repository includes a runnable playground: [`playground/external-coding-agents`](https://github.com/kaiban-ai/KaibanJS/tree/main/playground/external-coding-agents) (two agents, chained tasks, env-based backend selection).
+
+## Next steps
+
+For configuration fields (`claude`, `opencode`, `timeoutMs`, `cliPath`), environment merging, safety notes, and concrete Claude/OpenCode setup, see [Using ExternalCodingAgent](../how-to/19-Using-ExternalCodingAgent.md).
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
 
 
 
@@ -9658,7 +9788,7 @@ The **A2A Executor** implements the A2A protocol executor interface, handling ta
 The **Kaiban Controller** orchestrates workflow state management and integrates with KaibanIO platform APIs. It processes card activities, invokes your KaibanJS team, and updates card statuses automatically.
 
 ### 4. KaibanJS Team
-Your **KaibanJS Team** contains the business logic that processes requests using collaborative AI agents. The team can use any KaibanJS agent types, including `ReactChampionAgent` and `WorkflowDrivenAgent`.
+Your **KaibanJS Team** contains the business logic that processes requests using collaborative AI agents. The team can use any KaibanJS agent types, including `ReactChampionAgent`, `WorkflowDrivenAgent`, and `ExternalCodingAgent` (Node-oriented CLI delegation; see [ExternalCodingAgent](../core-concepts/11-ExternalCodingAgent.md)).
 
 ### 5. Kaiban SDK
 The **Kaiban SDK** (`@kaiban/sdk`) provides the client library for interacting with KaibanIO platform APIs (cards, activities, boards).
@@ -11100,6 +11230,147 @@ Use `teamMetadata.inputs.properties` and `additionalProperties: false` so the or
 The **`@kaibanjs/kaibanjs-plugin`** package registers your KaibanJS **Team** as **`kaiban_run_team`**, with parameters driven by **`teamMetadata`** and execution via **`createTeam`**. It is the right integration shape when OpenClaw’s main agent should **delegate** structured work to a full workflow, while the [**OpenResponses guide**](./17-OpenClaw-Integration.md) remains the right choice when your Team should **replace** the model backend behind `POST /v1/responses`.
 
 For source, manifest schema, and the Tavily example, see the [openclaw-plugin folder on GitHub](https://github.com/kaiban-ai/KaibanJS/tree/main/packages/openclaw-plugin). Community context: [Run KaibanJS multi-agent teams inside OpenClaw as a native tool](https://huggingface.co/blog/darielnoel/kaibanjs-openclaw-native-tool) (Hugging Face).
+
+:::tip[We Love Feedback!]
+Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!
+:::
+
+
+
+### ./src/how-to/19-Using-ExternalCodingAgent.md
+
+
+//--------------------------------------------
+// File: ./src/how-to/19-Using-ExternalCodingAgent.md
+//--------------------------------------------
+
+---
+title: Using ExternalCodingAgent
+description: Configure ExternalCodingAgent with Claude Code, OpenCode, or mock backends, wire Teams and Tasks, and run the official playground.
+---
+
+## Introduction
+
+`ExternalCodingAgent` lets a KaibanJS **Team** assign **Tasks** to **local developer CLIs** (or a **mock**) while keeping the same lifecycle as other agents: task description interpolation, context, completion handlers, and errors on failed runs.
+
+For concepts and comparisons, see [ExternalCodingAgent](../core-concepts/11-ExternalCodingAgent.md).
+
+:::tip[Using AI Development Tools?]
+Our documentation is available in an LLM-friendly format at [docs.kaibanjs.com/llms-full.txt](https://docs.kaibanjs.com/llms-full.txt). Feed this URL directly into your AI IDE or coding assistant for enhanced development support!
+:::
+
+## Requirements
+
+- **Node.js** (the agent spawns subprocesses; browser-only bundles are not supported).
+- **`kaibanjs`** package version that exports `ExternalCodingAgent` / `type: 'ExternalCodingAgent'` (see [KaibanJS releases](https://github.com/kaiban-ai/KaibanJS/releases)).
+
+## Creating an agent
+
+Use the same `Agent` constructor with `type: 'ExternalCodingAgent'` and the fields below.
+
+```typescript
+import { Agent } from 'kaibanjs';
+
+const agent = new Agent({
+  type: 'ExternalCodingAgent',
+  name: 'Coder',
+  role: 'Implementation assistant',
+  goal: 'Use the external CLI to satisfy each task',
+  background: 'Runs in Node against workspaceRoot',
+  codingBackend: 'claude-code', // 'opencode' | 'mock'
+  workspaceRoot: '/absolute/path/to/repo',
+  timeoutMs: 600_000,
+  cliPath: '/optional/path/to/claude', // default: 'claude' or 'opencode'
+  claude: {
+    useBare: true,
+    allowedTools: 'Read',
+    permissionMode: undefined,
+    maxTurns: undefined,
+    maxBudgetUsd: undefined,
+    extraArgs: [],
+  },
+  opencode: {
+    model: undefined,
+    agentName: undefined,
+    attachUrl: undefined,
+    extraArgs: [],
+  },
+});
+```
+
+### Parameter reference
+
+| Field | Required | Description |
+| ----- | -------- | ----------- |
+| `type` | Yes | Must be `'ExternalCodingAgent'`. |
+| `name`, `role`, `goal`, `background` | Yes | Same as other agents; used for identity and logging. |
+| `codingBackend` | Yes | `'claude-code'`, `'opencode'`, or `'mock'`. |
+| `workspaceRoot` | Yes | Working directory for the CLI (usually repository root). |
+| `cliPath` | No | Executable name or absolute path. Defaults: `claude`, `opencode`. Ignored for `mock`. |
+| `timeoutMs` | No | Subprocess timeout in ms (default **600000**). |
+| `claude` | No | `useBare` (default `true`), `allowedTools`, `permissionMode`, `maxTurns`, `maxBudgetUsd`, `extraArgs`. |
+| `opencode` | No | `model`, `agentName` (OpenCode `--agent`), `attachUrl` (`--attach`), `extraArgs`. |
+
+The agent does **not** use KaibanJS `tools` arrays for CLI execution; tool access is governed by the **external** CLI (for example Claude’s `--allowedTools`).
+
+### Environment variables
+
+The subprocess inherits **`process.env`** merged with the agent’s `env` object (from `Team` / `Agent` initialization, same pattern as other agents). Set provider keys as required by each CLI (for example **`ANTHROPIC_API_KEY`** for headless Claude Code).
+
+## Claude Code
+
+1. Install and authenticate [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup); verify `which claude`.
+2. For scripted runs, follow [Run Claude Code programmatically](https://docs.anthropic.com/en/docs/claude-code/headless) (the library uses JSON output mode and optional `--bare`).
+3. Prefer **narrow tool allowlists** and explicit **`permissionMode`** in production; defaults are your responsibility at the CLI.
+
+## OpenCode
+
+1. Install the [OpenCode CLI](https://opencode.ai/docs/cli/); verify `which opencode`.
+2. The driver runs `opencode run --format json` with your prompt. If the binary is missing, you get an actionable error: fix `PATH` or set `cliPath` to the full executable.
+
+## Mock backend
+
+Set `codingBackend: 'mock'` for CI-style checks: no subprocess, no keys. The result is a deterministic string prefix derived from the composed prompt.
+
+## Task chaining
+
+Pass prior task text into later tasks with interpolation, for example `{taskResult:task1}` for the **first** task in the team’s task list. See [Task result passing](../how-to/10-Task-Result-Passing.md).
+
+Each task triggers **one** CLI run (or one mock response). Feedback flows append **reviewer feedback** and invoke the backend again.
+
+## Official playground
+
+The KaibanJS repo includes **`playground/external-coding-agents`**:
+
+- Two `ExternalCodingAgent` instances and two chained tasks.
+- Backend switch: edit `PLAYGROUND_DEFAULT_BACKEND` in `index.ts` or set **`KAIBAN_CODING_BACKEND`** (`mock` \| `claude-code` \| `opencode`) in `.env`.
+- Optional CLI paths: **`KAIBAN_CLAUDE_CLI`** / **`CLAUDE_CLI`**, **`KAIBAN_OPENCODE_CLI`** / **`OPENCODE_CLI`**.
+
+Clone [KaibanJS](https://github.com/kaiban-ai/KaibanJS), build the package, then:
+
+```bash
+cd playground/external-coding-agents
+npm install
+npm start
+```
+
+Details match the playground [README](https://github.com/kaiban-ai/KaibanJS/blob/main/playground/external-coding-agents/README.md).
+
+## Task results: string vs structured
+
+- **Claude Code**: If the JSON response includes `structured_output`, the stored `TaskResult` can be that structured value; otherwise the text `result` is used.
+- **OpenCode**: Parsed JSON may expose both text-like fields and a structured object depending on the CLI output.
+
+## Limitations and safety
+
+- **Trust boundary**: The agent runs **arbitrary CLIs** with the prompt as arguments; do not pass unsanitized user-controlled strings into flags or `extraArgs`.
+- **Platform serialization** (for example Kaiban.io boards) for this agent type may lag the open-source library; treat board export as product-specific when available.
+- Very large stdout/stderr is not specially truncated in the library today; long runs may use significant memory.
+
+## Related
+
+- [Agents](../core-concepts/01-Agents.md) — general agent model.
+- [WorkflowDrivenAgent](../core-concepts/10-WorkflowDrivenAgent.md) — deterministic workflows inside KaibanJS.
 
 :::tip[We Love Feedback!]
 Is there something unclear or quirky in the docs? Maybe you have a suggestion or spotted an issue? Help us refine and enhance our documentation by [submitting an issue on GitHub](https://github.com/kaiban-ai/KaibanJS/issues). We're all ears!

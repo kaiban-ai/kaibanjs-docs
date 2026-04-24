@@ -33,7 +33,7 @@ The **A2A Executor** implements the A2A protocol executor interface, handling ta
 The **Kaiban Controller** orchestrates workflow state management and integrates with KaibanIO platform APIs. It processes card activities, invokes your KaibanJS team, and updates card statuses automatically.
 
 ### 4. KaibanJS Team
-Your **KaibanJS Team** contains the business logic that processes requests using collaborative AI agents. The team can use any KaibanJS agent types, including `ReactChampionAgent` and `WorkflowDrivenAgent`.
+Your **KaibanJS Team** contains the business logic that processes requests using collaborative AI agents. The team can use any KaibanJS agent types, including `ReactChampionAgent`, `WorkflowDrivenAgent`, and `ExternalCodingAgent` (Node-oriented CLI delegation; see [ExternalCodingAgent](../core-concepts/11-ExternalCodingAgent.md)).
 
 ### 5. Kaiban SDK
 The **Kaiban SDK** (`@kaiban/sdk`) provides the client library for interacting with KaibanIO platform APIs (cards, activities, boards).
